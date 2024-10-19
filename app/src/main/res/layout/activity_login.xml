@@ -80,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Password"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/login_em_email"
         app:layout_constraintTop_toBottomOf="@+id/login_em_email" />
 
@@ -134,9 +135,9 @@
         android:layout_marginTop="32dp"
         android:text="Need an account?"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_ib_googlesigninbtn" />
 
@@ -147,7 +148,7 @@
         android:layout_marginStart="6dp"
         android:text="Sign up"
         android:textColor="#136B0E"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/login_tv_registertitle"
         app:layout_constraintStart_toEndOf="@+id/login_tv_registertitle" />

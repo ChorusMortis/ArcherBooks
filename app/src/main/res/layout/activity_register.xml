@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/register_iv_headerbackground"
+        android:layout_width="0dp"
+        android:layout_height="175dp"
+        android:background="#61AA63"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/register_tv_headertitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Archer Books"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/register_iv_headerbackground"
+        app:layout_constraintEnd_toEndOf="@+id/register_iv_headerbackground"
+        app:layout_constraintStart_toStartOf="@+id/register_iv_headerbackground"
+        app:layout_constraintTop_toTopOf="@+id/register_iv_headerbackground"
+        app:layout_constraintVertical_bias="0.40" />
+
+    <TextView
+        android:id="@+id/register_tv_headersubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Book borrowing made easy"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/register_iv_headerbackground"
+        app:layout_constraintStart_toStartOf="@+id/register_iv_headerbackground"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_headertitle" />
+
+    <TextView
+        android:id="@+id/register_tv_registertitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Register"
+        android:textColor="#61AA63"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_iv_headerbackground" />
+
+    <TextView
+        android:id="@+id/register_tv_firstnametitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="First Name"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/register_et_firstname"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_registertitle" />
+
+    <TextView
+        android:id="@+id/register_tv_lastnametitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/register_et_lastname"
+        app:layout_constraintTop_toTopOf="@+id/register_tv_firstnametitle" />
+
+    <TextView
+        android:id="@+id/register_tv_emailtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Email"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/register_et_email"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_firstname" />
+
+    <TextView
+        android:id="@+id/register_tv_passwordtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Password"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/register_et_email"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_email" />
+
+    <EditText
+        android:id="@+id/register_et_firstname"
+        android:layout_width="135dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="John"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="@+id/register_et_email"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_firstnametitle" />
+
+    <EditText
+        android:id="@+id/register_et_lastname"
+        android:layout_width="135dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="Doe"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/register_et_firstname"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_email"
+        app:layout_constraintTop_toTopOf="@+id/register_et_firstname" />
+
+    <EditText
+        android:id="@+id/register_et_email"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="john.doe@example.com"
+        android:inputType="textEmailAddress"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_emailtitle" />
+
+    <EditText
+        android:id="@+id/register_et_password"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_email"
+        app:layout_constraintStart_toStartOf="@+id/register_et_email"
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_passwordtitle" />
+
+    <Button
+        android:id="@+id/register_btn_registerbtn"
+        android:layout_width="295dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="#61AA63"
+        android:text="Proceed"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/register_et_password"
+        app:layout_constraintStart_toStartOf="@+id/register_et_password"
+        app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
+
+    <View
+        android:id="@+id/register_div_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
+        app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
+        app:layout_constraintTop_toBottomOf="@+id/register_btn_registerbtn" />
+
+    <ImageButton
+        android:id="@+id/register_ib_googlesigninbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/google_login_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_div_divider" />
+
+    <TextView
+        android:id="@+id/register_tv_logintitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Already have an account?"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_ib_googlesigninbtn" />
+
+    <TextView
+        android:id="@+id/register_tv_loginhyperlink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="Log in"
+        android:textColor="#136B0E"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/register_tv_logintitle"
+        app:layout_constraintStart_toEndOf="@+id/register_tv_logintitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

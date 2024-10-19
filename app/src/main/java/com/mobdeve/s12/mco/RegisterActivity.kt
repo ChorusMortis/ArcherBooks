@@ -6,17 +6,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.mobdeve.s12.mco.databinding.ActivityLoginBinding
+import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewBinding = ActivityLoginBinding.inflate(layoutInflater)
+        val viewBinding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        // go to register activity when user taps on "Sign up" text
-        viewBinding.loginTvRegisterhyperlink.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+        // go to login activity when user taps on "Log in" text
+        viewBinding.registerTvLoginhyperlink.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
