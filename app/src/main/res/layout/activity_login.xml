@@ -167,6 +167,7 @@
         android:backgroundTint="@color/black"
         android:drawableStart="@drawable/google_logo"
         android:drawablePadding="15dp"
+        android:fontFamily="@font/sf_ui_text_regular"
         android:gravity="center_vertical"
         android:paddingStart="64sp"
         android:paddingEnd="64sp"
