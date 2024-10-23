@@ -27,12 +27,12 @@
         android:background="@drawable/rectangle_roundedtop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintHeight_percent="0.85"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/login_tv_welcometitle"
+        android:id="@+id/login_tv_headertitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/login_iv_cardbackground" />
 
     <TextView
-        android:id="@+id/login_tv_welcomesubtitle"
+        android:id="@+id/login_tv_headersubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -55,13 +55,13 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_tv_welcometitle" />
+        app:layout_constraintTop_toBottomOf="@+id/login_tv_headertitle" />
 
     <EditText
         android:id="@+id/login_et_email"
         android:layout_width="325dp"
         android:layout_height="48dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
@@ -75,13 +75,13 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_tv_welcomesubtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/login_tv_headersubtitle" />
 
     <EditText
         android:id="@+id/login_et_password"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
@@ -102,9 +102,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Forgot Password?"
+        android:text="Forgot password?"
         android:textColor="#61AA63"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
@@ -113,7 +113,7 @@
         android:id="@+id/login_btn_loginbtn"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#61AA63"
         android:text="Sign In"
@@ -139,7 +139,7 @@
         android:id="@+id/login_tv_altsignintext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:text="Or continue with"
         android:textColor="#8D8D8D"
         android:textSize="14sp"
@@ -184,7 +184,7 @@
         android:layout_marginTop="24dp"
         android:text="Don't have an account?"
         android:textColor="#8D8D8D"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent"
@@ -197,7 +197,7 @@
         android:layout_marginStart="6dp"
         android:text="Sign up"
         android:textColor="#61AA63"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/login_tv_registertitle"
         app:layout_constraintStart_toEndOf="@+id/login_tv_registertitle" />
