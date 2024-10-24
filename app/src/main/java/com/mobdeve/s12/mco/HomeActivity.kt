@@ -12,5 +12,8 @@ class HomeActivity : AppCompatActivity() {
         viewBinding = ActivityHomeBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+
+        viewBinding.homeIvLogo.setImageResource(R.drawable.archerbooks_logo_green)
+        viewBinding.homeIvSearchIcon.setImageResource(R.drawable.search_solid)
     }
 }
