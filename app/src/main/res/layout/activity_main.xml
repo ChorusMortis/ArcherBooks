@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/sf_ui_text_regular"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:text="Book borrowing made easy"
             android:textAlignment="center"
             android:textColor="@color/white"
