@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.mobdeve.s12.mco.databinding.ActivityLoginBinding
@@ -19,6 +20,15 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        // dynamic sizing of the content (white background)
+        val heightPixels = resources.displayMetrics.heightPixels.toFloat()
+        val params = viewBinding.loginClContent.layoutParams as ConstraintLayout.LayoutParams
+        if(heightPixels <= MainActivity.NEXUS_5X_HEIGHT) {
+            params.matchConstraintPercentHeight = 0.95f
+        } else {
+            params.matchConstraintPercentHeight = 0.85f
         }
     }
 }
