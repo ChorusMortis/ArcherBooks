@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
-
 
 class RegisterActivity : AppCompatActivity() {
 
