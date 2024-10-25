@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mco
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,5 +31,11 @@ class HomeActivity : AppCompatActivity() {
         val forYouLinearLayoutManager = LinearLayoutManager(this)
         forYouLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         this.forYouRecyclerView.layoutManager = forYouLinearLayoutManager
+
+        viewBinding.homeBtnSearch.setOnClickListener {
+            val intent = Intent(this, SearchResultsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

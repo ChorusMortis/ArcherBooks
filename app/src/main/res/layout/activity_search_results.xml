@@ -1,6 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/searchresults_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:text="Search Results"
+        android:textColor="@color/main_green"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/searchresults_et_searchbar"
+        app:layout_constraintStart_toStartOf="@+id/searchresults_et_searchbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/searchresults_et_searchbar"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/search_bar_shape"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:hint="Search Archer Books"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:singleLine="true"
+        android:textColor="#888888"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/searchresults_hsv_filterbuttonsscrollview"
+        app:layout_constraintEnd_toStartOf="@+id/searchresults_ib_searchbtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchresults_tv_title" />
+
+    <ImageButton
+        android:id="@+id/searchresults_ib_searchbtn"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/search_bar_btn"
+        android:src="@drawable/search_solid"
+        app:layout_constraintBottom_toBottomOf="@+id/searchresults_et_searchbar"
+        app:layout_constraintEnd_toStartOf="@+id/searchresults_ib_sortbtn"
+        app:layout_constraintTop_toTopOf="@+id/searchresults_et_searchbar" />
+
+    <ImageButton
+        android:id="@+id/searchresults_ib_sortbtn"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/main_green"
+        android:padding="4dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/filter_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/searchresults_et_searchbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/searchresults_et_searchbar" />
+
+    <HorizontalScrollView
+        android:id="@+id/searchresults_hsv_filterbuttonsscrollview"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/searchresults_gl_recyclerviewtop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchresults_et_searchbar">
+
+        <LinearLayout
+            android:id="@+id/searchresults_ll_filterbuttonslayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/searchresults_btn_filtermatchall"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#61AA63"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="All"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/searchresults_btn_filtermatchtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#C3C3C3"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Title"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/searchresults_btn_filtermatchauthor"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#C3C3C3"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Author"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/searchresults_btn_filtermatchsubject"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#C3C3C3"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Subject"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/searchresults_btn_filtermatchpublisher"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#C3C3C3"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Publisher"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/searchresults_gl_recyclerviewtop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchresults_rv_results"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchresults_gl_recyclerviewtop" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
