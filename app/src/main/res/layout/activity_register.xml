@@ -41,16 +41,14 @@
         android:id="@+id/register_tv_headertitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/sf_ui_text_bold"
         android:text="Get Started"
         android:textColor="#61AA63"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_tv_headersubtitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop" />
 
     <TextView
         android:id="@+id/register_tv_headersubtitle"
@@ -61,9 +59,7 @@
         android:text="Create your new account"
         android:textColor="#61AA63"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_et_fullname"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_tv_headertitle" />
 
@@ -83,9 +79,7 @@
         android:singleLine="true"
         android:textColorHint="#888888"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_et_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_tv_headersubtitle" />
 
@@ -93,7 +87,7 @@
         android:id="@+id/register_et_email"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
@@ -105,9 +99,7 @@
         android:singleLine="true"
         android:textColorHint="#888888"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_et_password"
         app:layout_constraintEnd_toEndOf="@+id/register_et_fullname"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/register_et_fullname"
         app:layout_constraintTop_toBottomOf="@+id/register_et_fullname" />
 
@@ -115,7 +107,7 @@
         android:id="@+id/register_et_password"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
@@ -127,9 +119,7 @@
         android:singleLine="true"
         android:textColorHint="#888888"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_et_confirmpassword"
         app:layout_constraintEnd_toEndOf="@+id/register_et_email"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/register_et_email"
         app:layout_constraintTop_toBottomOf="@+id/register_et_email" />
 
@@ -137,7 +127,7 @@
         android:id="@+id/register_et_confirmpassword"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
@@ -149,9 +139,7 @@
         android:singleLine="true"
         android:textColorHint="#888888"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/register_btn_registerbtn"
         app:layout_constraintEnd_toEndOf="@+id/register_et_password"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/register_et_password"
         app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
 
@@ -159,16 +147,14 @@
         android:id="@+id/register_btn_registerbtn"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#61AA63"
         android:text="Create Account"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/register_gl_altsignup"
         app:layout_constraintEnd_toEndOf="@+id/register_et_confirmpassword"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/register_et_confirmpassword"
         app:layout_constraintTop_toBottomOf="@+id/register_et_confirmpassword" />
 
@@ -194,12 +180,13 @@
         android:id="@+id/register_tv_altsignuptext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Or continue with"
         android:textColor="#8D8D8D"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/register_gl_altsignup" />
+        app:layout_constraintTop_toBottomOf="@+id/register_btn_registerbtn" />
 
     <View
         android:id="@+id/register_div_divider2"
@@ -238,7 +225,7 @@
         android:layout_marginTop="16dp"
         android:text="Already have an account?"
         android:textColor="#8D8D8D"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent"
@@ -251,7 +238,7 @@
         android:layout_marginStart="6dp"
         android:text="Sign in"
         android:textColor="#61AA63"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/register_tv_logintitle"
         app:layout_constraintStart_toEndOf="@+id/register_tv_logintitle" />

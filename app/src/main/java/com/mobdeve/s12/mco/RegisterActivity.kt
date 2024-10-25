@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -17,6 +18,22 @@ class RegisterActivity : AppCompatActivity() {
 
         addListenerLoginHyperLink()
         addListenerCreateAccountBtn()
+        setFonts()
+    }
+
+    fun setFonts() {
+        viewBinding.registerTvRegistertitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerTvHeadertitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
+        viewBinding.registerTvHeadersubtitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerEtFullname.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerEtEmail.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerEtPassword.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerEtConfirmpassword.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerBtnRegisterbtn.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_medium)
+        viewBinding.registerTvAltsignuptext.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerBtnSignupgoogle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerTvLogintitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
+        viewBinding.registerTvLoginhyperlink.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
     }
 
     fun addListenerLoginHyperLink() {

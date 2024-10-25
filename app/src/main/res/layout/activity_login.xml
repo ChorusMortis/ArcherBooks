@@ -46,7 +46,6 @@
         android:text="Welcome Back"
         android:textColor="#61AA63"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_tv_headersubtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +61,6 @@
         android:text="Login to your account"
         android:textColor="#61AA63"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_et_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +70,7 @@
         android:id="@+id/login_et_email"
         android:layout_width="325dp"
         android:layout_height="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
@@ -84,9 +82,7 @@
         android:singleLine="true"
         android:textColorHint="#888888"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_et_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_tv_headersubtitle" />
 
@@ -106,9 +102,7 @@
         android:singleLine="true"
         android:textColorHint="#888888"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_tv_forgotpassword"
         app:layout_constraintEnd_toEndOf="@+id/login_et_email"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/login_et_email"
         app:layout_constraintTop_toBottomOf="@+id/login_et_email" />
 
@@ -117,11 +111,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/sf_ui_text_bold"
         android:text="Forgot password?"
         android:textColor="#61AA63"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/login_btn_loginbtn"
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
 
@@ -132,11 +126,11 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#61AA63"
+        android:fontFamily="@font/sf_ui_text_medium"
         android:text="Sign In"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_gl_altsignin"
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/login_et_password"
@@ -147,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_begin="585dp" />
 
     <View
         android:id="@+id/login_div_divider1"
@@ -164,12 +158,14 @@
         android:id="@+id/login_tv_altsignintext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/sf_ui_text_regular"
         android:text="Or continue with"
         android:textColor="#8D8D8D"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/login_gl_altsignin" />
+        app:layout_constraintTop_toBottomOf="@+id/login_btn_loginbtn" />
 
     <View
         android:id="@+id/login_div_divider2"
@@ -206,9 +202,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/sf_ui_text_regular"
         android:text="Don't have an account?"
         android:textColor="#8D8D8D"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toStartOf="parent"
@@ -219,9 +216,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
+        android:fontFamily="@font/sf_ui_text_bold"
         android:text="Sign up"
         android:textColor="#61AA63"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/login_tv_registertitle"
         app:layout_constraintStart_toEndOf="@+id/login_tv_registertitle" />
