@@ -1,6 +1,11 @@
 package com.mobdeve.s12.mco
 
-import java.util.Date
+enum class HasTransaction {
+    ACTIVE,
+    INACTIVE,
+    NONE
+}
 
-class BookModel(id: String, title: String, authors: ArrayList<String>, subjects: ArrayList<String>, publisher: String, coverResource: Int, shelfLocation: String, publishYear: Int) {
+class BookModel(val id: String, val title: String, val authors: ArrayList<String>, val subjects: ArrayList<String>, val publisher: String, val coverResource: Int, val shelfLocation: String, val publishYear: Int, val hasTransaction: HasTransaction) {
+
 }
