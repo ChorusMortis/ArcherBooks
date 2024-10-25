@@ -7,6 +7,7 @@ import com.mobdeve.s12.mco.databinding.ActivityHomeBinding
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var viewBinding : ActivityHomeBinding
+    private val books = BookGenerator.generateSampleBooks()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewBinding = ActivityHomeBinding.inflate(layoutInflater)

@@ -21,7 +21,7 @@
         android:maxHeight="182dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sample_book_1" />
+        app:srcCompat="@drawable/fourth_wing" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
