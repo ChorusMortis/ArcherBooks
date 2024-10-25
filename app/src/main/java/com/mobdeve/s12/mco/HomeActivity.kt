@@ -20,9 +20,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         // set logos and icons' image resources on the home screen
-        viewBinding.homeIvLogo.setImageResource(R.drawable.archerbooks_logo_green)
-        viewBinding.homeIvSearchIcon.setImageResource(R.drawable.search_solid)
+        viewBinding.homeIvLogo.setImageResource(R.drawable.archerbooks_logo_white)
+        viewBinding.homeIvSearchIcon.setImageResource(R.drawable.search_icon_green)
 
+        // set the recycler view and adapter
         this.forYouRecyclerView = viewBinding.homeRvForyou
         this.forYouCardAdapter = HomeForYouAdapter(books)
         this.forYouRecyclerView.adapter = this.forYouCardAdapter

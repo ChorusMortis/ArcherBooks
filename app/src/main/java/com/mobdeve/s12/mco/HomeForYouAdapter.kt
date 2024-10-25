@@ -8,11 +8,11 @@ import com.mobdeve.s12.mco.databinding.ItemForYouCardBinding
 class HomeForYouAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeForYouViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeForYouViewHolder {
-        val itemForYouCardBinding: ItemForYouCardBinding = ItemForYouCardBinding.inflate(
+        val bookForYouCardBinding: ItemForYouCardBinding = ItemForYouCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
-        val forYouCardViewHolder = HomeForYouViewHolder(itemForYouCardBinding)
+        val forYouCardViewHolder = HomeForYouViewHolder(bookForYouCardBinding)
 
         // TODO Later: Add on-click listener to the card that will launch an intent going to book details
         // TODO Later: Add on-click listener for Borrow -> should also launch an intent to book details but scrolled down
