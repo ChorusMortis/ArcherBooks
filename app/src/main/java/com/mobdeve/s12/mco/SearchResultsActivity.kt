@@ -38,6 +38,10 @@ class SearchResultsActivity : AppCompatActivity() {
 
         initSearchFilterButtons()
 
+        searchResultsBinding.searchresultsIbSearchbtn.setOnClickListener {
+            activeSortOption = SortOption.RELEVANCE
+        }
+
         searchResultsBinding.searchresultsIbSortbtn.setOnClickListener {
             showSortResultsDialog()
         }
