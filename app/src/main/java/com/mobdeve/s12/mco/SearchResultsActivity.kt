@@ -6,10 +6,11 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ActivitySearchResultsBinding
-import com.mobdeve.s12.mco.databinding.DialogSearchresultsSortDialogBinding
+import com.mobdeve.s12.mco.databinding.ComponentSearchresultsSortDialogBinding
 
 class SearchResultsActivity : AppCompatActivity() {
     companion object {
@@ -26,7 +27,7 @@ class SearchResultsActivity : AppCompatActivity() {
     private lateinit var searchFilterButtons : List<Button>
     private var activeSearchFilterBtn : Button? = null
 
-    private var sortDialogBinding : DialogSearchresultsSortDialogBinding? = null
+    private var sortDialogBinding : ComponentSearchresultsSortDialogBinding? = null
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
     private var activeSortOption : SortOption = SortOption.RELEVANCE
     private var tempSortOption : SortOption? = null
@@ -64,8 +65,8 @@ class SearchResultsActivity : AppCompatActivity() {
         searchFilterButtons.forEach { button ->
             button.setOnClickListener {
                 activeSearchFilterBtn?.let {
-                    it.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#C3C3C3"))
-                    button.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#61AA63"))
+                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.search_filter_button))
+                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.main_green))
                     activeSearchFilterBtn = button
                 }
             }
@@ -74,7 +75,7 @@ class SearchResultsActivity : AppCompatActivity() {
 
     private fun showSortResultsDialog() {
         val bottomSheetDialog = BottomSheetDialog(this)
-        sortDialogBinding = DialogSearchresultsSortDialogBinding.inflate(layoutInflater)
+        sortDialogBinding = ComponentSearchresultsSortDialogBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 
         sortDialogOptionButtons = listOf(
