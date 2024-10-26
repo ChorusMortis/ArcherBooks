@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/foryou_cl"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/foryoucard_cl"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="12dp"
@@ -10,7 +11,7 @@
     android:elevation="15dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/foryou_cv"
+        android:id="@+id/foryoucard_cv"
         android:layout_width="319dp"
         android:layout_height="274dp"
         android:elevation="15dp"
@@ -22,10 +23,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/frameLayout"
+            android:id="@+id/foryoucard_fl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/dark_glass_card">
+            android:background="@drawable/for_you_card_light">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline7"
@@ -35,7 +36,7 @@
                 app:layout_constraintGuide_percent="0.0" />
 
             <ImageView
-                android:id="@+id/foryoucard_iv_cover4"
+                android:id="@+id/foryoucard_iv_cover"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -53,20 +54,35 @@
                 android:id="@+id/foryoucard_cl_details"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="-4dp"
                 android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/foryoucard_iv_cover4"
+                app:layout_constraintBottom_toBottomOf="@+id/foryoucard_iv_cover"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/foryoucard_iv_cover4"
-                app:layout_constraintTop_toTopOf="@+id/foryoucard_iv_cover4">
+                app:layout_constraintStart_toEndOf="@+id/foryoucard_iv_cover"
+                app:layout_constraintTop_toTopOf="@+id/foryoucard_iv_cover">
+
+                <TextView
+                    android:id="@+id/foryoucard_light_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_text_medium"
+                    android:text="2015"
+                    android:textColor="@color/subtext"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/foryoucard_tv_title" />
 
                 <TextView
                     android:id="@+id/foryoucard_tv_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_ui_text_bold"
-                    android:text="The Will of the Many (2015)"
-                    android:textColor="@color/white"
+                    android:layout_marginTop="-1dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_ui_text_heavy"
+                    android:maxLines="3"
+                    android:text="The Will of the Many and I say many many more"
+                    android:textColor="@color/maintext"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -75,13 +91,15 @@
                     android:id="@+id/foryoucard_tv_authors"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/sf_ui_text_regular"
+                    android:maxLines="2"
                     android:text="by James Islington, Barbara Steinfield"
-                    android:textColor="@color/white"
+                    android:textColor="@color/subtext"
+                    android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/foryoucard_tv_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/foryoucard_light_tv_date" />
 
                 <Button
                     android:id="@+id/foryoucard_btn_borrow"
@@ -119,7 +137,7 @@
                 app:layout_constraintGuide_percent="0.81" />
 
             <TextView
-                android:id="@+id/foryoucard_tv_status4"
+                android:id="@+id/foryoucard_tv_status"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -134,7 +152,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/foryoucard_cl_details"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/foryoucard_iv_cover4" />
+                app:layout_constraintStart_toStartOf="@+id/foryoucard_iv_cover" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

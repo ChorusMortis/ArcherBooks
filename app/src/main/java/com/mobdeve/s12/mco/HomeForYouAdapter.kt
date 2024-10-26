@@ -3,16 +3,16 @@ package com.mobdeve.s12.mco
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.mobdeve.s12.mco.databinding.ItemForYouCardBinding
+import com.mobdeve.s12.mco.databinding.ItemForYouCardLightBinding
 
 class HomeForYouAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeForYouViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeForYouViewHolder {
-        val bookForYouCardBinding: ItemForYouCardBinding = ItemForYouCardBinding.inflate(
+        val itemForYouCardBinding: ItemForYouCardLightBinding = ItemForYouCardLightBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
-        val forYouCardViewHolder = HomeForYouViewHolder(bookForYouCardBinding)
+        val forYouCardViewHolder = HomeForYouViewHolder(itemForYouCardBinding)
 
         // TODO Later: Add on-click listener to the card that will launch an intent going to book details
         // TODO Later: Add on-click listener for Borrow -> should also launch an intent to book details but scrolled down
@@ -23,10 +23,10 @@ class HomeForYouAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeFo
 
     override fun onBindViewHolder(holder: HomeForYouViewHolder, position: Int) {
         holder.bindData(data[position])
+        holder.setFonts()
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
-
 }
