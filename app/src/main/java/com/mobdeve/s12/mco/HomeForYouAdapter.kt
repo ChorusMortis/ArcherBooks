@@ -23,7 +23,6 @@ class HomeForYouAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeFo
 
     override fun onBindViewHolder(holder: HomeForYouViewHolder, position: Int) {
         holder.bindData(data[position])
-        holder.setFonts()
     }
 
     override fun getItemCount(): Int {

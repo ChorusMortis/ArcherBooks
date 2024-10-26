@@ -21,7 +21,6 @@ class HomeMBBAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeMBBVi
 
     override fun onBindViewHolder(holder: HomeMBBViewHolder, position: Int) {
         holder.bindData(data[position])
-        holder.setFonts()
     }
 
     override fun getItemCount(): Int {

@@ -29,11 +29,4 @@ class HomeMBBViewHolder(private val viewBinding: ItemMbbLightBinding): RecyclerV
             // TODO MCO3: Handle status when transaction is active (Pick up by..., Return by..., Overdue..., Unavailable...)
 //        }
     }
-
-    fun setFonts() {
-        this.viewBinding.mbbTvTitle.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_bold)
-        this.viewBinding.mbbTvAuthors.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_regular)
-        this.viewBinding.mbbTvStatus.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_medium)
-
-    }
 }
