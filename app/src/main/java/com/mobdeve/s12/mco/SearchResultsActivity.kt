@@ -108,26 +108,10 @@ class SearchResultsActivity : AppCompatActivity() {
     }
 
     private fun highlightSortOption() {
-        // highlight chosen sort option immediately
-        tempSortOption?.let {
-            sortDialogOptionButtons?.forEach { (option, button) ->
-                if (option == tempSortOption) {
-                    button.setTypeface(null, Typeface.BOLD)
-                } else {
-                    button.setTypeface(null, Typeface.NORMAL)
-                }
-            }
-            // terminate since chosen sort option is not saved until user confirms
-            return
-        }
-
-        // highlight default/last chosen sort option
         sortDialogOptionButtons?.forEach { (option, button) ->
-            if (option == activeSortOption) {
-                button.setTypeface(null, Typeface.BOLD)
-            } else {
-                button.setTypeface(null, Typeface.NORMAL)
-            }
+            // highlight chosen sorting option, otherwise highlight default/last chosen sort option
+            val isBold = option == tempSortOption || (tempSortOption == null && option == activeSortOption)
+            button.setTypeface(null, if (isBold) Typeface.BOLD else Typeface.NORMAL)
         }
     }
 }
