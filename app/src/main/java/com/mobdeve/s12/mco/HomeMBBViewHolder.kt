@@ -23,7 +23,7 @@ class HomeMBBViewHolder(private val viewBinding: ItemMbbLightBinding): RecyclerV
 
 //        if(book.hasTransaction == HasTransaction.ACTIVE) { // Sample books are just all inactive at this point, so they are commented out in the meantime
             // TODO MCO3: Check the book in the current user's transactions list and get the transactionStatus under the Transaction class
-            this.viewBinding.mbbTvStatus.text = "Return by Oct 3, 2025" // TODO MCO3: Transfer this as an enum class to Transaction class
+            this.viewBinding.mbbTvStatus.text = "Return by Oct 3" // TODO MCO3: Transfer this as an enum class to Transaction class ?, Reminder to keep the date with month and day only
             this.viewBinding.mbbTvStatus.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_borrowed))
 //        } else {
             // TODO MCO3: Handle status when transaction is active (Pick up by..., Return by..., Overdue..., Unavailable...)
