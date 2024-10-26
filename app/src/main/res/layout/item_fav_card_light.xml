@@ -101,7 +101,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/favcard_light_tv_date" />
 
-                <ImageButton
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/favcard_btn_favorite"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="48dp"
