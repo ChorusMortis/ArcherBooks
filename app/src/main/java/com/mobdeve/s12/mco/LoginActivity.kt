@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
 
         addListenerRegisterHyperLink()
         addListenerSignInBtn()
+        addListenerSignInWithGoogleBtn()
     }
 
     private fun addListenerRegisterHyperLink() {
@@ -36,6 +37,15 @@ class LoginActivity : AppCompatActivity() {
         // TODO MCO3: Password validation (1) length, (2) characters
 
         viewBinding.loginBtnLoginbtn.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        })
+    }
+
+    private fun addListenerSignInWithGoogleBtn() {
+        // TODO MCO3: Add Google Handling
+        viewBinding.loginBtnSigningoogle.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
