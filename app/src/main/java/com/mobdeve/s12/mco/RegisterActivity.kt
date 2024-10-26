@@ -18,25 +18,9 @@ class RegisterActivity : AppCompatActivity() {
 
         addListenerLoginHyperLink()
         addListenerCreateAccountBtn()
-        setFonts()
     }
 
-    fun setFonts() {
-        viewBinding.registerTvRegistertitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerTvHeadertitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
-        viewBinding.registerTvHeadersubtitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerEtFullname.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerEtEmail.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerEtPassword.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerEtConfirmpassword.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerBtnRegisterbtn.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_medium)
-        viewBinding.registerTvAltsignuptext.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerBtnSignupgoogle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerTvLogintitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.registerTvLoginhyperlink.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
-    }
-
-    fun addListenerLoginHyperLink() {
+    private fun addListenerLoginHyperLink() {
         viewBinding.registerTvLoginhyperlink.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -44,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun addListenerCreateAccountBtn() {
+    private fun addListenerCreateAccountBtn() {
         // TODO MCO3: Get input, validate if email address is unique, and add account to database
         // TODO MCO3: Add password and confirm password validation
         // TODO MCO3: Add input validation (1) empty fields, (2) whitespaces, (3) invalid characters

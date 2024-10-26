@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/mainbackground_gradient_leftright">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_logintitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Sign in"
         android:textColor="@color/white"
         android:textSize="28sp"
@@ -37,12 +37,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_gl_cardviewtop" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_headertitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/sf_ui_text_bold"
+        app:fontFamily="@font/sf_ui_text_bold"
         android:text="Welcome Back"
         android:textColor="#61AA63"
         android:textSize="40sp"
@@ -52,12 +52,12 @@
         app:layout_constraintTop_toBottomOf="@+id/login_gl_cardviewtop"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_headersubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Login to your account"
         android:textColor="#61AA63"
         android:textSize="18sp"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_tv_headertitle" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_et_email"
         android:layout_width="325dp"
         android:layout_height="48dp"
@@ -74,7 +74,7 @@
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:hint="Email address"
         android:inputType="textEmailAddress"
         android:paddingStart="15dp"
@@ -86,7 +86,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_tv_headersubtitle" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_et_password"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -94,7 +94,7 @@
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingStart="15dp"
@@ -106,12 +106,12 @@
         app:layout_constraintStart_toStartOf="@+id/login_et_email"
         app:layout_constraintTop_toBottomOf="@+id/login_et_email" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_forgotpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/sf_ui_text_bold"
+        app:fontFamily="@font/sf_ui_text_bold"
         android:text="Forgot password?"
         android:textColor="#61AA63"
         android:textSize="14sp"
@@ -119,14 +119,14 @@
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn_loginbtn"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/rounded_button"
         android:backgroundTint="#61AA63"
-        android:fontFamily="@font/sf_ui_text_medium"
+        app:fontFamily="@font/sf_ui_text_medium"
         android:text="Sign In"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -154,12 +154,12 @@
         app:layout_constraintStart_toStartOf="@+id/login_btn_loginbtn"
         app:layout_constraintTop_toTopOf="@+id/login_tv_altsignintext" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_altsignintext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Or continue with"
         android:textColor="#8D8D8D"
         android:textSize="14sp"
@@ -178,7 +178,7 @@
         app:layout_constraintStart_toEndOf="@+id/login_tv_altsignintext"
         app:layout_constraintTop_toTopOf="@+id/login_tv_altsignintext" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn_signingoogle"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -187,7 +187,7 @@
         android:backgroundTint="@color/black"
         android:drawableStart="@drawable/google_logo"
         android:drawablePadding="15dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:gravity="center_vertical"
         android:paddingStart="64sp"
         android:paddingEnd="64sp"
@@ -197,12 +197,12 @@
         app:layout_constraintStart_toStartOf="@+id/login_btn_loginbtn"
         app:layout_constraintTop_toBottomOf="@+id/login_tv_altsignintext" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_registertitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Don't have an account?"
         android:textColor="#8D8D8D"
         android:textSize="14sp"
@@ -211,12 +211,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_btn_signingoogle" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_registerhyperlink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:fontFamily="@font/sf_ui_text_bold"
+        app:fontFamily="@font/sf_ui_text_bold"
         android:text="Sign up"
         android:textColor="#61AA63"
         android:textSize="14sp"

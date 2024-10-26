@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/mainbackground_gradient_leftright">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/register_tv_registertitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Sign up"
         android:textColor="@color/white"
         android:textSize="28sp"
@@ -37,12 +37,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/register_tv_headertitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:fontFamily="@font/sf_ui_text_bold"
+        app:fontFamily="@font/sf_ui_text_bold"
         android:text="Get Started"
         android:textColor="#61AA63"
         android:textSize="40sp"
@@ -50,12 +50,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/register_tv_headersubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Create your new account"
         android:textColor="#61AA63"
         android:textSize="18sp"
@@ -63,7 +63,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_tv_headertitle" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/register_et_fullname"
         android:layout_width="325dp"
         android:layout_height="48dp"
@@ -71,7 +71,7 @@
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:hint="Full name"
         android:inputType="text"
         android:paddingStart="15dp"
@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_tv_headersubtitle" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/register_et_email"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -91,7 +91,7 @@
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:hint="Email address"
         android:inputType="textEmailAddress"
         android:paddingStart="15dp"
@@ -103,7 +103,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_et_fullname"
         app:layout_constraintTop_toBottomOf="@+id/register_et_fullname" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/register_et_password"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -111,7 +111,7 @@
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingStart="15dp"
@@ -123,7 +123,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_et_email"
         app:layout_constraintTop_toBottomOf="@+id/register_et_email" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/register_et_confirmpassword"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -131,7 +131,7 @@
         android:background="@drawable/rounded_button_transparent"
         android:backgroundTint="#61AA63"
         android:ems="10"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:hint="Confirm password"
         android:inputType="textPassword"
         android:paddingStart="15dp"
@@ -143,7 +143,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_et_password"
         app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register_btn_registerbtn"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -176,7 +176,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
         app:layout_constraintTop_toTopOf="@+id/register_tv_altsignuptext" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/register_tv_altsignuptext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -199,7 +199,7 @@
         app:layout_constraintStart_toEndOf="@+id/register_tv_altsignuptext"
         app:layout_constraintTop_toTopOf="@+id/register_tv_altsignuptext" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register_btn_signupgoogle"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -208,7 +208,7 @@
         android:backgroundTint="@color/black"
         android:drawableStart="@drawable/google_logo"
         android:drawablePadding="15dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:gravity="center_vertical"
         android:paddingStart="64sp"
         android:paddingEnd="64sp"
@@ -218,7 +218,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
         app:layout_constraintTop_toBottomOf="@+id/register_tv_altsignuptext" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/register_tv_logintitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -231,7 +231,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_btn_signupgoogle" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/register_tv_loginhyperlink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
