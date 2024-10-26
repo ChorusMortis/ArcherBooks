@@ -17,6 +17,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var forYouCardAdapter: HomeForYouAdapter
     private lateinit var mbbRecyclerView: RecyclerView
     private lateinit var mbbAdapter: HomeMBBAdapter
+    private lateinit var favRecyclerView: RecyclerView
+    private lateinit var favAdapter: HomeFavAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewBinding = ActivityHomeBinding.inflate(layoutInflater)
@@ -33,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
         // set recycler views
         setForYouRecyclerView()
         setMBBRecyclerView()
+        setFavRecyclerView()
     }
 
     private fun setImageResources() {
@@ -70,5 +73,16 @@ class HomeActivity : AppCompatActivity() {
         val mbbLinearLayoutManager = LinearLayoutManager(this)
         mbbLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         this.mbbRecyclerView.layoutManager = mbbLinearLayoutManager
+    }
+
+    private fun setFavRecyclerView() {
+        val sampleFavBooks = books.shuffled().take(1)
+
+        this.favRecyclerView = viewBinding.homeRvFav
+        this.favAdapter = HomeFavAdapter(ArrayList(sampleFavBooks))
+        this.favRecyclerView.adapter = this.favAdapter
+        val favLinearLayoutManager = LinearLayoutManager(this)
+        favLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        this.favRecyclerView.layoutManager = favLinearLayoutManager
     }
 }

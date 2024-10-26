@@ -1,8 +1,6 @@
 package com.mobdeve.s12.mco
 
-import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ItemForYouCardLightBinding
 
@@ -28,5 +26,9 @@ class HomeForYouViewHolder(private val viewBinding: ItemForYouCardLightBinding):
         } else {
             // TODO MCO3: Handle status when transaction is active (Pick up by..., Return by..., Overdue..., Unavailable...)
         }
+
+        //        if(book in current user's favorites list) -> select toggled on favorite button
+        //        else -> select toggled off
+        this.viewBinding.foryoucardBtnFavorite.setImageResource(R.drawable.favorite_btn_toggled_off)
     }
 }
