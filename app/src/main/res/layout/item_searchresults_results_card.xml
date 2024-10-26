@@ -11,7 +11,7 @@
         android:layout_height="274dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/for_you_background" />
+        app:srcCompat="@drawable/for_you_card_light" />
 
     <ImageView
         android:id="@+id/itm_searchresults_iv_bookcover"

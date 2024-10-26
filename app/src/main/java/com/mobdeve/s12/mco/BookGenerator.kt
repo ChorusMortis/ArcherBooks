@@ -8,7 +8,7 @@ class BookGenerator {
                 "12F 15D", 2021, HasTransaction.NONE))
             data.add(BookModel("/works/OL261169W", "How the Grinch Stole Christmas!", arrayListOf("Dr. Seuss,Rik Mayall"), arrayListOf("Christmas stories.sh","Pictorial works","Juvenile fiction","Children's stories.sh","Christmas stories","Christmas","Behavior", "fiction","Christmas", "fiction","Children's fiction","Stories in rhyme"), "Random House Children's Books", R.drawable.grinch,
             "8F 60F", 1957, HasTransaction.INACTIVE))
-            data.add(BookModel("/works/OL29226517W", "Fourth Wing", arrayListOf("Rebecca Yarros"), arrayListOf("Fantasía","Fantasy","ficción","ficciones","Fiction","Romántica","Romance","Romántico","joven adulto","Young adult fiction"), "‎Entangled: Red Tower Books (May 2, 2023)", R.drawable.tower_of_babel,
+            data.add(BookModel("/works/OL29226517W", "Fourth Wing", arrayListOf("Rebecca Yarros"), arrayListOf("Fantasía","Fantasy","ficción","ficciones","Fiction","Romántica","Romance","Romántico","joven adulto","Young adult fiction"), "‎Entangled: Red Tower Books (May 2, 2023)", R.drawable.fourth_wing,
                 "13F 38T", 2023, HasTransaction.NONE))
             data.add(BookModel("/works/OL8115854W", "Il mio nome è Stilton, Geronimo Stilton", arrayListOf("Elisabetta Dami"), arrayListOf("Juvenile fiction","Mice","Journalists","Fiction","Humorous stories","Souris","Romans, nouvelles, etc. pour la jeunesse","Journalistes","Action & Adventure","Animals"), "Turtleback Books Distributed by Demco Media", R.drawable.geronimo_stilton,
                 "8F 31W", 1999, HasTransaction.NONE))
