@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/home_iv_logo"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/archerbooks_logo_green" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/home_et_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/home_et_search">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/home_iv_search_icon"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
@@ -79,13 +79,13 @@
                     app:srcCompat="@drawable/search_icon_white" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_tv_for_you_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/sf_ui_text_bold"
+                android:fontFamily="@font/sf_ui_text_medium"
                 android:text="For You"
                 android:textColor="@color/main_green"
                 android:textSize="20sp"
@@ -103,13 +103,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_tv_for_you_label" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/home_tv_mbb_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/sf_ui_text_bold"
+                android:fontFamily="@font/sf_ui_text_medium"
                 android:text="My Borrowed Books"
                 android:textColor="@color/main_green"
                 android:textSize="20sp"

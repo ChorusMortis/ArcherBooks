@@ -29,12 +29,4 @@ class HomeForYouViewHolder(private val viewBinding: ItemForYouCardLightBinding):
             // TODO MCO3: Handle status when transaction is active (Pick up by..., Return by..., Overdue..., Unavailable...)
         }
     }
-
-    fun setFonts() {
-        this.viewBinding.foryoucardTvTitle.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_bold)
-        this.viewBinding.foryoucardTvAuthors.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_regular)
-        this.viewBinding.foryoucardBtnBorrow.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_regular)
-        this.viewBinding.foryoucardTvStatus.typeface = ResourcesCompat.getFont(viewBinding.root.context, R.font.sf_ui_text_medium)
-
-    }
 }

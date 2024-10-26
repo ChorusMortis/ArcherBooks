@@ -23,9 +23,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
 
-        // set font styles
-        setFonts()
-
         // add button listeners
         addListenerSearchBtn()
         clearFocus()
@@ -36,12 +33,6 @@ class HomeActivity : AppCompatActivity() {
         // set recycler views
         setForYouRecyclerView()
         setMBBRecyclerView()
-    }
-
-    private fun setFonts() {
-        viewBinding.homeEtSearch.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.homeTvForYouLabel.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
-        viewBinding.homeTvMbbLabel.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
     }
 
     private fun setImageResources() {
