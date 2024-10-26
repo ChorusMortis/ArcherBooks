@@ -47,7 +47,6 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.homeBtnSearch.setOnClickListener {
             val intent = Intent(this, SearchResultsActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 

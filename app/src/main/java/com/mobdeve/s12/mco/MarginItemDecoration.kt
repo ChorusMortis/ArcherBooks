@@ -1,10 +1,12 @@
 package com.mobdeve.s12.mco
 
 import android.graphics.Rect
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class MarginItemDecoration(private val spaceSize: Int) : RecyclerView.ItemDecoration() {
+class MarginItemDecoration(private val displayMetrics: DisplayMetrics, private val spaceSize: Int) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -36,7 +38,7 @@ class MarginItemDecoration(private val spaceSize: Int) : RecyclerView.ItemDecora
             }
 
             if (position == itemCount - 1) {
-                outRect.bottom = 0
+                outRect.bottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, spaceSize.toFloat(), displayMetrics).toInt()
             }
         }
     }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F7"
+    android:background="#F3F3F3"
     android:focusableInTouchMode="true"
     tools:context=".HomeActivity">
 
@@ -13,6 +13,7 @@
         android:id="@+id/home_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -42,7 +43,6 @@
                 android:layout_marginTop="20dp"
                 android:autoText="false"
                 android:background="@drawable/search_bar_shape"
-                app:fontFamily="@font/sf_ui_text_regular"
                 android:hint="Search Archer Books"
                 android:paddingStart="16dp"
                 android:paddingTop="12dp"
@@ -52,6 +52,7 @@
                 android:textColor="@color/main_green"
                 android:textColorHint="#838383"
                 android:textSize="12sp"
+                app:fontFamily="@font/sf_ui_text_regular"
                 app:layout_constraintEnd_toStartOf="@+id/home_btn_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_iv_logo" />
@@ -85,10 +86,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                app:fontFamily="@font/sf_ui_text_medium"
                 android:text="For You"
                 android:textColor="@color/main_green"
                 android:textSize="20sp"
+                app:fontFamily="@font/sf_ui_text_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_et_search" />
 
@@ -109,10 +110,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                app:fontFamily="@font/sf_ui_text_medium"
                 android:text="My Borrowed Books"
                 android:textColor="@color/main_green"
                 android:textSize="20sp"
+                app:fontFamily="@font/sf_ui_text_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_rv_foryou" />
 
@@ -133,10 +134,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                app:fontFamily="@font/sf_ui_text_medium"
                 android:text="My Favorites"
                 android:textColor="@color/main_green"
                 android:textSize="20sp"
+                app:fontFamily="@font/sf_ui_text_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_rv_mbb" />
 
@@ -156,4 +157,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <include
+        android:id="@+id/home_navbar"
+        layout="@layout/component_nav_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

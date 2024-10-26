@@ -13,7 +13,7 @@ import com.mobdeve.s12.mco.databinding.DialogSearchresultsSortDialogBinding
 
 class SearchResultsActivity : AppCompatActivity() {
     companion object {
-        private const val VERTICAL_SPACE = 25
+        private const val VERTICAL_SPACE = 24
     }
 
     private enum class SortOption {
@@ -48,7 +48,7 @@ class SearchResultsActivity : AppCompatActivity() {
 
         searchResultsBinding.searchresultsRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
         searchResultsBinding.searchresultsRvResults.layoutManager = LinearLayoutManager(this)
-        searchResultsBinding.searchresultsRvResults.addItemDecoration(MarginItemDecoration(VERTICAL_SPACE))
+        searchResultsBinding.searchresultsRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
     }
 
     private fun initSearchFilterButtons() {
