@@ -34,12 +34,12 @@
         app:layout_constraintTop_toBottomOf="@+id/main_iv_landingimage"
         app:srcCompat="@drawable/archerbooks_logo_white" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/main_tv_slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:gravity="center_horizontal"
         android:text="Book borrowing made easy"
         android:textAlignment="center"
@@ -57,13 +57,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.72" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_btn_register"
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button_transparent"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Create an Account"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -73,12 +73,12 @@
         app:layout_constraintStart_toStartOf="@+id/main_btn_login"
         app:layout_constraintTop_toBottomOf="@+id/main_btn_login" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/main_btn_login"
         android:layout_width="325dp"
         android:layout_height="55dp"
         android:background="@drawable/rounded_button"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Login"
         android:textAllCaps="false"
         android:textColor="#61AA63"

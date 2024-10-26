@@ -18,25 +18,9 @@ class LoginActivity : AppCompatActivity() {
 
         addListenerRegisterHyperLink()
         addListenerSignInBtn()
-        setFonts()
-
     }
 
-    fun setFonts() {
-        viewBinding.loginTvLogintitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginTvHeadertitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
-        viewBinding.loginTvHeadersubtitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginEtEmail.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginEtPassword.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginTvForgotpassword.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
-        viewBinding.loginBtnLoginbtn.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_medium)
-        viewBinding.loginTvAltsignintext.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginBtnSigningoogle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginTvRegistertitle.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_regular)
-        viewBinding.loginTvRegisterhyperlink.typeface = ResourcesCompat.getFont(this, R.font.sf_ui_text_bold)
-    }
-
-    fun addListenerRegisterHyperLink() {
+    private fun addListenerRegisterHyperLink() {
         // go to register activity when user taps on "Sign up" text
         viewBinding.loginTvRegisterhyperlink.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
@@ -45,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun addListenerSignInBtn() {
+    private fun addListenerSignInBtn() {
         // TODO MCO3: Get input, validate if email address is unique, and add account to database
         // TODO MCO3: Add password and confirm password validation
         // TODO MCO3: Add input validation (1) empty fields, (2) whitespaces, (3) invalid characters
