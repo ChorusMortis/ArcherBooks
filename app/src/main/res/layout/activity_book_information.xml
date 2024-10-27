@@ -1,9 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BookInformationActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_booktitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            app:fontFamily="@font/sf_ui_text_heavy"
+            android:text="Subprime Attention Crisis: Advertising and the Time Bomb at the Heart of the Internet"
+            android:textColor="@color/main_green"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_bookyear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fontFamily="@font/sf_ui_text_medium"
+            android:text="2020"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/bookinfo_tv_booktitle"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_booktitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_authors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fontFamily="@font/sf_ui_text_regular"
+            android:text="by Tim Hwang"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/bookinfo_tv_bookyear"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_bookyear" />
+
+        <ImageView
+            android:id="@+id/bookinfo_iv_bookcover"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:adjustViewBounds="true"
+            android:clipToOutline="true"
+            android:elevation="15dp"
+            android:outlineProvider="bounds"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_authors"
+            app:srcCompat="@drawable/hunger_games" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_bookstatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/book_card_status"
+            android:backgroundTint="@color/book_available"
+            app:fontFamily="@font/sf_ui_text_medium"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Book Available"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_iv_bookcover" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_subjectstitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Subjects"
+            android:textColor="@color/main_green"
+            android:textSize="16sp"
+            app:fontFamily="@font/sf_ui_text_bold"
+            app:layout_constraintStart_toStartOf="@+id/bookinfo_tv_bookstatus"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_bookstatus" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_subjects"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:fontFamily="@font/sf_ui_text_regular"
+            android:text="&quot;English Fantasy fiction&quot;,  &quot;Textual Criticism&quot;,  &quot;Middle Earth (Imaginary place)&quot;,  &quot;History and criticism&quot;,  &quot;Authorship&quot;,  &quot;British and irish fiction (fictional works by one author)&quot;,  &quot;Fiction, fantasy, general&quot;,  &quot;Lord of the rings (Tolkien, J.R.R.)&quot;,  &quot;Tolkien, j, r. r. (john ronald ruel), 1892-1973&quot;"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_subjectstitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_shelflocationtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:fontFamily="@font/sf_ui_text_bold"
+            android:text="Shelf Location"
+            android:textColor="@color/main_green"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/bookinfo_tv_subjectstitle"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_subjects" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookinfo_tv_shelflocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="14th flr. 43B"
+            android:textSize="14sp"
+            app:fontFamily="@font/sf_ui_text_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/bookinfo_tv_shelflocationtitle"
+            app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_shelflocationtitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
