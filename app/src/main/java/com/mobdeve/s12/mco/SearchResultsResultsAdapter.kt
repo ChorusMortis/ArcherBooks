@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardLightBinding
-import com.mobdeve.s12.mco.databinding.ItemSearchresultsResultsCardBinding
 
 class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : RecyclerView.Adapter<SearchResultsResultsViewHolder>() {
     override fun onCreateViewHolder(
