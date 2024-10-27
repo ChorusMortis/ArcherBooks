@@ -36,7 +36,6 @@
         android:textColor="@color/main_green"
         android:textColorHint="#838383"
         android:textSize="12sp"
-        app:fontFamily="@font/sf_ui_text_regular"
         app:layout_constraintEnd_toStartOf="@+id/searchresults_ib_searchbtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchresults_tv_title" />
