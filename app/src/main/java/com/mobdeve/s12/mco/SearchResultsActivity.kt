@@ -1,7 +1,6 @@
 package com.mobdeve.s12.mco
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.Button
@@ -53,7 +52,7 @@ class SearchResultsActivity : AppCompatActivity() {
     }
 
     private fun initSearchFilterButtons() {
-        searchFilterButtons = listOf<Button>(
+        searchFilterButtons = listOf(
             searchResultsBinding.searchresultsBtnFiltermatchall,
             searchResultsBinding.searchresultsBtnFiltermatchtitle,
             searchResultsBinding.searchresultsBtnFiltermatchauthor,
@@ -86,7 +85,7 @@ class SearchResultsActivity : AppCompatActivity() {
 
         sortDialogOptionButtons!!.forEach { (option, button) ->
             button.setOnClickListener {
-                // highlight the selected sort option but don't save it
+                // highlight the selected sort option but don't save it yet (user must confirm)
                 tempSortOption = option
                 highlightSortOption()
             }
@@ -99,7 +98,7 @@ class SearchResultsActivity : AppCompatActivity() {
         }
 
         sortDialogBinding!!.dialogSearchresultsBtnConfirmbtn.setOnClickListener {
-            // if user has selected a new sorting option, save it
+            // save selected sorting option after user hits confirm button
             tempSortOption?.let {
                 activeSortOption = it
             }
@@ -114,7 +113,7 @@ class SearchResultsActivity : AppCompatActivity() {
 
     private fun highlightSortOption() {
         sortDialogOptionButtons?.forEach { (option, button) ->
-            // highlight chosen sorting option, otherwise highlight default/last chosen sort option
+            // highlight newly selected sorting option, otherwise highlight default/last chosen sort option
             val isBold = option == tempSortOption || (tempSortOption == null && option == activeSortOption)
             button.setTypeface(null, if (isBold) Typeface.BOLD else Typeface.NORMAL)
         }
