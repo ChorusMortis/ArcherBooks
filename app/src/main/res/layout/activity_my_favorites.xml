@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MyFavoritesActivity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/myfavs_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:fontFamily="@font/sf_ui_text_regular"
+        app:fontFamily="@font/sf_ui_text_regular"
         android:text="My Favorites"
         android:textColor="@color/main_green"
         android:textSize="24sp"
