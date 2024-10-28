@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/dialog_mytrans_iv_headerbackground"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:background="@color/main_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_mytrans_tv_headertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sort by"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:fontFamily="@font/sf_ui_text_bold"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_mytrans_iv_headerbackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_mytrans_btn_filtertitle"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:stateListAnimator="@null"
+        android:text="Title"
+        android:textAllCaps="false"
+        app:fontFamily="@font/sf_ui_text_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_mytrans_iv_headerbackground" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_mytrans_btn_filterauthor"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:stateListAnimator="@null"
+        android:text="Author"
+        android:textAllCaps="false"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_mytrans_btn_filtertitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_mytrans_btn_filternewest"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        app:fontFamily="@font/sf_ui_text_regular"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:stateListAnimator="@null"
+        android:text="Newest"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_mytrans_btn_filterauthor" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_mytrans_btn_filteroldest"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        app:fontFamily="@font/sf_ui_text_regular"
+        android:gravity="start|center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:stateListAnimator="@null"
+        android:text="Oldest"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_mytrans_btn_filternewest" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_mytrans_btn_confirmbtn"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/small_btn_radius"
+        android:backgroundTint="@color/main_green"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:fontFamily="@font/sf_ui_text_semibold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_mytrans_btn_filteroldest" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,18 +6,163 @@
     android:layout_height="match_parent"
     tools:context=".MyTransactionsActivity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/mytrans_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/sf_ui_text_regular"
         android:text="My Transactions"
         android:textColor="@color/main_green"
         android:textSize="24sp"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/mytrans_ib_sortbtn"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mytrans_ib_sortbtn" />
+
+    <ImageButton
+        android:id="@+id/mytrans_ib_sortbtn"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/small_btn_radius"
+        android:backgroundTint="@color/main_green"
+        android:padding="4dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/filter_icon"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@+id/mytrans_hsv_filterbuttonsscrollview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mytrans_ib_sortbtn">
+
+        <LinearLayout
+            android:id="@+id/mytrans_ll_filterbuttonslayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchall"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#61AA63"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="All"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchpending"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#C3C3C3"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Pending"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchpickedup"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#C3C3C3"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Picked Up"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchreturned"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#C3C3C3"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Returned"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchcancelled"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#C3C3C3"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Cancelled"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchpickupmissed"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#C3C3C3"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Missed Pickup"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/mytrans_btn_filtermatchreturnmissed"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/filter_rounded_btn"
+                android:backgroundTint="#C3C3C3"
+                android:minWidth="0dip"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Missed Return"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mytrans_rv_transactions"
@@ -29,7 +174,7 @@
         app:layout_constraintBottom_toTopOf="@id/mytrans_navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mytrans_tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/mytrans_hsv_filterbuttonsscrollview" />
 
     <include
         layout="@layout/component_nav_bar"
