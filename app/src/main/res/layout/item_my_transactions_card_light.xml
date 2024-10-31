@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/mytransactionscard_gl_statustop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fourth_wing" />
+            app:srcCompat="@drawable/book_wizard_of_oz" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mytransactionscard_tv_date"

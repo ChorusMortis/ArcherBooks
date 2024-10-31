@@ -68,7 +68,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookinfo_tv_authors"
-                app:srcCompat="@drawable/hunger_games" />
+                app:srcCompat="@drawable/book_hunger_games" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bookinfo_tv_bookstatus"
