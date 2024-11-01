@@ -19,8 +19,8 @@
     <color name="text_over_gray_bg">#707070</color>
 
     <color name="book_available">#61AA63</color>
-    <color name="book_unavailable">#E91928</color>
-    <color name="book_borrowed">#E91928</color>
+    <color name="book_unavailable">#121212</color>
+    <color name="book_borrowed">#D10000</color>
 
     <color name="search_filter_button">#C3C3C3</color>
 </resources>

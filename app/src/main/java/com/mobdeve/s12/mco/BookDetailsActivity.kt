@@ -8,6 +8,7 @@ import android.graphics.Shader
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 
 
 class BookDetailsActivity : AppCompatActivity() {
@@ -57,14 +58,18 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private fun setStatusIcon(status: String) {
-        val statusResource : Int = if(status == "Book Available") {
-            R.drawable.icon_available
+        val statusResource : Int
+
+        if(status == "Book Available") {
+            statusResource = R.drawable.icon_available
         } else if(status == "Book Unavailable") {
-            R.drawable.icon_unavailable
+            statusResource = R.drawable.icon_unavailable
         } else if(status == "Overdue") {
-            R.drawable.icon_overdue
+            statusResource = R.drawable.icon_overdue
+            viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this, R.color.book_borrowed))
         } else {
-            R.drawable.icon_timer
+            statusResource = R.drawable.icon_timer
+            viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this, R.color.book_borrowed))
         }
         viewBinding.bookDetailsIvStatus.setImageResource(statusResource)
     }
