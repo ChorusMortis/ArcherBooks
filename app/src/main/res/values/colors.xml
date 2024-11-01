@@ -14,7 +14,9 @@
 
     <color name="maintext">#FFFFFF</color>
     <color name="subtext">#CCFFFFFF</color>
-    <color name="new_text_color">#909090</color>
+    <color name="gray_bg">#F0F0F0</color>
+    <color name="text_over_white_bg">#909090</color>
+    <color name="text_over_gray_bg">#707070</color>
 
     <color name="book_available">#61AA63</color>
     <color name="book_unavailable">#E91928</color>

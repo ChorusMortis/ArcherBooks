@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF">
+    android:background="@color/gray_bg">
 
     <ScrollView
         android:id="@+id/book_details_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,26 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/book_details_tv_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/sf_ui_text_bold"
-                android:text="Book Details"
-                android:textColor="@color/main_green"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/book_details_cl_cover"
                 android:layout_width="match_parent"
                 android:layout_height="315dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_details_tv_label">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/book_details_iv_cover"
@@ -85,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:background="@color/maintext"
+                android:background="@color/gray_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -121,11 +110,26 @@
                     android:maxLines="1"
                     android:text="by J.K. Rowling"
                     android:textAlignment="center"
-                    android:textColor="@color/new_text_color"
+                    android:textColor="@color/text_over_gray_bg"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/book_details_tv_title" />
+
+                <TextView
+                    android:id="@+id/book_details_tv_year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_ui_text_medium"
+                    android:maxLines="1"
+                    android:text="2020"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_over_gray_bg"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
+                    app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/book_details_tv_authors" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/book_details_cl_side_info"
@@ -135,7 +139,7 @@
                     android:background="@drawable/style_book_details_side_info_radius"
                     app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
-                    app:layout_constraintTop_toBottomOf="@+id/book_details_tv_authors">
+                    app:layout_constraintTop_toBottomOf="@+id/book_details_tv_year">
 
                     <TextView
                         android:id="@+id/book_details_tv_shelf_location"
@@ -144,7 +148,7 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/sf_ui_text_medium"
                         android:text="14th flr. 43B"
-                        android:textColor="@color/new_text_color"
+                        android:textColor="@color/text_over_white_bg"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +167,7 @@
                         android:id="@+id/separator1"
                         android:layout_width="2dp"
                         android:layout_height="0dp"
-                        android:background="@color/new_text_color"
+                        android:background="@color/text_over_white_bg"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintHeight_percent="0.5"
@@ -192,7 +196,7 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/sf_ui_text_medium"
                         android:text="Book Available"
-                        android:textColor="@color/new_text_color"
+                        android:textColor="@color/text_over_white_bg"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="@+id/book_details_iv_status"
                         app:layout_constraintStart_toStartOf="@+id/book_details_iv_status"
@@ -209,7 +213,7 @@
                         android:id="@+id/separator2"
                         android:layout_width="2dp"
                         android:layout_height="0dp"
-                        android:background="@color/new_text_color"
+                        android:background="@color/text_over_white_bg"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline2"
                         app:layout_constraintHeight_percent="0.5"
@@ -238,7 +242,7 @@
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/sf_ui_text_medium"
                         android:text="532 pages"
-                        android:textColor="@color/new_text_color"
+                        android:textColor="@color/text_over_white_bg"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -265,11 +269,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/sf_ui_text_medium"
+                    android:fontFamily="@font/sf_ui_text_regular"
                     android:lineSpacingExtra="8sp"
                     android:text="Turning the envelope over, his hand trembling, Harry saw a purple wax seal bearing a coat of arms; a lion, an eagle, a badger and a snake surrounding a large letter 'H'. Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin! Having become classics of our time, the Harry Potter eBooks never fail to bring comfort and escapism. With their message of hope, belonging and the enduring power of truth and love, the story of the Boy Who Lived continues to delight generations of new readers."
                     android:textAlignment="textStart"
-                    android:textColor="#909090"
+                    android:textColor="@color/text_over_gray_bg"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
@@ -279,4 +283,46 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/book_details_bottom_panel"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/book_details_ib_fav_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#FFE7D8"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_favorite_outlined" />
+
+        <Button
+            android:id="@+id/book_details_ib_borrow_btn"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/main_green"
+            android:fontFamily="@font/sf_ui_text_medium"
+            android:text="Borrow"
+            android:textAllCaps="false"
+            android:textColor="@color/maintext"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/book_details_ib_fav_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
