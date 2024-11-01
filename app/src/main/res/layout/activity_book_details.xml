@@ -121,7 +121,7 @@
                     android:maxLines="1"
                     android:text="by J.K. Rowling"
                     android:textAlignment="center"
-                    android:textColor="#909090"
+                    android:textColor="@color/new_text_color"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
@@ -137,11 +137,33 @@
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/book_details_tv_authors">
 
+                    <TextView
+                        android:id="@+id/book_details_tv_shelf_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/sf_ui_text_medium"
+                        android:text="14th flr. 43B"
+                        android:textColor="@color/new_text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+
+                    <ImageView
+                        android:id="@+id/book_details_iv_shelf_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
+                        app:layout_constraintEnd_toStartOf="@+id/separator1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:srcCompat="@drawable/icon_info" />
+
                     <View
                         android:id="@+id/separator1"
                         android:layout_width="2dp"
                         android:layout_height="0dp"
-                        android:background="#D0D0D0"
+                        android:background="@color/new_text_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintHeight_percent="0.5"
@@ -154,6 +176,28 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.33" />
 
+                    <ImageView
+                        android:id="@+id/book_details_iv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
+                        app:layout_constraintEnd_toStartOf="@+id/separator2"
+                        app:layout_constraintStart_toEndOf="@+id/separator1"
+                        app:srcCompat="@drawable/icon_available" />
+
+                    <TextView
+                        android:id="@+id/book_details_tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/sf_ui_text_medium"
+                        android:text="Book Available"
+                        android:textColor="@color/new_text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/book_details_iv_status"
+                        app:layout_constraintStart_toStartOf="@+id/book_details_iv_status"
+                        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/horizontal_guideline"
                         android:layout_width="wrap_content"
@@ -165,7 +209,7 @@
                         android:id="@+id/separator2"
                         android:layout_width="2dp"
                         android:layout_height="0dp"
-                        android:background="#D0D0D0"
+                        android:background="@color/new_text_color"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline2"
                         app:layout_constraintHeight_percent="0.5"
@@ -179,23 +223,27 @@
                         app:layout_constraintGuide_percent="0.67" />
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/book_details_iv_pages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
-                        app:layout_constraintEnd_toStartOf="@+id/separator2"
-                        app:layout_constraintStart_toEndOf="@+id/separator1"
-                        app:srcCompat="@drawable/icon_available" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/separator2"
+                        app:srcCompat="@drawable/icon_pages" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/book_details_tv_pages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/sf_ui_text_medium"
-                        android:text="Book Available"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView"
-                        app:layout_constraintStart_toStartOf="@+id/imageView"
+                        android:text="532 pages"
+                        android:textColor="@color/new_text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
                         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -218,6 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/sf_ui_text_medium"
+                    android:lineSpacingExtra="8sp"
                     android:text="Turning the envelope over, his hand trembling, Harry saw a purple wax seal bearing a coat of arms; a lion, an eagle, a badger and a snake surrounding a large letter 'H'. Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin! Having become classics of our time, the Harry Potter eBooks never fail to bring comfort and escapism. With their message of hope, belonging and the enduring power of truth and love, the story of the Boy Who Lived continues to delight generations of new readers."
                     android:textAlignment="textStart"
                     android:textColor="#909090"
