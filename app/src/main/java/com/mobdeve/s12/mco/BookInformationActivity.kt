@@ -30,7 +30,7 @@ class BookInformationActivity : AppCompatActivity() {
         viewBinding.bookinfoTvBooktitle.text = this.intent.getStringExtra(TITLE_KEY)
         viewBinding.bookinfoTvBookyear.text = this.intent.getStringExtra(YEAR_PUBLISHED_KEY)
         viewBinding.bookinfoTvAuthors.text = this.intent.getStringExtra(AUTHORS_KEY)
-        viewBinding.bookinfoIvBookcover.setImageResource(this.intent.getIntExtra(COVER_KEY, R.drawable.grinch)) // TODO: Create a default no cover image
+        viewBinding.bookinfoIvBookcover.setImageResource(this.intent.getIntExtra(COVER_KEY, R.drawable.book_grinch)) // TODO: Create a default no cover image
         viewBinding.bookinfoTvBookstatus.text = this.intent.getStringExtra(STATUS_KEY)
 
         val arrSubjects = this.intent.getStringArrayListExtra(SUBJECTS_KEY)

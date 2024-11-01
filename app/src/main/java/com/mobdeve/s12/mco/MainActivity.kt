@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addListenerLoginBtn() {
         viewBinding.mainBtnLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, BookDetailsActivity::class.java)
             startActivity(intent)
         }
     }

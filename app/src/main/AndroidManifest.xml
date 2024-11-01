@@ -25,6 +25,9 @@
             android:name=".BookInformationActivity"
             android:exported="false" />
         <activity
+            android:name=".BookDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchResultsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
