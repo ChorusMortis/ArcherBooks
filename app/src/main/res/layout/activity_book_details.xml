@@ -69,6 +69,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <ImageButton
+                tools:targetApi="29"
+                android:id="@+id/book_details_back_btn"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:src="@drawable/icon_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/book_details_cl_info"
                 android:layout_width="match_parent"
@@ -303,7 +316,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
             android:background="@drawable/rounded_button"
-            android:backgroundTint="#FFE7D8"
+            android:backgroundTint="@color/gray_bg"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

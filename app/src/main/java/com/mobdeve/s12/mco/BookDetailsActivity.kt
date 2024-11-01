@@ -33,6 +33,7 @@ class BookDetailsActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         setDataOnViews()
+        addListenerAndApiLimitBackBtn()
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
@@ -66,6 +67,18 @@ class BookDetailsActivity : AppCompatActivity() {
             R.drawable.icon_timer
         }
         viewBinding.bookDetailsIvStatus.setImageResource(statusResource)
+    }
+
+    private fun addListenerAndApiLimitBackBtn() {
+        viewBinding.bookDetailsBackBtn.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            viewBinding.bookDetailsBackBtn.visibility = View.VISIBLE
+        } else {
+            viewBinding.bookDetailsBackBtn.visibility = View.GONE
+        }
     }
 
 }
