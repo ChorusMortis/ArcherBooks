@@ -33,14 +33,15 @@ class HomeForYouAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeFo
 
     private fun addListenerCard(holder : HomeForYouViewHolder, itemForYouCardBinding: ItemForYouCardLightBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
-            val intent = Intent(holder.itemView.context, BookInformationActivity::class.java)
-            intent.putExtra(BookInformationActivity.TITLE_KEY, itemForYouCardBinding.foryoucardTvTitle.text)
-            intent.putExtra(BookInformationActivity.YEAR_PUBLISHED_KEY, itemForYouCardBinding.foryoucardLightTvDate.text)
-            intent.putExtra(BookInformationActivity.AUTHORS_KEY, itemForYouCardBinding.foryoucardTvAuthors.text)
-            intent.putExtra(BookInformationActivity.COVER_KEY, data[holder.bindingAdapterPosition].coverResource)
-            intent.putExtra(BookInformationActivity.STATUS_KEY, itemForYouCardBinding.foryoucardTvStatus.text)
-            intent.putExtra(BookInformationActivity.SUBJECTS_KEY, data[holder.bindingAdapterPosition].subjects)
-            intent.putExtra(BookInformationActivity.SHELF_LOCATION_KEY, data[holder.bindingAdapterPosition].shelfLocation)
+            val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
+            intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
+            intent.putExtra(BookDetailsActivity.YEAR_PUBLISHED_KEY, data[holder.bindingAdapterPosition].publishYear)
+            intent.putExtra(BookDetailsActivity.AUTHORS_KEY, itemForYouCardBinding.foryoucardTvAuthors.text) // concatenated with "by"
+            intent.putExtra(BookDetailsActivity.COVER_KEY, data[holder.bindingAdapterPosition].coverResource)
+            intent.putExtra(BookDetailsActivity.STATUS_KEY, itemForYouCardBinding.foryoucardTvStatus.text) // comes from transaction
+            intent.putExtra(BookDetailsActivity.SHELF_LOCATION_KEY, data[holder.bindingAdapterPosition].shelfLocation)
+            intent.putExtra(BookDetailsActivity.DESCRIPTION_KEY, data[holder.bindingAdapterPosition].description)
+            intent.putExtra(BookDetailsActivity.PAGES_KEY, data[holder.bindingAdapterPosition].pageCount)
             holder.itemView.context.startActivity(intent)
         })
     }

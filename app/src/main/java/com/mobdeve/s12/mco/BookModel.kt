@@ -6,6 +6,6 @@ enum class HasTransaction {
     NONE
 }
 
-class BookModel(val id: String, val title: String, val authors: ArrayList<String>, val subjects: ArrayList<String>, val publisher: String, val coverResource: Int, val shelfLocation: String, val publishYear: Int, val hasTransaction: HasTransaction) {
+class BookModel(val id: String, val title: String, val authors: ArrayList<String>, val description: String, val publisher: String, val coverResource: Int, val shelfLocation: String, val publishYear: Int, val pageCount: Int, val hasTransaction: HasTransaction) {
 
 }
