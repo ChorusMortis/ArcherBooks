@@ -227,7 +227,7 @@
                         app:layout_constraintGuide_percent="0.67" />
 
                     <ImageView
-                        android:id="@+id/book_details_iv_pages"
+                        android:id="@+id/book_details_iv_publisher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
@@ -236,12 +236,17 @@
                         app:srcCompat="@drawable/icon_pages" />
 
                     <TextView
-                        android:id="@+id/book_details_tv_pages"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/book_details_tv_publisher"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="2dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/sf_ui_text_medium"
-                        android:text="532 pages"
+                        android:maxLines="1"
+                        android:text="Phoenix Publishing House"
+                        android:textAlignment="center"
                         android:textColor="@color/text_over_white_bg"
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
