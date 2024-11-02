@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Archer Books</string>
+    <string name="terms_and_conditions"><u>Terms and Conditions</u>.</string>
 </resources>

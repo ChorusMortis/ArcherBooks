@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/borrow_popup_cl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/borrow_popup_cl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="@color/gray_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/borrow_popup_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="Borrow a book"
+            android:textColor="@color/main_green"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/borrow_popup_cl_start_date_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_button"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_label">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/borrow_popup_iv_start_date_btn_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_circular_background"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_calendar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/borrow_popup_tv_start_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Pickup date"
+                android:textColor="@color/text_over_white_bg"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/borrow_popup_iv_start_date_btn_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/borrow_popup_tv_start_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Select a date"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/borrow_popup_iv_start_date_btn_icon"
+                app:layout_constraintStart_toStartOf="@+id/borrow_popup_tv_start_date_label" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/borrow_popup_cl_end_date_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_button"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cl_start_date_btn">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/borrow_popup_iv_end_date_btn_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/style_circular_background"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_calendar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/borrow_popup_tv_end_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Return date"
+                android:textColor="@color/text_over_white_bg"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/borrow_popup_iv_end_date_btn_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/borrow_popup_tv_end_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Select a date"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/borrow_popup_iv_end_date_btn_icon"
+                app:layout_constraintStart_toStartOf="@+id/borrow_popup_tv_end_date_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <CheckBox
+            android:id="@+id/borrow_popup_cb_terms_and_conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="51dp"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/main_green"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="I agree to the"
+            android:textColor="@color/text_over_gray_bg"
+            android:textColorLink="@color/main_green"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/borrow_popup_cl_end_date_btn"
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cl_end_date_btn" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/borrow_popup_tv_terms_and_conditions_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:gravity="center_vertical"
+            android:text="@string/terms_and_conditions"
+            android:textColor="@color/main_green"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/borrow_popup_cb_terms_and_conditions"
+            app:layout_constraintEnd_toEndOf="@+id/borrow_popup_cl_end_date_btn"
+            app:layout_constraintStart_toEndOf="@+id/borrow_popup_cb_terms_and_conditions"
+            app:layout_constraintTop_toTopOf="@+id/borrow_popup_cb_terms_and_conditions" />
+
+        <Button
+            android:id="@+id/borrow_popup_cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/text_over_gray_bg"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/maintext"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/borrow_popup_cb_terms_and_conditions"
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cb_terms_and_conditions"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/borrow_popup_confirm_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="@color/main_green"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/maintext"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/borrow_popup_tv_terms_and_conditions_btn"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cb_terms_and_conditions" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tnc_popup_cl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tnc_popup_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="@color/gray_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tnc_popup_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="Terms and Conditions"
+            android:textColor="@color/main_green"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tnc_popup_term_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="1. The maximum borrowing duration for one transaction is seven (7) days. Borrowing for more than seven days would need to be separated into multiple borrowing transactions."
+            android:textColor="@color/text_over_gray_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tnc_popup_label"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tnc_popup_term_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="2. Late returns would be fined for a constant price of 150 pesos and will be automatically added to your MLS View Assessment."
+            android:textColor="@color/text_over_gray_bg"
+            app:layout_constraintEnd_toEndOf="@+id/tnc_popup_term_1"
+            app:layout_constraintStart_toStartOf="@+id/tnc_popup_term_1"
+            app:layout_constraintTop_toBottomOf="@+id/tnc_popup_term_1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tnc_popup_term_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="3. Students with unreturned books will have their clearances temporarily put on hold."
+            android:textColor="@color/text_over_gray_bg"
+            app:layout_constraintEnd_toEndOf="@+id/tnc_popup_term_2"
+            app:layout_constraintStart_toStartOf="@+id/tnc_popup_term_2"
+            app:layout_constraintTop_toBottomOf="@+id/tnc_popup_term_2" />
+
+        <Button
+            android:id="@+id/tnc_popup_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/small_btn_radius"
+            android:backgroundTint="@color/main_green"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="@color/maintext"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tnc_popup_term_3"
+            app:layout_constraintStart_toStartOf="@+id/tnc_popup_term_3"
+            app:layout_constraintTop_toBottomOf="@+id/tnc_popup_term_3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

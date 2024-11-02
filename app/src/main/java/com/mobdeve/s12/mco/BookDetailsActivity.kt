@@ -1,14 +1,30 @@
 package com.mobdeve.s12.mco
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s12.mco.databinding.ActivityBookDetailsBinding
 import android.graphics.RenderEffect
 import android.graphics.Shader
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.window.Popup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.mobdeve.s12.mco.databinding.ComponentBorrowPopupBinding
+import com.mobdeve.s12.mco.databinding.ComponentTermsAndConditionsPopupBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class BookDetailsActivity : AppCompatActivity() {
@@ -27,7 +43,6 @@ class BookDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewBinding : ActivityBookDetailsBinding
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityBookDetailsBinding.inflate(layoutInflater)
@@ -35,6 +50,7 @@ class BookDetailsActivity : AppCompatActivity() {
 
         setDataOnViews()
         addListenerAndApiLimitBackBtn()
+        addListenerBorrowBtn()
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
@@ -85,5 +101,118 @@ class BookDetailsActivity : AppCompatActivity() {
             viewBinding.bookDetailsBackBtn.visibility = View.GONE
         }
     }
+
+    private fun addListenerPopupBg(outerLayout: ConstraintLayout, content: ConstraintLayout, window: PopupWindow) {
+        outerLayout.setOnClickListener(View.OnClickListener {
+            window.dismiss()
+        })
+
+        content.setOnClickListener(View.OnClickListener {
+            // Do nothing
+        })
+    }
+
+    /*** Borrow Popup Functions ***/
+    private fun addListenerBorrowBtn() {
+        viewBinding.bookDetailsIbBorrowBtn.setOnClickListener(View.OnClickListener {
+            val window = PopupWindow(this)
+            val borrowPopupBinding = ComponentBorrowPopupBinding.inflate(layoutInflater)
+            window.contentView = borrowPopupBinding.root
+            window.height = ViewGroup.LayoutParams.MATCH_PARENT
+            window.width = ViewGroup.LayoutParams.MATCH_PARENT
+            window.setBackgroundDrawable(ColorDrawable(0x99000000.toInt()))
+
+            addListenerPopupBg(borrowPopupBinding.borrowPopupCl, borrowPopupBinding.borrowPopupClContent, window)
+            addListenerBorrowPopupDates(borrowPopupBinding, window)
+            addListenerBorrowPopupTNC(borrowPopupBinding)
+            addListenerCancelBtn(borrowPopupBinding.borrowPopupCancelBtn, window)
+            addListenerConfirmBtn(borrowPopupBinding.borrowPopupTvStartDateValue.text.toString(), borrowPopupBinding.borrowPopupTvEndDateValue.text.toString(), window, borrowPopupBinding.borrowPopupConfirmBtn)
+
+            window.showAtLocation(borrowPopupBinding.root, Gravity.CENTER, 0, 0)
+        })
+    }
+
+    private fun addListenerBorrowPopupDates(borrowPopupBinding: ComponentBorrowPopupBinding, window: PopupWindow) {
+        // pickup date
+        val pickupCalendar = Calendar.getInstance()
+        val pickupDatePicker = DatePickerDialog.OnDateSetListener {view, year, month, day ->
+            pickupCalendar.set(Calendar.YEAR, year)
+            pickupCalendar.set(Calendar.MONTH, month)
+            pickupCalendar.set(Calendar.DAY_OF_MONTH, day)
+            updateDate(borrowPopupBinding.borrowPopupTvStartDateValue, pickupCalendar)
+        }
+
+        borrowPopupBinding.borrowPopupClStartDateBtn.setOnClickListener(View.OnClickListener {
+            val datePickerDialog = DatePickerDialog(borrowPopupBinding.root.context, R.style.DialogTheme, pickupDatePicker, pickupCalendar.get(Calendar.YEAR), pickupCalendar.get(Calendar.MONTH), pickupCalendar.get(Calendar.DAY_OF_MONTH))
+            val rangeCalendar = Calendar.getInstance()
+            datePickerDialog.datePicker.minDate = rangeCalendar.timeInMillis
+            datePickerDialog.show()
+        })
+
+        // return date
+        val returnCalendar = Calendar.getInstance()
+        val returnDatePicker = DatePickerDialog.OnDateSetListener {view, year, month, day ->
+            returnCalendar.set(Calendar.YEAR, year)
+            returnCalendar.set(Calendar.MONTH, month)
+            returnCalendar.set(Calendar.DAY_OF_MONTH, day)
+            updateDate(borrowPopupBinding.borrowPopupTvEndDateValue, returnCalendar)
+        }
+
+        borrowPopupBinding.borrowPopupClEndDateBtn.setOnClickListener(View.OnClickListener {
+            val datePickerDialog = DatePickerDialog(borrowPopupBinding.root.context, R.style.DialogTheme, returnDatePicker, returnCalendar.get(Calendar.YEAR), returnCalendar.get(Calendar.MONTH), returnCalendar.get(Calendar.DAY_OF_MONTH))
+            val rangeCalendar = Calendar.getInstance()
+            rangeCalendar.set(pickupCalendar.get(Calendar.YEAR), pickupCalendar.get(Calendar.MONTH), pickupCalendar.get(Calendar.DAY_OF_MONTH) + 1)
+            datePickerDialog.datePicker.minDate = rangeCalendar.timeInMillis
+
+            rangeCalendar.set(pickupCalendar.get(Calendar.YEAR), pickupCalendar.get(Calendar.MONTH), pickupCalendar.get(Calendar.DAY_OF_MONTH) + 7)
+            datePickerDialog.datePicker.maxDate = rangeCalendar.timeInMillis
+
+            datePickerDialog.show()
+        })
+    }
+
+    private fun updateDate(dateHolder: TextView, calendar: Calendar) {
+        val dateFormat = "MMM d, yyyy"
+        val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
+        dateHolder.text = simpleDateFormat.format(calendar.time)
+    }
+
+    private fun addListenerCancelBtn(cancelBtn: Button, window: PopupWindow) {
+        cancelBtn.setOnClickListener(View.OnClickListener {
+            window.dismiss()
+        })
+    }
+
+    private fun addListenerConfirmBtn(pickupDate: String, returnDate: String, window: PopupWindow, confirmBtn: Button) {
+        // TODO MCO3: Handle adding of transactions to users
+        confirmBtn.setOnClickListener(View.OnClickListener {
+            window.dismiss()
+        })
+    }
+
+    /*** Terms and Conditions Popup Functions ***/
+    private fun addListenerBorrowPopupTNC(borrowPopupBinding: ComponentBorrowPopupBinding) {
+        borrowPopupBinding.borrowPopupTvTermsAndConditionsBtn.setOnClickListener(View.OnClickListener {
+            val popupWindow = PopupWindow(borrowPopupBinding.root.context)
+            val tncPopupBinding = ComponentTermsAndConditionsPopupBinding.inflate(layoutInflater)
+            popupWindow.contentView = tncPopupBinding.root
+            popupWindow.height = ViewGroup.LayoutParams.MATCH_PARENT
+            popupWindow.width = ViewGroup.LayoutParams.MATCH_PARENT
+            popupWindow.setBackgroundDrawable(ColorDrawable(0x00000000.toInt()))
+
+            addListenerPopupBg(tncPopupBinding.tncPopupCl, tncPopupBinding.tncPopupContent, popupWindow)
+            addListenerTNCBackBtn(tncPopupBinding, popupWindow)
+
+            popupWindow.showAtLocation(tncPopupBinding.root, Gravity.CENTER, 0, 0)
+        })
+    }
+
+    private fun addListenerTNCBackBtn(tncPopupBinding: ComponentTermsAndConditionsPopupBinding, popupWindow: PopupWindow) {
+        tncPopupBinding.tncPopupBtn.setOnClickListener(View.OnClickListener {
+            popupWindow.dismiss()
+        })
+    }
+
+
 
 }
