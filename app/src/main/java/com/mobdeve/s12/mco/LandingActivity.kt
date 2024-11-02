@@ -3,10 +3,9 @@ package com.mobdeve.s12.mco
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import com.mobdeve.s12.mco.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class LandingActivity : AppCompatActivity() {
 
     private lateinit var viewBinding : ActivityMainBinding
 
