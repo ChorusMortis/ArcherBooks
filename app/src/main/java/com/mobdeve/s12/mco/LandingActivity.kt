@@ -3,14 +3,14 @@ package com.mobdeve.s12.mco
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mobdeve.s12.mco.databinding.ActivityMainBinding
+import com.mobdeve.s12.mco.databinding.ActivityLandingBinding
 
 class LandingActivity : AppCompatActivity() {
 
-    private lateinit var viewBinding : ActivityMainBinding
+    private lateinit var viewBinding : ActivityLandingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        viewBinding = ActivityLandingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
 
