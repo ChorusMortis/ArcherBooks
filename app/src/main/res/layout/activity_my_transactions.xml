@@ -177,8 +177,8 @@
         app:layout_constraintTop_toBottomOf="@+id/mytrans_hsv_filterbuttonsscrollview" />
 
     <include
-        layout="@layout/component_nav_bar"
         android:id="@+id/mytrans_navbar"
+        layout="@layout/component_navbar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

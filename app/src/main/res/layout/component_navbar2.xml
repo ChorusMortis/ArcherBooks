@@ -5,7 +5,7 @@
     android:id="@+id/navbar_cl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray_bg">
+    android:background="@android:color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navbar_cl_panel"

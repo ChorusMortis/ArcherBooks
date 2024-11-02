@@ -178,8 +178,8 @@
         app:layout_constraintTop_toBottomOf="@+id/searchresults_hsv_filterbuttonsscrollview" />
 
     <include
-        layout="@layout/component_nav_bar"
         android:id="@+id/searchresults_navbar"
+        layout="@layout/component_navbar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
