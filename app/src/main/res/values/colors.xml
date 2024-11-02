@@ -17,6 +17,7 @@
     <color name="gray_bg">#F0F0F0</color>
     <color name="text_over_white_bg">#909090</color>
     <color name="text_over_gray_bg">#707070</color>
+    <color name="unselected_navbar_option">#BFBFBF</color>
 
     <color name="book_available">#61AA63</color>
     <color name="book_unavailable">#121212</color>

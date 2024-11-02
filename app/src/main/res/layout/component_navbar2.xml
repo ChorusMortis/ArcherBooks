@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navbar_cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_bg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/navbar_cl_panel"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/style_bottom_navbar_radius"
+        android:elevation="4dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navbar_btn_home"
+            android:layout_width="72.8dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/navbar_iv_home_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/navbar_tv_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top_home"
+                app:srcCompat="@drawable/icon_home" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/navbar_tv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Home"
+                android:textColor="@color/main_green"
+                android:textSize="10sp"
+                app:fontFamily="@font/sf_ui_text_semibold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/navbar_iv_home_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navbar_btn_transactions"
+            android:layout_width="72.8dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/navbar_btn_home"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top_transactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/navbar_iv_transactions_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/navbar_tv_transactions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top_transactions"
+                app:srcCompat="@drawable/icon_transactions"
+                app:tint="@color/unselected_navbar_option" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/navbar_tv_transactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Transactions"
+                android:textColor="@color/unselected_navbar_option"
+                android:textSize="10sp"
+                app:fontFamily="@font/sf_ui_text_semibold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_transactions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/navbar_iv_transactions_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom_transactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navbar_btn_favorites"
+            android:layout_width="72.8dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/navbar_btn_transactions"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/navbar_iv_favorites_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/navbar_tv_favorites"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top_favorites"
+                app:srcCompat="@drawable/icon_favorites"
+                app:tint="@color/unselected_navbar_option" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/navbar_tv_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Favorites"
+                android:textColor="@color/unselected_navbar_option"
+                android:textSize="10sp"
+                app:fontFamily="@font/sf_ui_text_semibold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_favorites"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/navbar_iv_favorites_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navbar_btn_notifications"
+            android:layout_width="72.8dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/navbar_btn_favorites"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top_notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/navbar_iv_notifications_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/navbar_tv_notifications"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top_notifications"
+                app:srcCompat="@drawable/icon_notification"
+                app:tint="@color/unselected_navbar_option" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/navbar_tv_notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Notifications"
+                android:textColor="@color/unselected_navbar_option"
+                android:textSize="10sp"
+                app:fontFamily="@font/sf_ui_text_semibold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_notifications"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/navbar_iv_notifications_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom_notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navbar_btn_logout"
+            android:layout_width="72.8dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/navbar_btn_notifications"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <ImageView
+                android:id="@+id/navbar_iv_logout_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/navbar_tv_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top_logout"
+                app:srcCompat="@drawable/icon_logout"
+                app:tint="@color/unselected_navbar_option" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/navbar_tv_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Logout"
+                android:textColor="@color/unselected_navbar_option"
+                android:textSize="10sp"
+                app:fontFamily="@font/sf_ui_text_semibold"
+                app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/navbar_iv_logout_icon" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

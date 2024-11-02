@@ -3,12 +3,13 @@
     <item android:state_checked="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/main_green" />
+            <corners android:topLeftRadius="25dp"  />
         </shape>
     </item>
-    <!-- Inactive item background -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/transparent" /> <!-- No background -->
+            <solid android:color="@android:color/transparent" />
+            <corners android:topLeftRadius="25dp" />
         </shape>
     </item>
 </selector>

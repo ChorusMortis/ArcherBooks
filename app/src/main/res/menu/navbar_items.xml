@@ -4,10 +4,10 @@
         android:title="Home"
         android:icon="@drawable/icon_home" />
     <item android:id="@+id/action_transactions"
-        android:title="My Transactions"
+        android:title="Transactions"
         android:icon="@drawable/icon_transactions" />
     <item android:id="@+id/action_favorites"
-        android:title="My Favorites"
+        android:title="Favorites"
         android:icon="@drawable/icon_favorites" />
     <item android:id="@+id/action_logout"
         android:title="Logout"
