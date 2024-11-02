@@ -120,7 +120,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/sf_ui_text_medium"
                     android:maxLines="1"
-                    android:text="by J.K. Rowling"
+                    android:text="J.K. Rowling"
                     android:textAlignment="center"
                     android:textColor="@color/text_over_gray_bg"
                     android:textSize="14sp"

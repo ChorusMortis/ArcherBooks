@@ -8,15 +8,6 @@ class HomeRVViewHolder(private val viewBinding: ItemRvCardBinding): RecyclerView
     fun bindData(book: BookModel) {
         this.viewBinding.itemViewedRecentlyIvCover.setImageResource(book.coverResource)
         this.viewBinding.itemViewedRecentlyTvTitle.text = book.title
-
-        var authors = ""
-        book.authors.forEachIndexed { index, author ->
-            authors += if(index == book.authors.size - 1) {
-                author
-            } else {
-                "${author}, "
-            }
-        }
-        this.viewBinding.itemViewedRecentlyAuthors.text = authors
+        this.viewBinding.itemViewedRecentlyAuthors.text = book.authors.joinToString(", ")
     }
 }
