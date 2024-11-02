@@ -89,7 +89,7 @@
             android:id="@+id/home_botd_iv_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.1"
+            android:alpha="0.2"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
-            app:srcCompat="@drawable/book_geronimo_stilton" />
+            app:srcCompat="@drawable/book_little_red_riding_hood" />
 
         <View
             android:id="@+id/home_botd_iv_tint"
