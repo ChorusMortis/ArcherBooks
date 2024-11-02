@@ -94,7 +94,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/book_details_cl_cover">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/book_details_tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/book_details_tv_authors"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/book_details_tv_title" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/book_details_tv_year"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/book_details_tv_year">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/book_details_tv_shelf_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                         app:layout_constraintStart_toEndOf="@+id/separator1"
                         app:srcCompat="@drawable/icon_available" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/book_details_tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                         app:layout_constraintStart_toEndOf="@+id/separator2"
                         app:srcCompat="@drawable/icon_pages" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/book_details_tv_pages"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -267,7 +267,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/book_details_tv_description_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/book_details_cl_side_info" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/book_details_tv_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

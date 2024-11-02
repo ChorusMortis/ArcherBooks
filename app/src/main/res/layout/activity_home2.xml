@@ -8,7 +8,7 @@
     android:background="@color/gray_bg"
     tools:context=".Home2Activity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_tv_welcome_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/home_tv_welcome_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_tv_slogan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         app:layout_constraintStart_toStartOf="@+id/home_tv_user_name"
         app:layout_constraintTop_toBottomOf="@+id/home_tv_user_name" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_tv_botd_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
             app:srcCompat="@drawable/book_geronimo_stilton" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/home_botd_tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
             app:layout_constraintStart_toEndOf="@+id/home_botd_iv_cover"
             app:layout_constraintTop_toBottomOf="@+id/home_botd_iv_bg" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/home_botd_tv_authors"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
             app:layout_constraintStart_toStartOf="@+id/home_botd_tv_title"
             app:layout_constraintTop_toBottomOf="@+id/home_botd_tv_title" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/home_botd_tv_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
             app:layout_constraintTop_toBottomOf="@+id/home_botd_tv_authors" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/home_tv_vr_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
