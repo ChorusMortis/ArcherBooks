@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     private fun addListenerSignInWithGoogleBtn() {
         // TODO MCO3: Add Google Handling
         viewBinding.loginBtnSigningoogle.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, Home2Activity::class.java)
             startActivity(intent)
             finish()
         })

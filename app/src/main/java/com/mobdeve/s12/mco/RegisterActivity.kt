@@ -36,7 +36,7 @@ class RegisterActivity : AppCompatActivity() {
         // TODO MCO3: Password validation (1) length, (2) characters
 
         viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, Home2Activity::class.java)
             startActivity(intent)
             finish()
         })
@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun addListenerSignUpWithGoogleBtn() {
         // TODO MCO3: Add Google Handling
         viewBinding.registerBtnSignupgoogle.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, Home2Activity::class.java)
             startActivity(intent)
             finish()
         })
