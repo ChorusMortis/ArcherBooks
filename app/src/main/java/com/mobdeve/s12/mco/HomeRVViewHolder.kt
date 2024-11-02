@@ -1,11 +1,9 @@
 package com.mobdeve.s12.mco
 
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemForYouCardLightBinding
-import com.mobdeve.s12.mco.databinding.ItemViewedRecentlyBinding
+import com.mobdeve.s12.mco.databinding.ItemRvCardBinding
 
-class HomeRVViewHolder(private val viewBinding: ItemViewedRecentlyBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class HomeRVViewHolder(private val viewBinding: ItemRvCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bindData(book: BookModel) {
         this.viewBinding.itemViewedRecentlyIvCover.setImageResource(book.coverResource)

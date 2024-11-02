@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.mobdeve.s12.mco.databinding.ItemForYouCardLightBinding
-import com.mobdeve.s12.mco.databinding.ItemMbbLightBinding
-import com.mobdeve.s12.mco.databinding.ItemViewedRecentlyBinding
+import com.mobdeve.s12.mco.databinding.ItemRvCardBinding
 
 class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRVViewHolder {
-        val itemRVViewBinding: ItemViewedRecentlyBinding = ItemViewedRecentlyBinding.inflate(
+        val itemRVViewBinding: ItemRvCardBinding = ItemRvCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
@@ -31,7 +29,7 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
         return data.size
     }
 
-    private fun addListenerCard(holder : HomeRVViewHolder, itemRVViewBinding: ItemViewedRecentlyBinding) {
+    private fun addListenerCard(holder : HomeRVViewHolder, itemRVViewBinding: ItemRvCardBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
