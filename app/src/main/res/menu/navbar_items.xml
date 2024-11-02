@@ -9,6 +9,9 @@
     <item android:id="@+id/action_favorites"
         android:title="Favorites"
         android:icon="@drawable/icon_favorites" />
+    <item android:id="@+id/action_notifications"
+        android:title="Notifications"
+        android:icon="@drawable/icon_notification" />
     <item android:id="@+id/action_logout"
         android:title="Logout"
         android:icon="@drawable/icon_logout" />

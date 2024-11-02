@@ -14,4 +14,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
+
+    <style name="NavBarStyle" parent="">
+        <item name="android:fontFamily">@font/sf_ui_text_semibold</item>
+        <item name="android:textSize">10sp</item>
+    </style>
 </resources>
