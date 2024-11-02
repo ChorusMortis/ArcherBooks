@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         // TODO MCO3: Password validation (1) length, (2) characters
 
         viewBinding.loginBtnLoginbtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, Home2Activity::class.java)
             startActivity(intent)
             finish()
         })
