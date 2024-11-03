@@ -3,11 +3,8 @@ package com.mobdeve.s12.mco
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mobdeve.s12.mco.databinding.ActivityMainBinding
 
 class MainActivity: AppCompatActivity() {
@@ -20,10 +17,14 @@ class MainActivity: AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // handle bottom navigation view to control fragments
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navbar_fragment_controller) as NavHostFragment
         navController = navHostFragment.navController
         setupWithNavController(viewBinding.navbarNv, navController)
+        addListenersBottomNavBarItems()
+    }
 
+    private fun addListenersBottomNavBarItems() {
         viewBinding.navbarNv.setOnItemSelectedListener{item ->
             when(item.itemId) {
                 R.id.action_home -> {
@@ -50,4 +51,5 @@ class MainActivity: AppCompatActivity() {
             }
         }
     }
+
 }
