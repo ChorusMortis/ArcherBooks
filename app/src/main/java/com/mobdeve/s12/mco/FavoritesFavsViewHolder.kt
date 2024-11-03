@@ -4,7 +4,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ItemMyFavoritesCardLightBinding
 
-class MyFavoritesFavsViewHolder(private val viewBinding: ItemMyFavoritesCardLightBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class FavoritesFavsViewHolder(private val viewBinding: ItemMyFavoritesCardLightBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(book: BookModel) {
         viewBinding.myfavoritescardIvCover.setImageResource(book.coverResource)
         viewBinding.myfavoritescardTvTitle.text = book.title

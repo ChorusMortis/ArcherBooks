@@ -44,7 +44,7 @@ class FavoritesFragment : Fragment() {
             showSortDialog()
         }
 
-        myFavoritesBinding.myfavsRvFavorites.adapter = MyFavoritesFavsAdapter(BookGenerator.generateSampleBooks())
+        myFavoritesBinding.myfavsRvFavorites.adapter = FavoritesFavsAdapter(BookGenerator.generateSampleBooks())
         myFavoritesBinding.myfavsRvFavorites.layoutManager = LinearLayoutManager(activity)
         myFavoritesBinding.myfavsRvFavorites.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 

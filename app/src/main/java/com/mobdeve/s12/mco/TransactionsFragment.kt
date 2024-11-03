@@ -48,7 +48,7 @@ class TransactionsFragment : Fragment() {
             showSortDialog()
         }
 
-        myTransactionsBinding.mytransRvTransactions.adapter = MyTransactionsTransAdapter(BookGenerator.generateSampleBooks())
+        myTransactionsBinding.mytransRvTransactions.adapter = TransactionsTransAdapter(BookGenerator.generateSampleBooks())
         myTransactionsBinding.mytransRvTransactions.layoutManager = LinearLayoutManager(activity)
         myTransactionsBinding.mytransRvTransactions.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
