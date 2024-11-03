@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ActivityMyFavoritesBinding
+import com.mobdeve.s12.mco.databinding.FragmentFavoritesBinding
 import com.mobdeve.s12.mco.databinding.ComponentMyfavsSortDialogBinding
 
 class FavoritesFragment : Fragment() {
@@ -26,7 +26,7 @@ class FavoritesFragment : Fragment() {
         OLDEST,
     }
 
-    private lateinit var myFavoritesBinding : ActivityMyFavoritesBinding
+    private lateinit var myFavoritesBinding : FragmentFavoritesBinding
     private lateinit var filterButtons : List<Button>
     private var activeFilterBtn : Button? = null
 
@@ -37,9 +37,9 @@ class FavoritesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 //        super.onCreate(savedInstanceState)
-//        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(layoutInflater)
+//        myFavoritesBinding = FragmentFavoritesBinding.inflate(layoutInflater)
 //        setContentView(myFavoritesBinding.root)
-        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(inflater, container, false)
+        myFavoritesBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
 
         initFilterButtons()

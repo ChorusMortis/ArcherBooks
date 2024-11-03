@@ -23,5 +23,5 @@
         android:id="@+id/action_favorites"
         android:name="com.mobdeve.s12.mco.FavoritesFragment"
         android:label="activity_my_favorites"
-        tools:layout="@layout/activity_my_favorites" />
+        tools:layout="@layout/fragment_favorites" />
 </navigation>
