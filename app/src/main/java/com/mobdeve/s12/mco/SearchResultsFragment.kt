@@ -35,13 +35,9 @@ class SearchResultsFragment : Fragment() {
     private var tempSortOption : SortOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//        super.onCreate(savedInstanceState)
-//        searchResultsBinding = FragmentSearchResultsBinding.inflate(layoutInflater)
-//        setContentView(searchResultsBinding.root)
         searchResultsBinding = FragmentSearchResultsBinding.inflate(inflater, container, false)
 
         initSearchFilterButtons()
-
         searchResultsBinding.searchresultsIbSearchbtn.setOnClickListener {
             activeSortOption = SortOption.RELEVANCE
         }
@@ -49,7 +45,6 @@ class SearchResultsFragment : Fragment() {
         searchResultsBinding.searchresultsIbSortbtn.setOnClickListener {
             showSortResultsDialog()
         }
-
 
         searchResultsBinding.searchresultsRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
         searchResultsBinding.searchresultsRvResults.layoutManager = LinearLayoutManager(activity)

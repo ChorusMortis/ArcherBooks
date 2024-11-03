@@ -16,7 +16,6 @@ class LandingActivity : AppCompatActivity() {
 
         addListenerLoginBtn()
         addListenerRegisterBtn()
-
     }
 
     private fun addListenerLoginBtn() {

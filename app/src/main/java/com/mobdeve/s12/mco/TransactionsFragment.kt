@@ -36,10 +36,6 @@ class TransactionsFragment : Fragment() {
     private var tempSortOption : SortOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//        super.onCreate(savedInstanceState)
-//        myTransactionsBinding = FragmentTransactionsBinding.inflate(layoutInflater)
-//        setContentView(myTransactionsBinding.root)
-
         myTransactionsBinding = FragmentTransactionsBinding.inflate(inflater, container, false)
 
         initFilterButtons()

@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addListenerRegisterHyperLink() {
-        // go to register activity when user taps on "Sign up" text
         viewBinding.loginTvRegisterhyperlink.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
