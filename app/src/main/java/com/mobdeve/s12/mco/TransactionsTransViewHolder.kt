@@ -2,9 +2,9 @@ package com.mobdeve.s12.mco
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemTransactionsCardLightBinding
+import com.mobdeve.s12.mco.databinding.ItemTransactionsCardBinding
 
-class TransactionsTransViewHolder(private val viewBinding: ItemTransactionsCardLightBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class TransactionsTransViewHolder(private val viewBinding: ItemTransactionsCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(book: BookModel) {
         viewBinding.mytransactionscardIvCover.setImageResource(book.coverResource)
         viewBinding.mytransactionscardTvTitle.text = book.title

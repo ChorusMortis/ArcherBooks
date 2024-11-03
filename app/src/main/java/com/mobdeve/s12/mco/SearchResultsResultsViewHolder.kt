@@ -2,9 +2,9 @@ package com.mobdeve.s12.mco
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardLightBinding
+import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardBinding
 
-class SearchResultsResultsViewHolder(private val viewBinding: ItemSearchresultsCardLightBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class SearchResultsResultsViewHolder(private val viewBinding: ItemSearchresultsCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(book: BookModel) {
         viewBinding.searchresultscardIvCover.setImageResource(book.coverResource)
         viewBinding.searchresultscardTvTitle.text = book.title

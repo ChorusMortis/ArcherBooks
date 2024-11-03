@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardLightBinding
+import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardBinding
 
 class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : RecyclerView.Adapter<SearchResultsResultsViewHolder>() {
     override fun onCreateViewHolder(
@@ -15,7 +15,7 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
         // TODO Later: Add on-click listener for Borrow -> should also launch an intent to book details but scrolled down
         // TODO MCO3: Add on-click listener for Favorite button that will add the book to the user's favorites list
 
-        val itemSearchResultsCardBinding = ItemSearchresultsCardLightBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemSearchResultsCardBinding = ItemSearchresultsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val srViewHolder = SearchResultsResultsViewHolder(itemSearchResultsCardBinding)
         addListenerCard(srViewHolder, itemSearchResultsCardBinding)
         return srViewHolder
@@ -29,7 +29,7 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
         holder.bindData(data[position])
     }
 
-    private fun addListenerCard(holder : SearchResultsResultsViewHolder, itemSearchResultsCardBinding: ItemSearchresultsCardLightBinding) {
+    private fun addListenerCard(holder : SearchResultsResultsViewHolder, itemSearchResultsCardBinding: ItemSearchresultsCardBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
