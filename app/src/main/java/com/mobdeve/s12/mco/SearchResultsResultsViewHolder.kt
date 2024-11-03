@@ -8,16 +8,7 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSearchresultsC
     fun bindData(book: BookModel) {
         viewBinding.searchresultscardIvCover.setImageResource(book.coverResource)
         viewBinding.searchresultscardTvTitle.text = book.title
-
-        var authors = ""
-        book.authors.forEachIndexed { index, author ->
-            authors += if(index == book.authors.size - 1) {
-                author
-            } else {
-                "${author}, "
-            }
-        }
-        viewBinding.searchresultscardTvAuthors.text = "by $authors"
+        viewBinding.searchresultscardTvAuthors.text = book.authors.joinToString(", ")
 
         if (book.hasTransaction == HasTransaction.NONE || book.hasTransaction == HasTransaction.INACTIVE) {
             viewBinding.searchresultscardTvStatus.text = "Book Available" // TODO MCO3: Transfer this as an enum class to Transaction class
