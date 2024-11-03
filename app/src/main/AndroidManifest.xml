@@ -31,7 +31,7 @@
             android:name=".BookDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchResultsActivity"
+            android:name=".FragmentSearchResults"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity

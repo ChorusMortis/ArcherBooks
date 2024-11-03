@@ -3,7 +3,6 @@ package com.mobdeve.s12.mco
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ActivityHomeBinding
@@ -45,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun addListenerSearchBtn() {
         viewBinding.homeBtnSearch.setOnClickListener {
-            val intent = Intent(this, SearchResultsActivity::class.java)
+            val intent = Intent(this, FragmentSearchResults::class.java)
             startActivity(intent)
         }
     }
