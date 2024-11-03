@@ -16,9 +16,6 @@
             android:name=".AdminTransactionsActivity"
             android:exported="false" />
         <activity
-            android:name=".BookInformationActivity"
-            android:exported="false" />
-        <activity
             android:name=".BookDetailsActivity"
             android:exported="false" />
         <activity
