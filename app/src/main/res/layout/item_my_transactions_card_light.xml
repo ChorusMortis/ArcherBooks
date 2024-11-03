@@ -105,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/book_card_status"
+            android:background="@color/white"
             android:backgroundTint="@color/white"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
