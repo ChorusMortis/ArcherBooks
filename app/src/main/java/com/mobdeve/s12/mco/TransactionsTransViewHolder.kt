@@ -8,16 +8,7 @@ class TransactionsTransViewHolder(private val viewBinding: ItemTransactionsCardL
     fun bindData(book: BookModel) {
         viewBinding.mytransactionscardIvCover.setImageResource(book.coverResource)
         viewBinding.mytransactionscardTvTitle.text = book.title
-
-        var authors = ""
-        book.authors.forEachIndexed { index, author ->
-            authors += if(index == book.authors.size - 1) {
-                author
-            } else {
-                "${author}, "
-            }
-        }
-        viewBinding.mytransactionscardTvAuthors.text = "by $authors"
+        viewBinding.mytransactionscardTvAuthors.text = book.authors.joinToString(", ")
 
         if (book.hasTransaction == HasTransaction.NONE || book.hasTransaction == HasTransaction.INACTIVE) {
             viewBinding.mytransactionscardTvStatus.text = "Book Available" // TODO MCO3: Transfer this as an enum class to Transaction class
