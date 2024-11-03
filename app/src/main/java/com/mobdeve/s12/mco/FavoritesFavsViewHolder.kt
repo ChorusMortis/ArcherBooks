@@ -8,16 +8,7 @@ class FavoritesFavsViewHolder(private val viewBinding: ItemFavoritesCardLightBin
     fun bindData(book: BookModel) {
         viewBinding.myfavoritescardIvCover.setImageResource(book.coverResource)
         viewBinding.myfavoritescardTvTitle.text = book.title
-
-        var authors = ""
-        book.authors.forEachIndexed { index, author ->
-            authors += if(index == book.authors.size - 1) {
-                author
-            } else {
-                "${author}, "
-            }
-        }
-        viewBinding.myfavoritescardTvAuthors.text = "by $authors"
+        viewBinding.myfavoritescardTvAuthors.text = book.authors.joinToString(", ")
 
         if (book.hasTransaction == HasTransaction.NONE || book.hasTransaction == HasTransaction.INACTIVE) {
             viewBinding.myfavoritescardTvStatus.text = "Book Available" // TODO MCO3: Transfer this as an enum class to Transaction class
