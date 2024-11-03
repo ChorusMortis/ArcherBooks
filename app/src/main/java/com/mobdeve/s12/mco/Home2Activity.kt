@@ -1,9 +1,12 @@
 package com.mobdeve.s12.mco
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ActivityHome2Binding
@@ -23,6 +26,7 @@ class Home2Activity : AppCompatActivity() {
 
         setRVRecyclerView()
         addListenerSearchBtn()
+//        addListenerNavBar()
 
         val botd = books.random() // TODO MCO3: Allow it to randomly query a book from the API
         setContentBOTD(botd)
@@ -67,4 +71,20 @@ class Home2Activity : AppCompatActivity() {
             startActivity(intent)
         })
     }
+
+//    private fun addListenerNavBar() {
+//        viewBinding.homeNavbar.navbarBtnTransactions.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(this, MyTransactionsActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+//            startActivity(intent)
+//            viewBinding.homeNavbar.navbarIvTransactionsIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.main_green))
+//        })
+//
+//        viewBinding.homeNavbar.navbarBtnHome.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(this, Home2Activity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+//            startActivity(intent)
+//        })
+//    }
+
 }
