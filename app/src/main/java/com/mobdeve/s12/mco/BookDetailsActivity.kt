@@ -4,20 +4,14 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s12.mco.databinding.ActivityBookDetailsBinding
-import android.graphics.RenderEffect
-import android.graphics.Shader
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.PopupWindow
 import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.window.Popup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.mobdeve.s12.mco.databinding.ComponentBorrowPopupBinding
@@ -51,13 +45,6 @@ class BookDetailsActivity : AppCompatActivity() {
         setDataOnViews()
         addListenerAndApiLimitBackBtn()
         addListenerBorrowBtn()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    fun applyBlurToView(view: View, blurRadius: Float) {
-        view.setRenderEffect(
-            RenderEffect.createBlurEffect(blurRadius, blurRadius, Shader.TileMode.CLAMP)
-        )
     }
 
     private fun setDataOnViews() {
@@ -108,7 +95,7 @@ class BookDetailsActivity : AppCompatActivity() {
         })
 
         content.setOnClickListener(View.OnClickListener {
-            // Do nothing
+            // Do nothing to prevent clicking on the content to dismiss window
         })
     }
 
@@ -212,7 +199,4 @@ class BookDetailsActivity : AppCompatActivity() {
             popupWindow.dismiss()
         })
     }
-
-
-
 }
