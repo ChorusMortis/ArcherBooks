@@ -20,18 +20,6 @@ class HomeFragment : Fragment() {
     private lateinit var rvAdapter: HomeRVAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//        super.onCreate(savedInstanceState)
-//        viewBinding = FragmentHomeBinding.inflate(layoutInflater)
-//        setContentView(viewBinding.root)
-//
-//        setRVRecyclerView()
-//        addListenerSearchBtn()
-////        addListenerNavBar()
-//
-//        val botd = books.random() // TODO MCO3: Allow it to randomly query a book from the API
-//        setContentBOTD(botd)
-//        addListenerBOTD(botd)
-
         viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setRVRecyclerView()
@@ -54,8 +42,6 @@ class HomeFragment : Fragment() {
 
     private fun addListenerSearchBtn() {
         viewBinding.homeBtnSearchBtn.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(activity, SearchResultsActivity::class.java)
-//            startActivity(intent)
             val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.navbar_fragment_controller) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_search)
@@ -84,20 +70,4 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         })
     }
-
-//    private fun addListenerNavBar() {
-//        viewBinding.homeNavbar.navbarBtnTransactions.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(this, TransactionsFragment::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-//            startActivity(intent)
-//            viewBinding.homeNavbar.navbarIvTransactionsIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.main_green))
-//        })
-//
-//        viewBinding.homeNavbar.navbarBtnHome.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(this, Home2Activity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-//            startActivity(intent)
-//        })
-//    }
-
 }
