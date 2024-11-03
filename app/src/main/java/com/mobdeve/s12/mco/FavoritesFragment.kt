@@ -36,11 +36,7 @@ class FavoritesFragment : Fragment() {
     private var tempSortOption : SortOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//        super.onCreate(savedInstanceState)
-//        myFavoritesBinding = FragmentFavoritesBinding.inflate(layoutInflater)
-//        setContentView(myFavoritesBinding.root)
         myFavoritesBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
-
 
         initFilterButtons()
 
