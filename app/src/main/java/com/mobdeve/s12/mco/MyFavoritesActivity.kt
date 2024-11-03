@@ -3,15 +3,20 @@ package com.mobdeve.s12.mco
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ActivityMyFavoritesBinding
+import com.mobdeve.s12.mco.databinding.ActivitySearchResultsBinding
 import com.mobdeve.s12.mco.databinding.ComponentMyfavsSortDialogBinding
 
-class MyFavoritesActivity : AppCompatActivity() {
+class MyFavoritesActivity : Fragment() {
     companion object {
         private const val VERTICAL_SPACE = 24
     }
@@ -32,10 +37,12 @@ class MyFavoritesActivity : AppCompatActivity() {
     private var activeSortOption : SortOption = SortOption.TITLE
     private var tempSortOption : SortOption? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(layoutInflater)
-        setContentView(myFavoritesBinding.root)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+//        super.onCreate(savedInstanceState)
+//        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(layoutInflater)
+//        setContentView(myFavoritesBinding.root)
+        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(inflater, container, false)
+
 
         initFilterButtons()
 
@@ -44,8 +51,10 @@ class MyFavoritesActivity : AppCompatActivity() {
         }
 
         myFavoritesBinding.myfavsRvFavorites.adapter = MyFavoritesFavsAdapter(BookGenerator.generateSampleBooks())
-        myFavoritesBinding.myfavsRvFavorites.layoutManager = LinearLayoutManager(this)
+        myFavoritesBinding.myfavsRvFavorites.layoutManager = LinearLayoutManager(activity)
         myFavoritesBinding.myfavsRvFavorites.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+
+        return myFavoritesBinding.root
     }
 
     private fun initFilterButtons() {
@@ -63,8 +72,8 @@ class MyFavoritesActivity : AppCompatActivity() {
         filterButtons.forEach { button ->
             button.setOnClickListener {
                 activeFilterBtn?.let {
-                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.search_filter_button))
-                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.main_green))
+                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
+                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
                     activeFilterBtn = button
                 }
             }
@@ -72,7 +81,7 @@ class MyFavoritesActivity : AppCompatActivity() {
     }
 
     private fun showSortDialog() {
-        val bottomSheetDialog = BottomSheetDialog(this)
+        val bottomSheetDialog = BottomSheetDialog(requireActivity())
         sortDialogBinding = ComponentMyfavsSortDialogBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 

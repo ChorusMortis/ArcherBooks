@@ -3,15 +3,19 @@ package com.mobdeve.s12.mco
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ActivityHome2Binding
 
-class Home2Activity : AppCompatActivity() {
+class Home2Activity : Fragment() {
 
     private val books = BookGenerator.generateSampleBooks()
 
@@ -19,33 +23,46 @@ class Home2Activity : AppCompatActivity() {
     private lateinit var rvRecyclerView: RecyclerView
     private lateinit var rvAdapter: HomeRVAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewBinding = ActivityHome2Binding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+//        super.onCreate(savedInstanceState)
+//        viewBinding = ActivityHome2Binding.inflate(layoutInflater)
+//        setContentView(viewBinding.root)
+//
+//        setRVRecyclerView()
+//        addListenerSearchBtn()
+////        addListenerNavBar()
+//
+//        val botd = books.random() // TODO MCO3: Allow it to randomly query a book from the API
+//        setContentBOTD(botd)
+//        addListenerBOTD(botd)
+
+        viewBinding = ActivityHome2Binding.inflate(inflater, container, false)
 
         setRVRecyclerView()
         addListenerSearchBtn()
-//        addListenerNavBar()
 
         val botd = books.random() // TODO MCO3: Allow it to randomly query a book from the API
         setContentBOTD(botd)
         addListenerBOTD(botd)
+        return viewBinding.root
     }
 
     private fun setRVRecyclerView() {
         this.rvRecyclerView = viewBinding.homeRvVr
         this.rvAdapter = HomeRVAdapter(ArrayList(books))
         this.rvRecyclerView.adapter = this.rvAdapter
-        val mbbLinearLayoutManager = LinearLayoutManager(this)
+        val mbbLinearLayoutManager = LinearLayoutManager(activity)
         mbbLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         this.rvRecyclerView.layoutManager = mbbLinearLayoutManager
     }
 
     private fun addListenerSearchBtn() {
         viewBinding.homeBtnSearchBtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, SearchResultsActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(activity, SearchResultsActivity::class.java)
+//            startActivity(intent)
+            val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.navbar_fragment_controller) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.action_search)
         })
     }
 
@@ -59,7 +76,7 @@ class Home2Activity : AppCompatActivity() {
 
     private fun addListenerBOTD(botd: BookModel) {
         viewBinding.homeBotdClContainer.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, BookDetailsActivity::class.java)
+            val intent = Intent(activity, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, botd.title)
             intent.putExtra(BookDetailsActivity.YEAR_PUBLISHED_KEY, botd.publishYear)
             intent.putExtra(BookDetailsActivity.AUTHORS_KEY, botd.authors.joinToString(", "))

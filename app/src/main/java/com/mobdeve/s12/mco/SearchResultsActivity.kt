@@ -3,15 +3,19 @@ package com.mobdeve.s12.mco
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ActivitySearchResultsBinding
 import com.mobdeve.s12.mco.databinding.ComponentSearchresultsSortDialogBinding
 
-class SearchResultsActivity : AppCompatActivity() {
+class SearchResultsActivity : Fragment() {
     companion object {
         private const val VERTICAL_SPACE = 24
     }
@@ -31,10 +35,11 @@ class SearchResultsActivity : AppCompatActivity() {
     private var activeSortOption : SortOption = SortOption.RELEVANCE
     private var tempSortOption : SortOption? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        searchResultsBinding = ActivitySearchResultsBinding.inflate(layoutInflater)
-        setContentView(searchResultsBinding.root)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+//        super.onCreate(savedInstanceState)
+//        searchResultsBinding = ActivitySearchResultsBinding.inflate(layoutInflater)
+//        setContentView(searchResultsBinding.root)
+        searchResultsBinding = ActivitySearchResultsBinding.inflate(inflater, container, false)
 
         initSearchFilterButtons()
 
@@ -46,9 +51,12 @@ class SearchResultsActivity : AppCompatActivity() {
             showSortResultsDialog()
         }
 
+
         searchResultsBinding.searchresultsRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
-        searchResultsBinding.searchresultsRvResults.layoutManager = LinearLayoutManager(this)
+        searchResultsBinding.searchresultsRvResults.layoutManager = LinearLayoutManager(activity)
         searchResultsBinding.searchresultsRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+
+        return searchResultsBinding.root
     }
 
     private fun initSearchFilterButtons() {
@@ -64,8 +72,8 @@ class SearchResultsActivity : AppCompatActivity() {
         searchFilterButtons.forEach { button ->
             button.setOnClickListener {
                 activeSearchFilterBtn?.let {
-                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.search_filter_button))
-                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.main_green))
+                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
+                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
                     activeSearchFilterBtn = button
                 }
             }
@@ -73,7 +81,7 @@ class SearchResultsActivity : AppCompatActivity() {
     }
 
     private fun showSortResultsDialog() {
-        val bottomSheetDialog = BottomSheetDialog(this)
+        val bottomSheetDialog = BottomSheetDialog(requireActivity())
         sortDialogBinding = ComponentSearchresultsSortDialogBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 

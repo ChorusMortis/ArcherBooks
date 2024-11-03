@@ -38,7 +38,6 @@ class RegisterActivity : AppCompatActivity() {
         viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, Home2Activity::class.java)
             startActivity(intent)
-            finish()
         })
     }
 
@@ -47,7 +46,6 @@ class RegisterActivity : AppCompatActivity() {
         viewBinding.registerBtnSignupgoogle.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, Home2Activity::class.java)
             startActivity(intent)
-            finish()
         })
     }
 }
