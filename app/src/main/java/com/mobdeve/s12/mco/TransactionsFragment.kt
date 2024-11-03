@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ActivityMyTransactionsBinding
+import com.mobdeve.s12.mco.databinding.FragmentTransactionsBinding
 import com.mobdeve.s12.mco.databinding.ComponentMytransSortDialogBinding
 
 class TransactionsFragment : Fragment() {
@@ -26,7 +26,7 @@ class TransactionsFragment : Fragment() {
         OLDEST,
     }
 
-    private lateinit var myTransactionsBinding : ActivityMyTransactionsBinding
+    private lateinit var myTransactionsBinding : FragmentTransactionsBinding
     private lateinit var filterButtons : List<Button>
     private var activeFilterBtn : Button? = null
 
@@ -37,10 +37,10 @@ class TransactionsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 //        super.onCreate(savedInstanceState)
-//        myTransactionsBinding = ActivityMyTransactionsBinding.inflate(layoutInflater)
+//        myTransactionsBinding = FragmentTransactionsBinding.inflate(layoutInflater)
 //        setContentView(myTransactionsBinding.root)
 
-        myTransactionsBinding = ActivityMyTransactionsBinding.inflate(inflater, container, false)
+        myTransactionsBinding = FragmentTransactionsBinding.inflate(inflater, container, false)
 
         initFilterButtons()
 
