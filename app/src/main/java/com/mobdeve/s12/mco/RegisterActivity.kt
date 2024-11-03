@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -36,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         // TODO MCO3: Password validation (1) length, (2) characters
 
         viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, Home2Activity::class.java)
+            val intent = Intent(this, FragmentHome::class.java)
             startActivity(intent)
         })
     }
@@ -44,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun addListenerSignUpWithGoogleBtn() {
         // TODO MCO3: Add Google Handling
         viewBinding.registerBtnSignupgoogle.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, Home2Activity::class.java)
+            val intent = Intent(this, FragmentHome::class.java)
             startActivity(intent)
         })
     }

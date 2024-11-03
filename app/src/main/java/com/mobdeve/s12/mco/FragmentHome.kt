@@ -1,21 +1,17 @@
 package com.mobdeve.s12.mco
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ActivityHome2Binding
 
-class Home2Activity : Fragment() {
+class FragmentHome : Fragment() {
 
     private val books = BookGenerator.generateSampleBooks()
 

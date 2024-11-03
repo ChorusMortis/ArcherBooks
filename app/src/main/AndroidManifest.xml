@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".Home2Activity"
+            android:name=".FragmentHome"
             android:exported="false" />
         <activity
             android:name=".AdminTransactionsActivity"

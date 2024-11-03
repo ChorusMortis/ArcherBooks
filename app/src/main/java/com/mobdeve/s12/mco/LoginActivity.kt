@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import com.mobdeve.s12.mco.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -45,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
     private fun addListenerSignInWithGoogleBtn() {
         // TODO MCO3: Add Google Handling
         viewBinding.loginBtnSigningoogle.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, Home2Activity::class.java)
+            val intent = Intent(this, FragmentHome::class.java)
             startActivity(intent)
         })
     }
