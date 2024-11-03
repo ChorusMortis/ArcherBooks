@@ -7,16 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ActivityMyFavoritesBinding
-import com.mobdeve.s12.mco.databinding.ActivitySearchResultsBinding
-import com.mobdeve.s12.mco.databinding.ComponentMyfavsSortDialogBinding
+import com.mobdeve.s12.mco.databinding.ActivityMyTransactionsBinding
+import com.mobdeve.s12.mco.databinding.ComponentMytransSortDialogBinding
 
-class MyFavoritesActivity : Fragment() {
+class FragmentTransactions : Fragment() {
     companion object {
         private const val VERTICAL_SPACE = 24
     }
@@ -28,47 +26,47 @@ class MyFavoritesActivity : Fragment() {
         OLDEST,
     }
 
-    private lateinit var myFavoritesBinding : ActivityMyFavoritesBinding
+    private lateinit var myTransactionsBinding : ActivityMyTransactionsBinding
     private lateinit var filterButtons : List<Button>
     private var activeFilterBtn : Button? = null
 
-    private var sortDialogBinding : ComponentMyfavsSortDialogBinding? = null
+    private var sortDialogBinding : ComponentMytransSortDialogBinding? = null
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
     private var activeSortOption : SortOption = SortOption.TITLE
     private var tempSortOption : SortOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 //        super.onCreate(savedInstanceState)
-//        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(layoutInflater)
-//        setContentView(myFavoritesBinding.root)
-        myFavoritesBinding = ActivityMyFavoritesBinding.inflate(inflater, container, false)
+//        myTransactionsBinding = ActivityMyTransactionsBinding.inflate(layoutInflater)
+//        setContentView(myTransactionsBinding.root)
 
+        myTransactionsBinding = ActivityMyTransactionsBinding.inflate(inflater, container, false)
 
         initFilterButtons()
 
-        myFavoritesBinding.myfavsIbSortbtn.setOnClickListener {
+        myTransactionsBinding.mytransIbSortbtn.setOnClickListener {
             showSortDialog()
         }
 
-        myFavoritesBinding.myfavsRvFavorites.adapter = MyFavoritesFavsAdapter(BookGenerator.generateSampleBooks())
-        myFavoritesBinding.myfavsRvFavorites.layoutManager = LinearLayoutManager(activity)
-        myFavoritesBinding.myfavsRvFavorites.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+        myTransactionsBinding.mytransRvTransactions.adapter = MyTransactionsTransAdapter(BookGenerator.generateSampleBooks())
+        myTransactionsBinding.mytransRvTransactions.layoutManager = LinearLayoutManager(activity)
+        myTransactionsBinding.mytransRvTransactions.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
-        return myFavoritesBinding.root
+        return myTransactionsBinding.root
     }
 
     private fun initFilterButtons() {
         filterButtons = listOf(
-            myFavoritesBinding.myfavsBtnFiltermatchall,
-            myFavoritesBinding.myfavsBtnFiltermatchpending,
-            myFavoritesBinding.myfavsBtnFiltermatchpickedup,
-            myFavoritesBinding.myfavsBtnFiltermatchreturned,
-            myFavoritesBinding.myfavsBtnFiltermatchcancelled,
-            myFavoritesBinding.myfavsBtnFiltermatchpickupmissed,
-            myFavoritesBinding.myfavsBtnFiltermatchreturnmissed
+            myTransactionsBinding.mytransBtnFiltermatchall,
+            myTransactionsBinding.mytransBtnFiltermatchpending,
+            myTransactionsBinding.mytransBtnFiltermatchpickedup,
+            myTransactionsBinding.mytransBtnFiltermatchreturned,
+            myTransactionsBinding.mytransBtnFiltermatchcancelled,
+            myTransactionsBinding.mytransBtnFiltermatchpickupmissed,
+            myTransactionsBinding.mytransBtnFiltermatchreturnmissed
         )
 
-        activeFilterBtn = myFavoritesBinding.myfavsBtnFiltermatchall
+        activeFilterBtn = myTransactionsBinding.mytransBtnFiltermatchall
         filterButtons.forEach { button ->
             button.setOnClickListener {
                 activeFilterBtn?.let {
@@ -82,14 +80,14 @@ class MyFavoritesActivity : Fragment() {
 
     private fun showSortDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity())
-        sortDialogBinding = ComponentMyfavsSortDialogBinding.inflate(layoutInflater)
+        sortDialogBinding = ComponentMytransSortDialogBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 
         sortDialogOptionButtons = listOf(
-            SortOption.TITLE to sortDialogBinding!!.dialogMyfavsBtnFiltertitle,
-            SortOption.AUTHOR to sortDialogBinding!!.dialogMyfavsBtnFilterauthor,
-            SortOption.NEWEST to sortDialogBinding!!.dialogMyfavsBtnFilternewest,
-            SortOption.OLDEST to sortDialogBinding!!.dialogMyfavsBtnFilteroldest
+            SortOption.TITLE to sortDialogBinding!!.dialogMytransBtnFiltertitle,
+            SortOption.AUTHOR to sortDialogBinding!!.dialogMytransBtnFilterauthor,
+            SortOption.NEWEST to sortDialogBinding!!.dialogMytransBtnFilternewest,
+            SortOption.OLDEST to sortDialogBinding!!.dialogMytransBtnFilteroldest
         )
 
         sortDialogOptionButtons!!.forEach { (option, button) ->
@@ -106,7 +104,7 @@ class MyFavoritesActivity : Fragment() {
             tempSortOption = null
         }
 
-        sortDialogBinding!!.dialogMyfavsBtnConfirmbtn.setOnClickListener {
+        sortDialogBinding!!.dialogMytransBtnConfirmbtn.setOnClickListener {
             // save selected sorting option after user hits confirm button
             tempSortOption?.let {
                 activeSortOption = it

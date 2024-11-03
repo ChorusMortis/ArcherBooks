@@ -87,7 +87,7 @@ class FragmentHome : Fragment() {
 
 //    private fun addListenerNavBar() {
 //        viewBinding.homeNavbar.navbarBtnTransactions.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(this, MyTransactionsActivity::class.java)
+//            val intent = Intent(this, FragmentTransactions::class.java)
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 //            startActivity(intent)
 //            viewBinding.homeNavbar.navbarIvTransactionsIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.main_green))

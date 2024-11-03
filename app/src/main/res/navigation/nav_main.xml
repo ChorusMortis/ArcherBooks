@@ -12,7 +12,7 @@
         tools:layout="@layout/activity_home2" />
     <fragment
         android:id="@+id/action_transactions"
-        android:name="com.mobdeve.s12.mco.MyTransactionsActivity"
+        android:name="com.mobdeve.s12.mco.FragmentTransactions"
         android:label="activity_my_transactions"
         tools:layout="@layout/activity_my_transactions" />
     <fragment
@@ -21,7 +21,7 @@
         android:label="SearchResultsActivity" />
     <fragment
         android:id="@+id/action_favorites"
-        android:name="com.mobdeve.s12.mco.MyFavoritesActivity"
+        android:name="com.mobdeve.s12.mco.FragmentFavorites"
         android:label="activity_my_favorites"
         tools:layout="@layout/activity_my_favorites" />
 </navigation>
