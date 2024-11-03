@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ActivitySearchResultsBinding
 import com.mobdeve.s12.mco.databinding.ComponentSearchresultsSortDialogBinding
 
-class FragmentSearchResults : Fragment() {
+class SearchResultsFragment : Fragment() {
     companion object {
         private const val VERTICAL_SPACE = 24
     }

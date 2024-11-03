@@ -7,21 +7,21 @@
 
     <fragment
         android:id="@+id/action_home"
-        android:name="com.mobdeve.s12.mco.FragmentHome"
+        android:name="com.mobdeve.s12.mco.HomeFragment"
         android:label="activity_home2"
         tools:layout="@layout/activity_home2" />
     <fragment
         android:id="@+id/action_transactions"
-        android:name="com.mobdeve.s12.mco.FragmentTransactions"
+        android:name="com.mobdeve.s12.mco.TransactionsFragment"
         android:label="activity_my_transactions"
         tools:layout="@layout/activity_my_transactions" />
     <fragment
         android:id="@+id/action_search"
-        android:name="com.mobdeve.s12.mco.FragmentSearchResults"
+        android:name="com.mobdeve.s12.mco.SearchResultsFragment"
         android:label="SearchResultsActivity" />
     <fragment
         android:id="@+id/action_favorites"
-        android:name="com.mobdeve.s12.mco.FragmentFavorites"
+        android:name="com.mobdeve.s12.mco.FavoritesFragment"
         android:label="activity_my_favorites"
         tools:layout="@layout/activity_my_favorites" />
 </navigation>

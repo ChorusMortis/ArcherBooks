@@ -44,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun addListenerSearchBtn() {
         viewBinding.homeBtnSearch.setOnClickListener {
-            val intent = Intent(this, FragmentSearchResults::class.java)
+            val intent = Intent(this, SearchResultsFragment::class.java)
             startActivity(intent)
         }
     }

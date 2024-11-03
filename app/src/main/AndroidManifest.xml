@@ -13,16 +13,16 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".FragmentHome"
+            android:name=".HomeFragment"
             android:exported="false" />
         <activity
             android:name=".AdminTransactionsActivity"
             android:exported="false" />
         <activity
-            android:name=".FragmentTransactions"
+            android:name=".TransactionsFragment"
             android:exported="false" />
         <activity
-            android:name=".FragmentFavorites"
+            android:name=".FavoritesFragment"
             android:exported="false" />
         <activity
             android:name=".BookInformationActivity"
@@ -31,7 +31,7 @@
             android:name=".BookDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".FragmentSearchResults"
+            android:name=".SearchResultsFragment"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
