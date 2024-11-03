@@ -9,19 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ActivityHome2Binding
+import com.mobdeve.s12.mco.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private val books = BookGenerator.generateSampleBooks()
 
-    private lateinit var viewBinding : ActivityHome2Binding
+    private lateinit var viewBinding : FragmentHomeBinding
     private lateinit var rvRecyclerView: RecyclerView
     private lateinit var rvAdapter: HomeRVAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 //        super.onCreate(savedInstanceState)
-//        viewBinding = ActivityHome2Binding.inflate(layoutInflater)
+//        viewBinding = FragmentHomeBinding.inflate(layoutInflater)
 //        setContentView(viewBinding.root)
 //
 //        setRVRecyclerView()
@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
 //        setContentBOTD(botd)
 //        addListenerBOTD(botd)
 
-        viewBinding = ActivityHome2Binding.inflate(inflater, container, false)
+        viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setRVRecyclerView()
         addListenerSearchBtn()

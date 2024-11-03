@@ -9,7 +9,7 @@
         android:id="@+id/action_home"
         android:name="com.mobdeve.s12.mco.HomeFragment"
         android:label="activity_home2"
-        tools:layout="@layout/activity_home2" />
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/action_transactions"
         android:name="com.mobdeve.s12.mco.TransactionsFragment"
