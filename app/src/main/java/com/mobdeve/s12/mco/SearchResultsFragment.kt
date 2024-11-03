@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ActivitySearchResultsBinding
+import com.mobdeve.s12.mco.databinding.FragmentSearchResultsBinding
 import com.mobdeve.s12.mco.databinding.ComponentSearchresultsSortDialogBinding
 
 class SearchResultsFragment : Fragment() {
@@ -25,7 +25,7 @@ class SearchResultsFragment : Fragment() {
         OLDEST,
     }
 
-    private lateinit var searchResultsBinding : ActivitySearchResultsBinding
+    private lateinit var searchResultsBinding : FragmentSearchResultsBinding
     private lateinit var searchFilterButtons : List<Button>
     private var activeSearchFilterBtn : Button? = null
 
@@ -36,9 +36,9 @@ class SearchResultsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 //        super.onCreate(savedInstanceState)
-//        searchResultsBinding = ActivitySearchResultsBinding.inflate(layoutInflater)
+//        searchResultsBinding = FragmentSearchResultsBinding.inflate(layoutInflater)
 //        setContentView(searchResultsBinding.root)
-        searchResultsBinding = ActivitySearchResultsBinding.inflate(inflater, container, false)
+        searchResultsBinding = FragmentSearchResultsBinding.inflate(inflater, container, false)
 
         initSearchFilterButtons()
 
