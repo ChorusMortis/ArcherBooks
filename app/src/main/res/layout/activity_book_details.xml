@@ -26,14 +26,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="315dp"
                 android:layout_marginTop="32dp"
+                android:maxHeight="315dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/book_details_iv_cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:alpha="0.3"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -44,30 +45,31 @@
 
                 <View
                     android:id="@+id/book_details_v"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/style_fading_dark_tint"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/book_details_iv_cover_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/book_hunger_games"
-                    android:clipToOutline="true"
-                    android:elevation="15dp"
-                    android:maxWidth="178dp"
-                    android:maxHeight="273dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/book_details_v"
-                    app:srcCompat="@drawable/book_hunger_games" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/book_details_iv_cover_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/book_hunger_games"
+                android:clipToOutline="true"
+                android:elevation="15dp"
+                android:maxWidth="178dp"
+                android:maxHeight="273dp"
+                app:layout_constraintBottom_toBottomOf="@+id/book_details_cl_cover"
+                app:layout_constraintEnd_toEndOf="@+id/book_details_cl_cover"
+                app:layout_constraintStart_toStartOf="@+id/book_details_cl_cover"
+                app:layout_constraintTop_toTopOf="@+id/book_details_cl_cover"
+                app:srcCompat="@drawable/book_little_red_riding_hood" />
 
             <ImageButton
                 tools:targetApi="29"
@@ -86,13 +88,14 @@
                 android:id="@+id/book_details_cl_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:background="@color/gray_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_details_cl_cover">
+                app:layout_constraintTop_toBottomOf="@+id/book_details_iv_cover_2">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/book_details_tv_title"
