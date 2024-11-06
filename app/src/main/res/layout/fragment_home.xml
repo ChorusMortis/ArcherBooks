@@ -44,7 +44,7 @@
                 android:fontFamily="@font/sf_ui_text_semibold"
                 android:text="Patrick James"
                 android:textColor="@color/main_green"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_tv_welcome_label" />
 
@@ -68,7 +68,7 @@
                 android:fontFamily="@font/sf_ui_text_bold"
                 android:text="Book borrowing\nmade easy"
                 android:textColor="@color/dark_background"
-                android:textSize="32sp"
+                android:textSize="36sp"
                 app:layout_constraintEnd_toEndOf="@+id/home_btn_search_btn"
                 app:layout_constraintStart_toStartOf="@+id/home_tv_user_name"
                 app:layout_constraintTop_toBottomOf="@+id/home_tv_user_name" />
@@ -82,7 +82,7 @@
                 android:fontFamily="@font/sf_ui_text_bold"
                 android:text="Book of the Day"
                 android:textColor="@color/main_green"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_tv_slogan" />
 
@@ -208,7 +208,7 @@
                 android:fontFamily="@font/sf_ui_text_bold"
                 android:text="You Viewed Recently"
                 android:textColor="@color/main_green"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_botd_cl_container" />
 
