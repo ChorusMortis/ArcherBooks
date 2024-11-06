@@ -9,15 +9,8 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding)
         viewBinding.itemSrTvTitle.text = book.title
         viewBinding.itemSrAuthors.text = book.authors.joinToString(", ")
 
-//        if (book.hasTransaction == HasTransaction.NONE || book.hasTransaction == HasTransaction.INACTIVE) {
-//            viewBinding.searchresultscardTvStatus.text = "Book Available" // TODO MCO3: Transfer this as an enum class to Transaction class
-//            viewBinding.searchresultscardTvStatus.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_available))
-//        } else {
-//            // TODO MCO3: Handle status when transaction is active (Pick up by..., Return by..., Overdue..., Unavailable...)
-//        }
-//
-//        // if(book in current user's favorites list) -> select toggled on favorite button
-//        // else -> select toggled off
-//        viewBinding.searchresultscardBtnFavorite.setImageResource(R.drawable.favorite_btn_toggled_off)
+        // TODO MCO3: Pass Transaction array list to adapter, then pass the specific transaction to ViewHolder via bindData fun
+        // Then, create a conditional to properly check icon to set
+        viewBinding.itemSearchResultsStatusIcon.setImageResource(R.drawable.icon_available)
     }
 }

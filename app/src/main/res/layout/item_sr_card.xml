@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_search_results_cl"
-    android:layout_width="match_parent"
+    android:layout_width="170dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,18 +16,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/item_sr_iv_cover"
+        <FrameLayout
+            android:id="@+id/item_search_results_fl"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:elevation="3dp"
-            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1.2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/SearchResults.CornerSize"
-            app:srcCompat="@drawable/book_scarlet_witch" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/item_sr_iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/SearchResults.CornerSize"
+                app:srcCompat="@drawable/book_scarlet_witch" />
+
+        </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/item_sr_tv_title"
@@ -42,10 +48,10 @@
             android:text="Scarlet Witch Vol. 2 The Rise from the Ashes"
             android:textColor="@color/dark_background"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/item_sr_iv_cover"
+            app:layout_constraintEnd_toEndOf="@+id/item_search_results_fl"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/item_sr_iv_cover"
-            app:layout_constraintTop_toBottomOf="@+id/item_sr_iv_cover" />
+            app:layout_constraintStart_toStartOf="@+id/item_search_results_fl"
+            app:layout_constraintTop_toBottomOf="@+id/item_search_results_fl" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/item_sr_authors"
@@ -72,6 +78,22 @@
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/item_sr_tv_title"
             app:layout_constraintTop_toBottomOf="@+id/item_sr_authors" />
+
+        <ImageView
+            android:id="@+id/item_search_results_status_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/style_circular_background"
+            android:backgroundTint="@color/white"
+            android:elevation="3dp"
+            android:padding="7dp"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_available" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
