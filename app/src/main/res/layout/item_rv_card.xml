@@ -12,7 +12,7 @@
         android:id="@+id/item_viewed_recently_iv_cover"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:elevation="1.5dp"
+        android:elevation="3dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
