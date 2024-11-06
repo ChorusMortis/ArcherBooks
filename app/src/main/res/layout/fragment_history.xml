@@ -6,163 +6,194 @@
     android:layout_height="match_parent"
     android:background="@color/gray_bg">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/history_cl_overview_card_bg"
+    <TextView
+        android:id="@+id/history_tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/sf_ui_text_bold"
+        android:text="My Transactions"
+        android:textColor="@color/main_green"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/style_rounded_borrow_popup"
-        android:backgroundTint="#8061AA63"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/history_tv_label">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_current_label"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/history_cl_overview_card_bg"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/style_rounded_borrow_popup"
+            android:backgroundTint="#8061AA63">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_current_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Current"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_current_value"
+                app:layout_constraintEnd_toStartOf="@+id/history_tv_overdue_label"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overview_current_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/sf_ui_text_bold"
+                android:text="5"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_current_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_current_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overdue_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Overdue"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_overdue_value"
+                app:layout_constraintEnd_toStartOf="@+id/history_tv_returned_label"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/history_tv_current_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overview_overdue_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_ui_text_bold"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_current_value"
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_overdue_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_overdue_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_returned_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Returned"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_returned_value"
+                app:layout_constraintEnd_toStartOf="@+id/history_tv_cancelled_label"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/history_tv_overdue_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overview_returned_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_ui_text_bold"
+                android:text="19"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_overdue_value"
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_returned_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_returned_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_cancelled_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Cancelled"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_cancelled_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/history_tv_returned_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overview_cancelled_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_ui_text_bold"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_returned_value"
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_cancelled_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_cancelled_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/history_cl_overview_card"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="-4dp"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:text="Current"
-            android:textColor="@color/text_over_gray_bg"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_current_value"
-            app:layout_constraintEnd_toStartOf="@+id/history_tv_overdue_label"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:background="@drawable/style_rounded_borrow_popup"
+            android:backgroundTint="@color/main_green">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_overview_current_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:fontFamily="@font/sf_ui_text_bold"
-            android:text="5"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/history_tv_current_label"
-            app:layout_constraintStart_toStartOf="@+id/history_tv_current_label" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_total_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Total Borrowed Books"
+                android:textColor="@color/gray_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_overdue_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-4dp"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:text="Overdue"
-            android:textColor="@color/text_over_gray_bg"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_overdue_value"
-            app:layout_constraintEnd_toStartOf="@+id/history_tv_returned_label"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/history_tv_current_label" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overview_total_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/sf_ui_text_bold"
+                android:text="24 Books"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_total_label"
+                app:layout_constraintTop_toBottomOf="@+id/history_tv_total_label" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_overview_overdue_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sf_ui_text_bold"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_current_value"
-            app:layout_constraintEnd_toEndOf="@+id/history_tv_overdue_label"
-            app:layout_constraintStart_toStartOf="@+id/history_tv_overdue_label" />
+    </FrameLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_returned_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-4dp"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:text="Returned"
-            android:textColor="@color/text_over_gray_bg"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_returned_value"
-            app:layout_constraintEnd_toStartOf="@+id/history_tv_cancelled_label"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/history_tv_overdue_label" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_overview_returned_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sf_ui_text_bold"
-            android:text="19"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_overdue_value"
-            app:layout_constraintEnd_toEndOf="@+id/history_tv_returned_label"
-            app:layout_constraintStart_toStartOf="@+id/history_tv_returned_label" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_cancelled_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-4dp"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:text="Cancelled"
-            android:textColor="@color/text_over_gray_bg"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_cancelled_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/history_tv_returned_label" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_overview_cancelled_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sf_ui_text_bold"
-            android:text="3"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_returned_value"
-            app:layout_constraintEnd_toEndOf="@+id/history_tv_cancelled_label"
-            app:layout_constraintStart_toStartOf="@+id/history_tv_cancelled_label" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/history_cl_overview_card"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/history_btn_sort"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/style_rounded_borrow_popup"
-        android:backgroundTint="@color/main_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/history_cl_overview_card_bg">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_total_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:text="Total Borrowed Books"
-            android:textColor="@color/gray_bg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/history_tv_overview_total_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/sf_ui_text_bold"
-            android:text="24 Books"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/history_tv_total_label"
-            app:layout_constraintTop_toBottomOf="@+id/history_tv_total_label" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:backgroundTint="@color/white"
+        android:padding="10dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout"
+        app:srcCompat="@drawable/icon_filter_sort" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history_rv"
@@ -174,19 +205,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_cl_overview_card_bg" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/sf_ui_text_bold"
-        android:text="My Transactions"
-        android:textColor="@color/main_green"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
