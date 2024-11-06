@@ -64,7 +64,7 @@
                 android:id="@+id/home_tv_slogan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="18dp"
                 android:fontFamily="@font/sf_ui_text_bold"
                 android:text="Book borrowing\nmade easy"
                 android:textColor="@color/dark_background"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="22dp"
                 android:fontFamily="@font/sf_ui_text_bold"
                 android:text="Book of the Day"
                 android:textColor="@color/main_green"
@@ -89,11 +89,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/home_botd_cl_container"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="230dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="24dp"
-                android:background="@drawable/rounded_button_on_light"
+                android:background="@drawable/style_botd_radius"
                 android:elevation="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
+                    app:shapeAppearanceOverlay="@style/Botd.Bg.CornerSize"
                     app:srcCompat="@drawable/book_little_red_riding_hood" />
 
                 <View
@@ -143,7 +143,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize"
+                    app:shapeAppearanceOverlay="@style/Botd.Inner.CornerSize"
                     app:srcCompat="@drawable/book_geronimo_stilton" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -157,7 +157,7 @@
                     android:maxLines="3"
                     android:text="Geronimo's Valentine (Geronimo Stilton #36)"
                     android:textColor="@color/dark_background"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@+id/home_botd_tv_authors"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -174,7 +174,7 @@
                     android:maxLines="2"
                     android:text="Geronimo Stilton"
                     android:textColor="@color/dark_background"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/home_botd_tv_date"
                     app:layout_constraintEnd_toEndOf="@+id/home_botd_tv_title"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -191,7 +191,7 @@
                     android:maxLines="2"
                     android:text="2020"
                     android:textColor="@color/dark_background"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/home_botd_iv_bg"
                     app:layout_constraintEnd_toEndOf="@+id/home_botd_tv_title"
                     app:layout_constraintHorizontal_bias="0.5"
