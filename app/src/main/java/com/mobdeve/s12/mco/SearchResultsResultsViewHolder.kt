@@ -1,10 +1,6 @@
 package com.mobdeve.s12.mco
 
-import android.view.Gravity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardBinding
 import com.mobdeve.s12.mco.databinding.ItemSrCardBinding
 
 class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
