@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_ts_cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:background="@drawable/style_botd_radius"
+    android:elevation="2dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/item_ts_tv_cover"
+        android:layout_width="114dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Botd.Bg.CornerSize"
+        app:srcCompat="@drawable/book_geronimo_stilton" />
+
+    <TextView
+        android:id="@+id/item_ts_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_bold"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textColor="@color/main_green"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/item_ts_tv_cover"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_ts_tv_authors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_medium"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textColor="@color/text_over_white_bg"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/item_ts_tv_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/item_ts_tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/item_ts_tv_title" />
+
+    <TextView
+        android:id="@+id/item_ts_tv_trans_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:maxLines="1"
+        android:text="Transaction Date:"
+        android:textColor="@color/text_over_white_bg"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/item_ts_tv_authors"
+        app:layout_constraintTop_toBottomOf="@+id/item_ts_tv_authors" />
+
+    <TextView
+        android:id="@+id/item_ts_tv_trans_date_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:maxLines="1"
+        android:text="Jun 3, 2024"
+        android:textColor="@color/text_over_white_bg"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_ts_tv_trans_date_label"
+        app:layout_constraintStart_toEndOf="@+id/item_ts_tv_trans_date_label"
+        app:layout_constraintTop_toTopOf="@+id/item_ts_tv_trans_date_label" />
+
+    <TextView
+        android:id="@+id/item_ts_tv_borrow_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:maxLines="1"
+        android:text="Return by"
+        android:textColor="@color/book_borrowed"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/item_ts_tv_borrow_status_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:maxLines="1"
+        android:text="Sep 3, 2025"
+        android:textColor="@color/book_borrowed"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_ts_tv_borrow_status_label"
+        app:layout_constraintStart_toEndOf="@+id/item_ts_tv_borrow_status_label"
+        app:layout_constraintTop_toTopOf="@+id/item_ts_tv_borrow_status_label" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/item_ts_tv_trans_date_label"
+        app:layout_constraintTop_toBottomOf="@+id/item_ts_tv_trans_date_label"
+        app:srcCompat="@drawable/icon_timer" />
+</androidx.constraintlayout.widget.ConstraintLayout>
