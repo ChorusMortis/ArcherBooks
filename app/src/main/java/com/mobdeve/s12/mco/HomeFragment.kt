@@ -24,6 +24,7 @@ class HomeFragment : Fragment() {
 
         setRVRecyclerView()
         addListenerSearchBtn()
+        scrollToTop()
 
         val botd = books.random() // TODO MCO3: Allow it to randomly query a book from the API
         setContentBOTD(botd)
@@ -46,6 +47,12 @@ class HomeFragment : Fragment() {
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_search)
         })
+    }
+
+    private fun scrollToTop() {
+        viewBinding.homeSlContainer.post{
+            viewBinding.homeSlContainer.scrollTo(0, 0)
+        }
     }
 
     private fun setContentBOTD(botd: BookModel) {
