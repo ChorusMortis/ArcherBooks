@@ -5,6 +5,7 @@
     android:id="@+id/navbar_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_bg"
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -12,6 +13,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="60dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,15 +24,17 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navbar_nv"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="60dp"
         android:background="@drawable/style_bottom_navbar_radius"
+        android:forceHasOverlappingRendering="false"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:theme="@style/NavBarStyle"
-        app:itemIconSize="28dp"
+        app:itemBackground="@android:color/transparent"
+        app:itemIconSize="24dp"
         app:itemIconTint="@color/navbar_icon_colors"
-        app:itemPaddingBottom="26dp"
-        app:itemPaddingTop="24dp"
+        app:itemPaddingBottom="13dp"
+        app:itemPaddingTop="11dp"
         app:itemTextColor="@color/navbar_icon_colors"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
