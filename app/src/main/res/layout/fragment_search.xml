@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_cl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg">
+
+    <ImageButton
+        android:id="@+id/search_btn_back"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="29" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/search_tv_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/sf_ui_text_bold"
+        android:text="Search"
+        android:textAlignment="center"
+        android:textColor="@color/main_green"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/search_et_search_bar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/style_search_bar_radius"
+        android:hint="Search Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSearch Archer BooksSasopdkpoask dpoaksdpoasdp oasjdasj dpas jd[as jdas jdasi jdpoas jd[asj d"
+        android:paddingStart="50dp"
+        android:paddingEnd="56dp"
+        android:singleLine="true"
+        android:textColor="@color/main_green"
+        android:textColorHint="@color/text_over_white_bg"
+        android:textSize="12sp"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_tv_header" />
+
+    <ImageView
+        android:id="@+id/search_iv_search_bar_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/search_et_search_bar"
+        app:layout_constraintStart_toStartOf="@+id/search_et_search_bar"
+        app:layout_constraintTop_toTopOf="@+id/search_et_search_bar"
+        app:srcCompat="@drawable/icon_search_search_screen" />
+
+    <ImageButton
+        android:id="@+id/search_btn_filter_sort"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="6dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/search_et_search_bar"
+        app:layout_constraintEnd_toEndOf="@+id/search_et_search_bar"
+        app:layout_constraintTop_toTopOf="@+id/search_et_search_bar"
+        app:srcCompat="@drawable/icon_filter_sort" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_rv_results"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_et_search_bar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

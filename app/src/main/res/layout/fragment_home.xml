@@ -55,7 +55,7 @@
                 android:background="@drawable/style_circular_background"
                 android:backgroundTint="#FFFFFF"
                 android:padding="15dp"
-                android:src="@drawable/icon_search"
+                android:src="@drawable/icon_search_home_screen"
                 app:layout_constraintBottom_toBottomOf="@+id/home_tv_user_name"
                 app:layout_constraintEnd_toEndOf="parent" />
 
