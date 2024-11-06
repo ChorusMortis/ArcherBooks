@@ -1,11 +1,12 @@
 package com.mobdeve.s12.mco
 
 import android.content.Intent
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemSearchresultsCardBinding
+import com.mobdeve.s12.mco.databinding.ItemSrCardBinding
 
 class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : RecyclerView.Adapter<SearchResultsResultsViewHolder>() {
     override fun onCreateViewHolder(
@@ -15,9 +16,15 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
         // TODO Later: Add on-click listener for Borrow -> should also launch an intent to book details but scrolled down
         // TODO MCO3: Add on-click listener for Favorite button that will add the book to the user's favorites list
 
-        val itemSearchResultsCardBinding = ItemSearchresultsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemSearchResultsCardBinding = ItemSrCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val srViewHolder = SearchResultsResultsViewHolder(itemSearchResultsCardBinding)
         addListenerCard(srViewHolder, itemSearchResultsCardBinding)
+
+        if(srViewHolder.bindingAdapterPosition % 2 == 0) {
+            srViewHolder.itemView.foregroundGravity = Gravity.START
+        } else {
+            srViewHolder.itemView.foregroundGravity = Gravity.END
+        }
         return srViewHolder
     }
 
@@ -29,7 +36,7 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
         holder.bindData(data[position])
     }
 
-    private fun addListenerCard(holder : SearchResultsResultsViewHolder, itemSearchResultsCardBinding: ItemSearchresultsCardBinding) {
+    private fun addListenerCard(holder : SearchResultsResultsViewHolder, itemSearchResultsCardBinding: ItemSrCardBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)

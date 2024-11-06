@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MarginItemDecoration(private val displayMetrics: DisplayMetrics, private val spaceSize: Int) : RecyclerView.ItemDecoration() {
@@ -17,6 +18,19 @@ class MarginItemDecoration(private val displayMetrics: DisplayMetrics, private v
         val position = parent.getChildAdapterPosition(view)
         val itemCount = state.itemCount
         val layoutManager = parent.layoutManager
+
+        if (layoutManager is GridLayoutManager) {
+            outRect.top = spaceSize
+            outRect.bottom = spaceSize
+
+            if (position % 2 == 0) {
+                outRect.right = spaceSize
+            } else {
+                outRect.left = spaceSize
+            }
+
+            return
+        }
 
         if (layoutManager?.canScrollHorizontally() == true) {
             outRect.left = spaceSize

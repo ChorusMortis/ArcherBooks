@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.FragmentSearchResultsBinding
+import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
 import com.mobdeve.s12.mco.databinding.ComponentSearchresultsSortDialogBinding
 
 class SearchResultsFragment : Fragment() {
     companion object {
-        private const val VERTICAL_SPACE = 24
+        private const val VERTICAL_SPACE = 12
     }
 
     private enum class SortOption {
@@ -25,7 +26,7 @@ class SearchResultsFragment : Fragment() {
         OLDEST,
     }
 
-    private lateinit var searchResultsBinding : FragmentSearchResultsBinding
+    private lateinit var searchResultsBinding : FragmentSearchBinding
     private lateinit var searchFilterButtons : List<Button>
     private var activeSearchFilterBtn : Button? = null
 
@@ -35,44 +36,44 @@ class SearchResultsFragment : Fragment() {
     private var tempSortOption : SortOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        searchResultsBinding = FragmentSearchResultsBinding.inflate(inflater, container, false)
+        searchResultsBinding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        initSearchFilterButtons()
-        searchResultsBinding.searchresultsIbSearchbtn.setOnClickListener {
-            activeSortOption = SortOption.RELEVANCE
-        }
+//        initSearchFilterButtons()
+//        searchResultsBinding.searchresultsIbSearchbtn.setOnClickListener {
+//            activeSortOption = SortOption.RELEVANCE
+//        }
 
-        searchResultsBinding.searchresultsIbSortbtn.setOnClickListener {
+        searchResultsBinding.searchBtnFilterSort.setOnClickListener {
             showSortResultsDialog()
         }
 
-        searchResultsBinding.searchresultsRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
-        searchResultsBinding.searchresultsRvResults.layoutManager = LinearLayoutManager(activity)
-        searchResultsBinding.searchresultsRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+        searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
+        searchResultsBinding.searchRvResults.layoutManager = GridLayoutManager(activity, 2)
+        searchResultsBinding.searchRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         return searchResultsBinding.root
     }
 
-    private fun initSearchFilterButtons() {
-        searchFilterButtons = listOf(
-            searchResultsBinding.searchresultsBtnFiltermatchall,
-            searchResultsBinding.searchresultsBtnFiltermatchtitle,
-            searchResultsBinding.searchresultsBtnFiltermatchauthor,
-            searchResultsBinding.searchresultsBtnFiltermatchsubject,
-            searchResultsBinding.searchresultsBtnFiltermatchpublisher
-        )
-
-        activeSearchFilterBtn = searchResultsBinding.searchresultsBtnFiltermatchall
-        searchFilterButtons.forEach { button ->
-            button.setOnClickListener {
-                activeSearchFilterBtn?.let {
-                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
-                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
-                    activeSearchFilterBtn = button
-                }
-            }
-        }
-    }
+//    private fun initSearchFilterButtons() {
+//        searchFilterButtons = listOf(
+//            searchResultsBinding.searchresultsBtnFiltermatchall,
+//            searchResultsBinding.searchresultsBtnFiltermatchtitle,
+//            searchResultsBinding.searchresultsBtnFiltermatchauthor,
+//            searchResultsBinding.searchresultsBtnFiltermatchsubject,
+//            searchResultsBinding.searchresultsBtnFiltermatchpublisher
+//        )
+//
+//        activeSearchFilterBtn = searchResultsBinding.searchresultsBtnFiltermatchall
+//        searchFilterButtons.forEach { button ->
+//            button.setOnClickListener {
+//                activeSearchFilterBtn?.let {
+//                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
+//                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
+//                    activeSearchFilterBtn = button
+//                }
+//            }
+//        }
+//    }
 
     private fun showSortResultsDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity())
