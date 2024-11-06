@@ -40,9 +40,9 @@ class TransactionsFragment : Fragment() {
 
 //        initFilterButtons()
 
-//        myTransactionsBinding.mytransIbSortbtn.setOnClickListener {
-//            showSortDialog()
-//        }
+        myTransactionsBinding.historyBtnSort.setOnClickListener {
+            showSortDialog()
+        }
 
         myTransactionsBinding.historyRv.adapter = TransactionsTransAdapter(BookGenerator.generateSampleBooks())
         myTransactionsBinding.historyRv.layoutManager = LinearLayoutManager(activity)
@@ -75,15 +75,15 @@ class TransactionsFragment : Fragment() {
 //    }
 
     private fun showSortDialog() {
-        val bottomSheetDialog = BottomSheetDialog(requireActivity())
+        val bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetDialog)
         sortDialogBinding = ComponentMytransSortDialogBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 
         sortDialogOptionButtons = listOf(
-            SortOption.TITLE to sortDialogBinding!!.dialogMytransBtnFiltertitle,
-            SortOption.AUTHOR to sortDialogBinding!!.dialogMytransBtnFilterauthor,
-            SortOption.NEWEST to sortDialogBinding!!.dialogMytransBtnFilternewest,
-            SortOption.OLDEST to sortDialogBinding!!.dialogMytransBtnFilteroldest
+            SortOption.TITLE to sortDialogBinding!!.dialogHistoryBtnSortTitle,
+            SortOption.AUTHOR to sortDialogBinding!!.dialogHistoryBtnSortAuthorname,
+            SortOption.NEWEST to sortDialogBinding!!.dialogHistoryBtnSortNewest,
+//            SortOption.OLDEST to sortDialogBinding!!.dialogMytransBtnFilteroldest
         )
 
         sortDialogOptionButtons!!.forEach { (option, button) ->
@@ -100,7 +100,7 @@ class TransactionsFragment : Fragment() {
             tempSortOption = null
         }
 
-        sortDialogBinding!!.dialogMytransBtnConfirmbtn.setOnClickListener {
+        sortDialogBinding!!.dialogHistoryBtnConfirmbtn.setOnClickListener {
             // save selected sorting option after user hits confirm button
             tempSortOption?.let {
                 activeSortOption = it
