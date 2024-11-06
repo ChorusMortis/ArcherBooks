@@ -73,20 +73,6 @@
             app:layout_constraintStart_toStartOf="@+id/item_sr_tv_title"
             app:layout_constraintTop_toBottomOf="@+id/item_sr_authors" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_sr_publisher"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:maxLines="1"
-            android:text="Phoenix Publishing House"
-            android:textColor="@color/text_over_gray_bg"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/item_sr_tv_title"
-            app:layout_constraintTop_toBottomOf="@+id/item_sr_year" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

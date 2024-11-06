@@ -146,6 +146,22 @@
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
                     app:layout_constraintTop_toBottomOf="@+id/book_details_tv_authors" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/book_details_tv_publisher"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/sf_ui_text_regular_italic"
+                    android:maxLines="1"
+                    android:text="Published by The Phoenix Publishing House"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_over_gray_bg"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
+                    app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/book_details_tv_year" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/book_details_cl_side_info"
                     android:layout_width="0dp"
@@ -154,7 +170,7 @@
                     android:background="@drawable/style_book_details_side_info_radius"
                     app:layout_constraintEnd_toEndOf="@+id/book_details_tv_title"
                     app:layout_constraintStart_toStartOf="@+id/book_details_tv_title"
-                    app:layout_constraintTop_toBottomOf="@+id/book_details_tv_year">
+                    app:layout_constraintTop_toBottomOf="@+id/book_details_tv_publisher">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/book_details_tv_shelf_location"

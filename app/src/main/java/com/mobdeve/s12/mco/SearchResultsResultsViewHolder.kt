@@ -8,7 +8,6 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding)
         viewBinding.itemSrIvCover.setImageResource(book.coverResource)
         viewBinding.itemSrTvTitle.text = book.title
         viewBinding.itemSrAuthors.text = book.authors.joinToString(", ")
-        viewBinding.itemSrPublisher.text = book.publisher
 
 //        if (book.hasTransaction == HasTransaction.NONE || book.hasTransaction == HasTransaction.INACTIVE) {
 //            viewBinding.searchresultscardTvStatus.text = "Book Available" // TODO MCO3: Transfer this as an enum class to Transaction class

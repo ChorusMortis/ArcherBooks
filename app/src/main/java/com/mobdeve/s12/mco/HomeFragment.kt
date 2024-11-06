@@ -70,6 +70,7 @@ class HomeFragment : Fragment() {
             intent.putExtra(BookDetailsActivity.YEAR_PUBLISHED_KEY, botd.publishYear)
             intent.putExtra(BookDetailsActivity.AUTHORS_KEY, botd.authors.joinToString(", "))
             intent.putExtra(BookDetailsActivity.COVER_KEY, botd.coverResource)
+            intent.putExtra(BookDetailsActivity.PUBLISHER_KEY, botd.publisher)
             intent.putExtra(BookDetailsActivity.STATUS_KEY, "Book Available") // TODO MCO3 comes from transaction
             intent.putExtra(BookDetailsActivity.SHELF_LOCATION_KEY, botd.shelfLocation)
             intent.putExtra(BookDetailsActivity.DESCRIPTION_KEY, botd.description)
