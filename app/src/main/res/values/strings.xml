@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Archer Books</string>
     <string name="terms_and_conditions"><u>Terms and Conditions</u>.</string>
+
+    <string name="to_pick_up">Pick up by</string>
+    <string name="to_return">Return by</string>
+    <string name="overdue">Overdue:</string>
+    <string name="cancelled">Cancelled:</string>
+    <string name="returned">Returned:</string>
+
 </resources>

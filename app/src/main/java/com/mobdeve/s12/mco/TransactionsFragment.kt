@@ -11,12 +11,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.FragmentTransactionsBinding
+import com.mobdeve.s12.mco.databinding.FragmentHistoryBinding
 import com.mobdeve.s12.mco.databinding.ComponentMytransSortDialogBinding
 
 class TransactionsFragment : Fragment() {
     companion object {
-        private const val VERTICAL_SPACE = 24
+        private const val VERTICAL_SPACE = 12
     }
 
     private enum class SortOption {
@@ -26,7 +26,7 @@ class TransactionsFragment : Fragment() {
         OLDEST,
     }
 
-    private lateinit var myTransactionsBinding : FragmentTransactionsBinding
+    private lateinit var myTransactionsBinding : FragmentHistoryBinding
     private lateinit var filterButtons : List<Button>
     private var activeFilterBtn : Button? = null
 
@@ -36,43 +36,43 @@ class TransactionsFragment : Fragment() {
     private var tempSortOption : SortOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        myTransactionsBinding = FragmentTransactionsBinding.inflate(inflater, container, false)
+        myTransactionsBinding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        initFilterButtons()
+//        initFilterButtons()
 
-        myTransactionsBinding.mytransIbSortbtn.setOnClickListener {
-            showSortDialog()
-        }
+//        myTransactionsBinding.mytransIbSortbtn.setOnClickListener {
+//            showSortDialog()
+//        }
 
-        myTransactionsBinding.mytransRvTransactions.adapter = TransactionsTransAdapter(BookGenerator.generateSampleBooks())
-        myTransactionsBinding.mytransRvTransactions.layoutManager = LinearLayoutManager(activity)
-        myTransactionsBinding.mytransRvTransactions.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+        myTransactionsBinding.historyRv.adapter = TransactionsTransAdapter(BookGenerator.generateSampleBooks())
+        myTransactionsBinding.historyRv.layoutManager = LinearLayoutManager(activity)
+        myTransactionsBinding.historyRv.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         return myTransactionsBinding.root
     }
 
-    private fun initFilterButtons() {
-        filterButtons = listOf(
-            myTransactionsBinding.mytransBtnFiltermatchall,
-            myTransactionsBinding.mytransBtnFiltermatchpending,
-            myTransactionsBinding.mytransBtnFiltermatchpickedup,
-            myTransactionsBinding.mytransBtnFiltermatchreturned,
-            myTransactionsBinding.mytransBtnFiltermatchcancelled,
-            myTransactionsBinding.mytransBtnFiltermatchpickupmissed,
-            myTransactionsBinding.mytransBtnFiltermatchreturnmissed
-        )
-
-        activeFilterBtn = myTransactionsBinding.mytransBtnFiltermatchall
-        filterButtons.forEach { button ->
-            button.setOnClickListener {
-                activeFilterBtn?.let {
-                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
-                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
-                    activeFilterBtn = button
-                }
-            }
-        }
-    }
+//    private fun initFilterButtons() {
+//        filterButtons = listOf(
+//            myTransactionsBinding.mytransBtnFiltermatchall,
+//            myTransactionsBinding.mytransBtnFiltermatchpending,
+//            myTransactionsBinding.mytransBtnFiltermatchpickedup,
+//            myTransactionsBinding.mytransBtnFiltermatchreturned,
+//            myTransactionsBinding.mytransBtnFiltermatchcancelled,
+//            myTransactionsBinding.mytransBtnFiltermatchpickupmissed,
+//            myTransactionsBinding.mytransBtnFiltermatchreturnmissed
+//        )
+//
+//        activeFilterBtn = myTransactionsBinding.mytransBtnFiltermatchall
+//        filterButtons.forEach { button ->
+//            button.setOnClickListener {
+//                activeFilterBtn?.let {
+//                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
+//                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
+//                    activeFilterBtn = button
+//                }
+//            }
+//        }
+//    }
 
     private fun showSortDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity())

@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemTransactionsCardBinding
+import com.mobdeve.s12.mco.databinding.ItemTsCardBinding
 
 class TransactionsTransAdapter(private val data: ArrayList<BookModel>): RecyclerView.Adapter<TransactionsTransViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): TransactionsTransViewHolder {
-        // TODO Later: Add on-click listener for Borrow -> should also launch an intent to book details but scrolled down
-
-        val itemTransViewBinding = ItemTransactionsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemTransViewBinding = ItemTsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val transViewHolder = TransactionsTransViewHolder(itemTransViewBinding)
         addListenerCard(transViewHolder, itemTransViewBinding)
 
@@ -29,7 +27,7 @@ class TransactionsTransAdapter(private val data: ArrayList<BookModel>): Recycler
         holder.bindData(data[position])
     }
 
-    private fun addListenerCard(holder : TransactionsTransViewHolder, itemTransViewBinding: ItemTransactionsCardBinding) {
+    private fun addListenerCard(holder : TransactionsTransViewHolder, itemTransViewBinding: ItemTsCardBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
