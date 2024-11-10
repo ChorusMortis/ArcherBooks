@@ -3,6 +3,7 @@ package com.mobdeve.s12.mco
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,9 @@ import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
 class SearchResultsFragment : Fragment() {
     companion object {
         private const val VERTICAL_SPACE = 12
+
+        const val SEARCH_RESULTS_SORT_PREF = "SEARCH_RESULTS_SORT_PREF"
+        const val SEARCH_RESULTS_FILTER_PREF = "SEARCH_RESULTS_FILTER_PREF"
     }
 
     private enum class SortOption {
@@ -53,6 +57,8 @@ class SearchResultsFragment : Fragment() {
 //            activeSearchFilterOption = FilterOption.ALL
 //        }
 
+        initPreferences()
+
         searchResultsBinding.searchBtnFilterSort.setOnClickListener {
             showSortResultsDialog()
         }
@@ -62,6 +68,24 @@ class SearchResultsFragment : Fragment() {
         searchResultsBinding.searchRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         return searchResultsBinding.root
+    }
+
+    private fun initPreferences() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+
+        val strPrefSortOption = sp.getString(SEARCH_RESULTS_SORT_PREF, "")
+        val strPrefFilterOption = sp.getString(SEARCH_RESULTS_FILTER_PREF, "")
+
+        val prefSortOption = SortOption.entries.firstOrNull { it.name == strPrefSortOption }
+        val prefFilterOption = FilterOption.entries.firstOrNull { it.name == strPrefFilterOption }
+
+        prefSortOption?.let {
+            activeSortOption = it
+        }
+
+        prefFilterOption?.let {
+            activeSearchFilterOption = it
+        }
     }
 
     private fun showSortResultsDialog() {
@@ -83,11 +107,21 @@ class SearchResultsFragment : Fragment() {
             // save selected sorting option after user hits confirm button
             tempActiveSortOption?.let {
                 activeSortOption = it
+
+                val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+                val editor = sp.edit()
+                editor.putString(SEARCH_RESULTS_SORT_PREF, it.name)
+                editor.apply()
             }
 
             // save selected filter option after user hits confirm button
             tempActiveSearchFilterOption?.let {
                 activeSearchFilterOption = it
+
+                val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+                val editor = sp.edit()
+                editor.putString(SEARCH_RESULTS_FILTER_PREF, it.name)
+                editor.apply()
             }
 
             bottomSheetDialog.dismiss()

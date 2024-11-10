@@ -3,6 +3,7 @@ package com.mobdeve.s12.mco
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,9 @@ import com.mobdeve.s12.mco.databinding.FragmentFavoritesBinding
 class FavoritesFragment : Fragment() {
     companion object {
         private const val VERTICAL_SPACE = 12
+
+        const val FAVORITES_SORT_PREF = "FAVORITES_SORT_PREF"
+        const val FAVORITES_FILTER_PREF = "FAVORITES_FILTER_PREF"
     }
 
     private enum class SortOption {
@@ -49,6 +53,8 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         transactionsFragBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
+        initPreferences()
+
         transactionsFragBinding.favoritesBtnSort.setOnClickListener {
             showSortDialog()
         }
@@ -58,6 +64,24 @@ class FavoritesFragment : Fragment() {
         transactionsFragBinding.favoritesRvFavs.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         return transactionsFragBinding.root
+    }
+
+    private fun initPreferences() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+
+        val strPrefSortOption = sp.getString(FAVORITES_SORT_PREF, "")
+        val strPrefFilterOption = sp.getString(FAVORITES_FILTER_PREF, "")
+
+        val prefSortOption = SortOption.entries.firstOrNull { it.name == strPrefSortOption }
+        val prefFilterOption = FilterOption.entries.firstOrNull { it.name == strPrefFilterOption }
+
+        prefSortOption?.let {
+            activeSortOption = it
+        }
+
+        prefFilterOption?.let {
+            activeFilterOption = it
+        }
     }
 
     private fun showSortDialog() {
@@ -79,11 +103,21 @@ class FavoritesFragment : Fragment() {
             // save selected sorting option after user hits confirm button
             tempActiveSortOption?.let {
                 activeSortOption = it
+
+                val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+                val editor = sp.edit()
+                editor.putString(FAVORITES_SORT_PREF, it.name)
+                editor.apply()
             }
 
             // save selected filter option after user hits confirm button
             tempActiveFilterOption?.let {
                 activeFilterOption = it
+
+                val sp = PreferenceManager.getDefaultSharedPreferences(activity)
+                val editor = sp.edit()
+                editor.putString(FAVORITES_FILTER_PREF, it.name)
+                editor.apply()
             }
 
             bottomSheetDialog.dismiss()
