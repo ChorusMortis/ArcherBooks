@@ -4,169 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoritesFragment">
+    android:background="@color/gray_bg">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/myfavs_tv_title"
+        android:id="@+id/favorites_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        app:fontFamily="@font/sf_ui_text_regular"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/sf_ui_text_bold"
         android:text="My Favorites"
         android:textColor="@color/main_green"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/myfavs_ib_sortbtn"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/myfavs_ib_sortbtn" />
-
-    <ImageButton
-        android:id="@+id/myfavs_ib_sortbtn"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/small_btn_radius"
-        android:backgroundTint="@color/main_green"
-        android:padding="4dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/filter_icon"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <HorizontalScrollView
-        android:id="@+id/myfavs_hsv_filterbuttonsscrollview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/favorites_iv_overviewbg"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:scrollbars="none"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="@color/main_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myfavs_ib_sortbtn">
+        app:layout_constraintTop_toBottomOf="@+id/favorites_tv_title">
 
-        <LinearLayout
-            android:id="@+id/myfavs_ll_filterbuttonslayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+    </ImageView>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchall"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#61AA63"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="All"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/favorites_tv_overviewtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:text="Total Favorited Books"
+        android:textColor="@color/gray_bg"
+        app:layout_constraintStart_toStartOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintTop_toTopOf="@+id/favorites_iv_overviewbg" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchpending"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#C3C3C3"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="Pending"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/favorites_tv_overviewbookcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/sf_ui_text_bold"
+        android:text="24 Books"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintStart_toStartOf="@+id/favorites_tv_overviewtitle"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_tv_overviewtitle" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchpickedup"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#C3C3C3"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="Picked Up"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchreturned"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#C3C3C3"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="Returned"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchcancelled"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#C3C3C3"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="Cancelled"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchpickupmissed"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#C3C3C3"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="Missed Pickup"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/myfavs_btn_filtermatchreturnmissed"
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/filter_rounded_btn"
-                android:backgroundTint="#C3C3C3"
-                android:minWidth="0dip"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="Missed Return"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                app:fontFamily="@font/sf_ui_text_regular" />
-        </LinearLayout>
-    </HorizontalScrollView>
+    <ImageButton
+        android:id="@+id/favorites_btn_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="@color/white"
+        android:padding="10dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintBottom_toBottomOf="@+id/favorites_tv_overviewbookcount"
+        app:layout_constraintEnd_toEndOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintTop_toTopOf="@+id/favorites_tv_overviewtitle"
+        app:srcCompat="@drawable/icon_filter_sort" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myfavs_rv_favorites"
-        android:layout_width="0dp"
+        android:id="@+id/favorites_rv_favs"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -174,6 +85,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myfavs_hsv_filterbuttonsscrollview" />
+        app:layout_constraintTop_toBottomOf="@+id/favorites_iv_overviewbg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
