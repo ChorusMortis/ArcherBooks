@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemFCardBinding
+import com.mobdeve.s12.mco.databinding.ItemFavoritesCardBinding
 
 class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView.Adapter<FavoritesFavsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesFavsViewHolder {
         // TODO MCO3: Add on-click listener for Favorite button that will add the book to the user's favorites list
 
-        val itemFavsViewBinding = ItemFCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemFavsViewBinding = ItemFavoritesCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val favsViewHolder = FavoritesFavsViewHolder(itemFavsViewBinding)
         addListenerCard(favsViewHolder, itemFavsViewBinding)
 
@@ -26,7 +26,7 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView
         holder.bindData(data[position])
     }
 
-    private fun addListenerCard(holder : FavoritesFavsViewHolder, itemFavsViewBinding: ItemFCardBinding) {
+    private fun addListenerCard(holder : FavoritesFavsViewHolder, itemFavsViewBinding: ItemFavoritesCardBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)

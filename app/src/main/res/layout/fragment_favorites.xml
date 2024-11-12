@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/gray_bg">
 
-    <TextView
-        android:id="@+id/favorites_tv_label"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/favorites_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -15,34 +15,76 @@
         android:fontFamily="@font/sf_ui_text_bold"
         android:text="My Favorites"
         android:textColor="@color/main_green"
-        android:textSize="28sp"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/history_btn_sort"
+    <ImageView
+        android:id="@+id/favorites_iv_overviewbg"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="@color/main_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_tv_title">
+
+    </ImageView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/favorites_tv_overviewtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:text="Total Favorited Books"
+        android:textColor="@color/gray_bg"
+        app:layout_constraintStart_toStartOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintTop_toTopOf="@+id/favorites_iv_overviewbg" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/favorites_tv_overviewbookcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/sf_ui_text_bold"
+        android:text="24 Books"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintStart_toStartOf="@+id/favorites_tv_overviewtitle"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_tv_overviewtitle" />
+
+    <ImageButton
+        android:id="@+id/favorites_btn_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/style_rounded_borrow_popup"
         android:backgroundTint="@color/white"
         android:padding="10dp"
         android:scaleX="1"
         android:scaleY="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/favorites_tv_label"
+        app:layout_constraintBottom_toBottomOf="@+id/favorites_tv_overviewbookcount"
+        app:layout_constraintEnd_toEndOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintTop_toTopOf="@+id/favorites_tv_overviewtitle"
         app:srcCompat="@drawable/icon_filter_sort" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favorites_rv"
+        android:id="@+id/favorites_rv_favs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favorites_tv_label" />
+        app:layout_constraintTop_toBottomOf="@+id/favorites_iv_overviewbg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

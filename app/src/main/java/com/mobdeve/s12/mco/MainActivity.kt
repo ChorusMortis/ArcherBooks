@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mco
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +23,9 @@ class MainActivity: AppCompatActivity() {
         navController = navHostFragment.navController
         setupWithNavController(viewBinding.navbarNv, navController)
         addListenersBottomNavBarItems()
+
+        // reset search preferences after app closes to default
+        removeSearchPreferences()
     }
 
     private fun addListenersBottomNavBarItems() {
@@ -52,4 +56,19 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
+    private fun removeSearchPreferences() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = sp.edit()
+
+        editor.remove(SearchResultsFragment.SEARCH_RESULTS_SORT_PREF)
+        editor.remove(SearchResultsFragment.SEARCH_RESULTS_FILTER_PREF)
+
+        editor.remove(TransactionsFragment.TRANSACTIONS_SORT_PREF)
+        editor.remove(TransactionsFragment.TRANSACTIONS_FILTER_PREF)
+
+        editor.remove(FavoritesFragment.FAVORITES_SORT_PREF)
+        editor.remove(FavoritesFragment.FAVORITES_FILTER_PREF)
+
+        editor.apply()
+    }
 }

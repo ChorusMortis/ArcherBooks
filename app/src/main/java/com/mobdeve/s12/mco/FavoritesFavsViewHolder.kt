@@ -1,17 +1,17 @@
 package com.mobdeve.s12.mco
 
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemFCardBinding
+import com.mobdeve.s12.mco.databinding.ItemFavoritesCardBinding
 
-class FavoritesFavsViewHolder(private val viewBinding: ItemFCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class FavoritesFavsViewHolder(private val viewBinding: ItemFavoritesCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(book: BookModel) {
-        viewBinding.itemFIvCover.setImageResource(book.coverResource)
-        viewBinding.itemFTvTitle.text = book.title
-        viewBinding.itemFAuthors.text = book.authors.joinToString(", ")
+        viewBinding.itemFvTvCover.setImageResource(book.coverResource)
+        viewBinding.itemFvTvTitle.text = book.title
+        viewBinding.itemFvTvAuthors.text = book.authors.joinToString(", ")
+        viewBinding.itemFvTvPubyear.text = book.publishYear.toString()
 
         // if(book in current user's favorites list) -> select toggled on favorite button
         // else -> select toggled off
-        viewBinding.itemFFavBtn.setImageResource(R.drawable.icon_favorite_filled)
+        viewBinding.itemFvIbFavbtn.setImageResource(R.drawable.favorite_btn_toggled_off)
     }
 }
