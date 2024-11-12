@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.FragmentFavoritesBinding
@@ -16,7 +17,7 @@ import com.mobdeve.s12.mco.databinding.ComponentMyfavsSortDialogBinding
 
 class FavoritesFragment : Fragment() {
     companion object {
-        private const val VERTICAL_SPACE = 24
+        private const val VERTICAL_SPACE = 12
     }
 
     private enum class SortOption {
@@ -38,41 +39,41 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         myFavoritesBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
-        initFilterButtons()
+//        initFilterButtons()
+//
+//        myFavoritesBinding.myfavsIbSortbtn.setOnClickListener {
+//            showSortDialog()
+//        }
 
-        myFavoritesBinding.myfavsIbSortbtn.setOnClickListener {
-            showSortDialog()
-        }
-
-        myFavoritesBinding.myfavsRvFavorites.adapter = FavoritesFavsAdapter(BookGenerator.generateSampleBooks())
-        myFavoritesBinding.myfavsRvFavorites.layoutManager = LinearLayoutManager(activity)
-        myFavoritesBinding.myfavsRvFavorites.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+        myFavoritesBinding.favoritesRv.adapter = FavoritesFavsAdapter(BookGenerator.generateSampleBooks())
+        myFavoritesBinding.favoritesRv.layoutManager = GridLayoutManager(activity, 2)
+        myFavoritesBinding.favoritesRv.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         return myFavoritesBinding.root
     }
 
-    private fun initFilterButtons() {
-        filterButtons = listOf(
-            myFavoritesBinding.myfavsBtnFiltermatchall,
-            myFavoritesBinding.myfavsBtnFiltermatchpending,
-            myFavoritesBinding.myfavsBtnFiltermatchpickedup,
-            myFavoritesBinding.myfavsBtnFiltermatchreturned,
-            myFavoritesBinding.myfavsBtnFiltermatchcancelled,
-            myFavoritesBinding.myfavsBtnFiltermatchpickupmissed,
-            myFavoritesBinding.myfavsBtnFiltermatchreturnmissed
-        )
-
-        activeFilterBtn = myFavoritesBinding.myfavsBtnFiltermatchall
-        filterButtons.forEach { button ->
-            button.setOnClickListener {
-                activeFilterBtn?.let {
-                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
-                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
-                    activeFilterBtn = button
-                }
-            }
-        }
-    }
+//    private fun initFilterButtons() {
+//        filterButtons = listOf(
+//            myFavoritesBinding.myfavsBtnFiltermatchall,
+//            myFavoritesBinding.myfavsBtnFiltermatchpending,
+//            myFavoritesBinding.myfavsBtnFiltermatchpickedup,
+//            myFavoritesBinding.myfavsBtnFiltermatchreturned,
+//            myFavoritesBinding.myfavsBtnFiltermatchcancelled,
+//            myFavoritesBinding.myfavsBtnFiltermatchpickupmissed,
+//            myFavoritesBinding.myfavsBtnFiltermatchreturnmissed
+//        )
+//
+//        activeFilterBtn = myFavoritesBinding.myfavsBtnFiltermatchall
+//        filterButtons.forEach { button ->
+//            button.setOnClickListener {
+//                activeFilterBtn?.let {
+//                    it.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.search_filter_button))
+//                    button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.main_green))
+//                    activeFilterBtn = button
+//                }
+//            }
+//        }
+//    }
 
     private fun showSortDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity())
