@@ -12,6 +12,6 @@ class FavoritesFavsViewHolder(private val viewBinding: ItemFavoritesCardBinding)
 
         // if(book in current user's favorites list) -> select toggled on favorite button
         // else -> select toggled off
-        viewBinding.itemFvIbFavbtn.setImageResource(R.drawable.favorite_btn_toggled_off)
+        viewBinding.itemFvIbFavbtn.setImageResource(R.drawable.icon_favorite_filled)
     }
 }
