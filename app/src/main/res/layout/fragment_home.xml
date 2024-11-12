@@ -134,7 +134,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/small_btn_radius"
+                    android:background="@drawable/style_botd_cover_radius"
                     android:elevation="5dp"
                     android:maxWidth="178dp"
                     android:maxHeight="178dp"

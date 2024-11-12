@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/rounded_button_on_colored"
+            android:background="@drawable/style_rounded_button_on_colored"
             android:backgroundTint="@color/main_green"
             android:fontFamily="@font/sf_ui_text_regular"
             android:text="Back"

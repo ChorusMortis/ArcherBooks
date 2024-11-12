@@ -5,7 +5,7 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainbackground_gradient_topdown"
+    android:background="@drawable/background_landing_gradient_topdown"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/landing_icon" />
+        app:srcCompat="@drawable/logo_landing_icon" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/main_iv_logo"
@@ -62,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button_transparent"
+        android:background="@drawable/style_rounded_button_transparent"
         android:text="Create an Account"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -78,7 +78,7 @@
         android:id="@+id/main_btn_login"
         android:layout_width="325dp"
         android:layout_height="55dp"
-        android:background="@drawable/rounded_button_on_colored"
+        android:background="@drawable/style_rounded_button_on_colored"
         android:text="Login"
         android:textAllCaps="false"
         android:textColor="#61AA63"
