@@ -1,9 +1,9 @@
 package com.mobdeve.s12.mco
 
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s12.mco.databinding.ItemFavoritesCardBinding
+import com.mobdeve.s12.mco.databinding.ItemFCardBinding
 
-class FavoritesFavsViewHolder(private val viewBinding: ItemFavoritesCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class FavoritesFavsViewHolder(private val viewBinding: ItemFCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(book: BookModel) {
         viewBinding.itemFvTvCover.setImageResource(book.coverResource)
         viewBinding.itemFvTvTitle.text = book.title
