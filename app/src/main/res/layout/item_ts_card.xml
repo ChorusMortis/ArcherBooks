@@ -31,7 +31,7 @@
         android:maxLines="1"
         android:text="TextView"
         android:textColor="@color/main_green"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_ts_tv_cover"
         app:layout_constraintTop_toTopOf="parent" />
