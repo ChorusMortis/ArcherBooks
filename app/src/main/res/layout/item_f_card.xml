@@ -2,99 +2,83 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_f_cl"
+    android:id="@+id/item_fv_cl"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/style_botd_radius"
+    android:elevation="1.5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_f_cl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/style_book_details_cover_radius"
-        android:backgroundTint="@color/transparent"
-        android:paddingBottom="8dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/item_fv_tv_cover"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Botd.Bg.CornerSize"
+        app:srcCompat="@drawable/book_geronimo_stilton" />
 
-        <FrameLayout
-            android:id="@+id/item_f_fl"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1.2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_fv_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_bold"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textColor="@color/main_green"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/item_fv_ib_favbtn"
+        app:layout_constraintStart_toEndOf="@+id/item_fv_tv_cover"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/item_f_iv_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/SearchResults.CornerSize"
-                app:srcCompat="@drawable/book_scarlet_witch" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_fv_tv_authors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_medium"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textColor="@color/text_over_white_bg"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/item_fv_tv_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/item_fv_tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/item_fv_tv_title" />
 
-        </FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_fv_tv_pubyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:maxLines="1"
+        android:text="2024"
+        android:textColor="@color/text_over_white_bg"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/item_fv_tv_authors"
+        app:layout_constraintTop_toBottomOf="@+id/item_fv_tv_authors" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_f_tv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="2dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_bold"
-            android:maxLines="2"
-            android:text="Scarlet Witch Vol. 2 The Rise from the Ashes"
-            android:textColor="@color/dark_background"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/item_f_fl"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/item_f_fl"
-            app:layout_constraintTop_toBottomOf="@+id/item_f_fl" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_f_authors"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:maxLines="1"
-            android:text="Disney Book Group"
-            android:textColor="@color/text_over_white_bg"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/item_f_tv_title"
-            app:layout_constraintTop_toBottomOf="@+id/item_f_tv_title" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_f_year"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_ui_text_regular"
-            android:maxLines="1"
-            android:text="2020"
-            android:textColor="@color/text_over_white_bg"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/item_f_tv_title"
-            app:layout_constraintTop_toBottomOf="@+id/item_f_authors" />
-
-        <ImageButton
-            android:id="@+id/item_f_fav_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/style_circular_background"
-            android:backgroundTint="@color/white"
-            android:elevation="3dp"
-            android:padding="10dp"
-            android:scaleX="1.1"
-            android:scaleY="1.1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_favorite_filled" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/item_fv_ib_favbtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/rounded_button_on_colored"
+        android:backgroundTint="@color/gray_bg"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_fv_tv_pubyear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_fv_tv_title"
+        app:srcCompat="@drawable/icon_favorite_outlined" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
