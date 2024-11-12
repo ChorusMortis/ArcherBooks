@@ -15,7 +15,7 @@
         android:fontFamily="@font/sf_ui_text_bold"
         android:text="My Favorites"
         android:textColor="@color/main_green"
-        android:textSize="22sp"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
