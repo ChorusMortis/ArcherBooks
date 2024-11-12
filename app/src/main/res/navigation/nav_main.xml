@@ -14,7 +14,7 @@
         android:id="@+id/action_transactions"
         android:name="com.mobdeve.s12.mco.TransactionsFragment"
         android:label="activity_my_transactions"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_transactions" />
     <fragment
         android:id="@+id/action_search"
         android:name="com.mobdeve.s12.mco.SearchResultsFragment"

@@ -12,8 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ComponentMytransSortDialogBinding
-import com.mobdeve.s12.mco.databinding.FragmentHistoryBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogTransBinding
+import com.mobdeve.s12.mco.databinding.FragmentTransactionsBinding
 
 class TransactionsFragment : Fragment() {
     companion object {
@@ -38,9 +38,9 @@ class TransactionsFragment : Fragment() {
         CANCELLED,
     }
 
-    private lateinit var transactionsFragBinding : FragmentHistoryBinding
+    private lateinit var transactionsFragBinding : FragmentTransactionsBinding
 
-    private var sortDialogBinding : ComponentMytransSortDialogBinding? = null
+    private var sortDialogBinding : ComponentDialogTransBinding? = null
 
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
     private var activeSortOption : SortOption = SortOption.NEWEST
@@ -51,7 +51,7 @@ class TransactionsFragment : Fragment() {
     private var tempActiveFilterOption : FilterOption? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        transactionsFragBinding = FragmentHistoryBinding.inflate(inflater, container, false)
+        transactionsFragBinding = FragmentTransactionsBinding.inflate(inflater, container, false)
 
         initPreferences()
 
@@ -86,7 +86,7 @@ class TransactionsFragment : Fragment() {
 
     private fun showSortDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetDialog)
-        sortDialogBinding = ComponentMytransSortDialogBinding.inflate(layoutInflater)
+        sortDialogBinding = ComponentDialogTransBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 
         bottomSheetDialog.setOnDismissListener {

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ComponentMyfavsSortDialogBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogFavsBinding
 import com.mobdeve.s12.mco.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
@@ -40,7 +40,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var transactionsFragBinding : FragmentFavoritesBinding
 
-    private var sortDialogBinding : ComponentMyfavsSortDialogBinding? = null
+    private var sortDialogBinding : ComponentDialogFavsBinding? = null
 
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
     private var activeSortOption : SortOption = SortOption.NEWEST
@@ -86,7 +86,7 @@ class FavoritesFragment : Fragment() {
 
     private fun showSortDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetDialog)
-        sortDialogBinding = ComponentMyfavsSortDialogBinding.inflate(layoutInflater)
+        sortDialogBinding = ComponentDialogFavsBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 
         bottomSheetDialog.setOnDismissListener {

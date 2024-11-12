@@ -14,8 +14,8 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.mobdeve.s12.mco.databinding.ComponentBorrowPopupBinding
-import com.mobdeve.s12.mco.databinding.ComponentTermsAndConditionsPopupBinding
+import com.mobdeve.s12.mco.databinding.ComponentPopupBorrowBinding
+import com.mobdeve.s12.mco.databinding.ComponentPopupTncBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -104,7 +104,7 @@ class BookDetailsActivity : AppCompatActivity() {
     private fun addListenerBorrowBtn() {
         viewBinding.bookDetailsIbBorrowBtn.setOnClickListener(View.OnClickListener {
             val window = PopupWindow(this)
-            val borrowPopupBinding = ComponentBorrowPopupBinding.inflate(layoutInflater)
+            val borrowPopupBinding = ComponentPopupBorrowBinding.inflate(layoutInflater)
             window.contentView = borrowPopupBinding.root
             window.height = ViewGroup.LayoutParams.MATCH_PARENT
             window.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -120,7 +120,7 @@ class BookDetailsActivity : AppCompatActivity() {
         })
     }
 
-    private fun addListenerBorrowPopupDates(borrowPopupBinding: ComponentBorrowPopupBinding, window: PopupWindow) {
+    private fun addListenerBorrowPopupDates(borrowPopupBinding: ComponentPopupBorrowBinding, window: PopupWindow) {
         // pickup date
         val pickupCalendar = Calendar.getInstance()
         val pickupDatePicker = DatePickerDialog.OnDateSetListener {view, year, month, day ->
@@ -179,10 +179,10 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     /*** Terms and Conditions Popup Functions ***/
-    private fun addListenerBorrowPopupTNC(borrowPopupBinding: ComponentBorrowPopupBinding) {
+    private fun addListenerBorrowPopupTNC(borrowPopupBinding: ComponentPopupBorrowBinding) {
         borrowPopupBinding.borrowPopupTvTermsAndConditionsBtn.setOnClickListener(View.OnClickListener {
             val popupWindow = PopupWindow(borrowPopupBinding.root.context)
-            val tncPopupBinding = ComponentTermsAndConditionsPopupBinding.inflate(layoutInflater)
+            val tncPopupBinding = ComponentPopupTncBinding.inflate(layoutInflater)
             popupWindow.contentView = tncPopupBinding.root
             popupWindow.height = ViewGroup.LayoutParams.MATCH_PARENT
             popupWindow.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -195,7 +195,7 @@ class BookDetailsActivity : AppCompatActivity() {
         })
     }
 
-    private fun addListenerTNCBackBtn(tncPopupBinding: ComponentTermsAndConditionsPopupBinding, popupWindow: PopupWindow) {
+    private fun addListenerTNCBackBtn(tncPopupBinding: ComponentPopupTncBinding, popupWindow: PopupWindow) {
         tncPopupBinding.tncPopupBtn.setOnClickListener(View.OnClickListener {
             popupWindow.dismiss()
         })

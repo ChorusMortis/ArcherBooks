@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobdeve.s12.mco.databinding.ComponentSearchresultsSortDialogBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogSearchBinding
 import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
 
 class SearchResultsFragment : Fragment() {
@@ -38,7 +38,7 @@ class SearchResultsFragment : Fragment() {
 
     private lateinit var searchResultsBinding : FragmentSearchBinding
 
-    private var sortDialogBinding : ComponentSearchresultsSortDialogBinding? = null
+    private var sortDialogBinding : ComponentDialogSearchBinding? = null
 
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
     private var activeSortOption : SortOption = SortOption.RELEVANCE
@@ -90,7 +90,7 @@ class SearchResultsFragment : Fragment() {
 
     private fun showSortResultsDialog() {
         val bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.BottomSheetDialog)
-        sortDialogBinding = ComponentSearchresultsSortDialogBinding.inflate(layoutInflater)
+        sortDialogBinding = ComponentDialogSearchBinding.inflate(layoutInflater)
         bottomSheetDialog.setContentView(sortDialogBinding!!.root)
 
         bottomSheetDialog.setOnDismissListener {
