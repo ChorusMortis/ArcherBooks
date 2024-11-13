@@ -6,6 +6,7 @@ class TransactionModel(
     val transactionId: String,
     val book: BookModel,
     val user: UserModel,
+    val transactionDate: Date,
     val expectedPickupDate: Date,
     val expectedReturnDate: Date,
     var actualPickupDate: Date,
