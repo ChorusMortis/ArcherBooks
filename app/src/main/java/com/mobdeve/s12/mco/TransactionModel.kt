@@ -5,17 +5,18 @@ import java.util.Date
 class TransactionModel(
     val transactionId: String,
     val book: BookModel,
-    val studentName: String,
+    val user: UserModel,
     val expectedPickupDate: Date,
     val expectedReturnDate: Date,
-    var status: Status = Status.PENDING
+    var actualPickupDate: Date,
+    var actualReturnDate: Date,
+    var status: Status = Status.FOR_PICKUP
 ) {
     enum class Status {
-        PENDING, // Waiting for pickup
-        PICKED_UP, // Book has been picked up
-        RETURNED, // Book has been returned
-        CANCELLED, // Pickup cancelled
-        PICKUP_MISSED, // Pickup deadline missed
-        RETURN_MISSED // Return deadline missed
+        FOR_PICKUP,
+        TO_RETURN,
+        OVERDUE,
+        CANCELLED,
+        RETURNED
     }
 }
