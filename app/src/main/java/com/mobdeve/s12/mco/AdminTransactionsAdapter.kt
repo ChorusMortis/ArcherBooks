@@ -14,7 +14,7 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
         val adminTransViewHolder = AdminTransactionsViewHolder(itemAdminTransBinding)
 
         itemAdminTransBinding.itemAdminEditBtn.setOnClickListener {
-            showEditDialog(parent.context)
+            showEditDialog(parent.context, adminTransViewHolder.bindingAdapterPosition)
         }
 
         return adminTransViewHolder
@@ -28,7 +28,7 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
         holder.bindData(data[position])
     }
 
-    private fun showEditDialog(context: Context) {
+    private fun showEditDialog(context: Context, position: Int) {
         val editDialogBinding = ComponentDialogAdmintransEditstatusBinding.inflate(LayoutInflater.from(context))
         val dialog = AlertDialog.Builder(context, R.style.WrapContentDialog)
             .setView(editDialogBinding.root)
@@ -38,7 +38,9 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
         // make background transparent so dialog floats
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // TODO: change message based on transaction status
+        val editingTransaction = data[position]
+
+        setDialogMessage(editingTransaction, editDialogBinding)
 
         editDialogBinding.dialogAdmintransBtnCancel.setOnClickListener {
             dialog.dismiss()
@@ -51,5 +53,16 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
         }
 
         dialog.show()
+    }
+
+    private fun setDialogMessage(transaction: TransactionModel, dialogBinding: ComponentDialogAdmintransEditstatusBinding) {
+        val message = when (transaction.status) {
+            TransactionModel.Status.FOR_PICKUP -> "Did the borrower pick up the book?"
+            TransactionModel.Status.TO_RETURN -> "Did the borrower return the book?"
+            TransactionModel.Status.OVERDUE -> "Did the borrower return the overdue book?"
+            TransactionModel.Status.CANCELLED -> "The borrower has cancelled the transaction."
+            TransactionModel.Status.RETURNED -> "The borrower has already returned the book."
+        }
+        dialogBinding.dialogAdmintransTvMessage.text = message
     }
 }
