@@ -14,6 +14,8 @@ import com.mobdeve.s12.mco.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
 
     private val books = BookGenerator.generateSampleBooks()
+    private val users = UserGenerator.generateSampleUsers()
+    private val transactions = TransactionGenerator.generateSampleTransactions(books, users)
 
     private lateinit var viewBinding : FragmentHomeBinding
     private lateinit var rvRecyclerView: RecyclerView
