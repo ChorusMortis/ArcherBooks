@@ -2,9 +2,227 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_cl_container"
+    android:id="@+id/admin_cl_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_bg"
     tools:context=".AdminTransactionsActivity">
+
+<TextView
+    android:id="@+id/admin_trans_tv_label"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="24dp"
+    android:fontFamily="@font/sf_ui_text_bold"
+    android:text="List of Transactions"
+    android:textColor="@color/main_green"
+    android:textSize="28sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<FrameLayout
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="24dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/admin_trans_tv_label">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/admin_trans_overview_card_bg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="#8061AA63">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_fp_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="For Pickup"
+            android:textColor="@color/text_over_gray_bg"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/admin_trans_tv_fp_value"
+            app:layout_constraintEnd_toStartOf="@+id/admin_trans_tv_tr_label"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_fp_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="5"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/admin_trans_tv_fp_label"
+            app:layout_constraintStart_toStartOf="@+id/admin_trans_tv_fp_label" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_tr_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="To Return"
+            android:textColor="@color/text_over_gray_bg"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/admin_trans_tv_tr_value"
+            app:layout_constraintEnd_toStartOf="@+id/admin_trans_tv_r_label"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/admin_trans_tv_fp_label" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_tr_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/admin_trans_tv_fp_value"
+            app:layout_constraintEnd_toEndOf="@+id/admin_trans_tv_tr_label"
+            app:layout_constraintStart_toStartOf="@+id/admin_trans_tv_tr_label" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_r_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Returned"
+            android:textColor="@color/text_over_gray_bg"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/admin_trans_tv_r_value"
+            app:layout_constraintEnd_toStartOf="@+id/admin_trans_tv_c_label"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/admin_trans_tv_tr_label" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_r_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="19"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/admin_trans_tv_tr_value"
+            app:layout_constraintEnd_toEndOf="@+id/admin_trans_tv_r_label"
+            app:layout_constraintStart_toStartOf="@+id/admin_trans_tv_r_label" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_c_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Cancelled"
+            android:textColor="@color/text_over_gray_bg"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/admin_trans_tv_c_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/admin_trans_tv_r_label" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_c_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="3"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/admin_trans_tv_r_value"
+            app:layout_constraintEnd_toEndOf="@+id/admin_trans_tv_c_label"
+            app:layout_constraintStart_toStartOf="@+id/admin_trans_tv_c_label" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/admin_trans_cl_overview_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/style_rounded_borrow_popup"
+        android:backgroundTint="@color/main_green">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_total_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Total Transactions"
+            android:textColor="@color/gray_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/admin_trans_tv_total_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/sf_ui_text_bold"
+            android:text="24 Transactions"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/admin_trans_tv_total_label"
+            app:layout_constraintTop_toBottomOf="@+id/admin_trans_tv_total_label" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
+
+<ImageButton
+    android:id="@+id/admin_trans_btn_filter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="19dp"
+    android:layout_marginEnd="32dp"
+    android:background="@drawable/style_rounded_borrow_popup"
+    android:backgroundTint="@color/white"
+    android:padding="10dp"
+    android:scaleX="1"
+    android:scaleY="1"
+    app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+    app:layout_constraintTop_toTopOf="@+id/frameLayout"
+    app:srcCompat="@drawable/icon_filter_sort" />
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/admin_trans_rv"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:background="@color/transparent"
+        android:backgroundTint="@color/white"
+        android:padding="9dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:tint="@color/main_green"
+        app:layout_constraintBottom_toBottomOf="@+id/admin_trans_tv_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/admin_trans_tv_label"
+        app:srcCompat="@drawable/icon_logout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
