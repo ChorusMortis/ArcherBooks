@@ -20,7 +20,7 @@
     <color name="text_over_gray_bg">#707070</color>
     <color name="unselected_navbar_option">#BFBFBF</color>
 
-    <color name="book_available">#61AA63</color>
+    <color name="book_available">#006603</color>
     <color name="book_unavailable">#121212</color>
     <color name="book_borrowed">#D10000</color>
 
