@@ -13,9 +13,6 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
         parent: ViewGroup,
         viewType: Int
     ): SearchResultsResultsViewHolder {
-        // TODO Later: Add on-click listener for Borrow -> should also launch an intent to book details but scrolled down
-        // TODO MCO3: Add on-click listener for Favorite button that will add the book to the user's favorites list
-
         val itemSearchResultsCardBinding = ItemSrCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val srViewHolder = SearchResultsResultsViewHolder(itemSearchResultsCardBinding)
         addListenerCard(srViewHolder, itemSearchResultsCardBinding)
