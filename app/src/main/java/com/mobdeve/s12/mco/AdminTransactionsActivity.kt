@@ -1,16 +1,15 @@
 package com.mobdeve.s12.mco
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ActivityAdminTransactionsBinding
-import com.mobdeve.s12.mco.databinding.FragmentHomeBinding
 
 class AdminTransactionsActivity : AppCompatActivity() {
+    companion object {
+        private const val VERTICAL_SPACE = 12
+    }
 
     private val books = BookGenerator.generateSampleBooks()
     private val users = UserGenerator.generateSampleUsers()
@@ -30,12 +29,11 @@ class AdminTransactionsActivity : AppCompatActivity() {
     }
 
     private fun setRVRecyclerView() {
-        this.rvRecyclerView = viewBinding.adminTransRv
-        this.rvAdapter = AdminTransactionsAdapter(ArrayList(transactions))
-        this.rvRecyclerView.adapter = this.rvAdapter
-        val transLinearLayoutManager = LinearLayoutManager(this)
-        transLinearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        this.rvRecyclerView.layoutManager = transLinearLayoutManager
+        rvRecyclerView = viewBinding.adminTransRv
+        rvAdapter = AdminTransactionsAdapter(ArrayList(transactions))
+        rvRecyclerView.adapter = rvAdapter
+        rvRecyclerView.layoutManager = LinearLayoutManager(this)
+        rvRecyclerView.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
     }
 
     private fun initLogoutButton() {
