@@ -35,7 +35,12 @@ class LoginActivity : AppCompatActivity() {
         // TODO MCO3: Password validation (1) length, (2) characters
 
         viewBinding.loginBtnLoginbtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent : Intent
+            intent = if(viewBinding.loginEtEmail.text.toString() == "Admin") { // TODO MCO3: Change this to detect user auth with Firebase
+                Intent(this, AdminTransactionsActivity::class.java)
+            } else {
+                Intent(this, MainActivity::class.java)
+            }
             startActivity(intent)
         })
     }
