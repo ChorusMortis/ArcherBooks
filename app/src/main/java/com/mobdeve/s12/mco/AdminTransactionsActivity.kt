@@ -26,6 +26,7 @@ class AdminTransactionsActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         setRVRecyclerView()
+        initLogoutButton()
     }
 
     private fun setRVRecyclerView() {
@@ -35,5 +36,12 @@ class AdminTransactionsActivity : AppCompatActivity() {
         val transLinearLayoutManager = LinearLayoutManager(this)
         transLinearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         this.rvRecyclerView.layoutManager = transLinearLayoutManager
+    }
+
+    private fun initLogoutButton() {
+        viewBinding.adminTransBtnLogout.setOnClickListener {
+            // end activity which Login started
+            finish()
+        }
     }
 }
