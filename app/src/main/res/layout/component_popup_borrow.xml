@@ -161,7 +161,7 @@
             app:layout_constraintStart_toEndOf="@+id/borrow_popup_cb_terms_and_conditions"
             app:layout_constraintTop_toTopOf="@+id/borrow_popup_cb_terms_and_conditions" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/borrow_popup_cancel_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/style_rounded_button_on_colored"
             android:backgroundTint="@color/text_over_gray_bg"
-            android:fontFamily="@font/sf_ui_text_regular"
+            app:fontFamily="@font/sf_ui_text_regular"
             android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="@color/maintext"
@@ -180,7 +180,7 @@
             app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cb_terms_and_conditions"
             app:layout_constraintVertical_bias="1.0" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/borrow_popup_confirm_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/style_rounded_button_on_colored"
             android:backgroundTint="@color/main_green"
-            android:fontFamily="@font/sf_ui_text_regular"
+            app:fontFamily="@font/sf_ui_text_regular"
             android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/maintext"

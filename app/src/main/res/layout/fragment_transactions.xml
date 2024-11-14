@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/gray_bg">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/history_tv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:fontFamily="@font/sf_ui_text_bold"
+        app:fontFamily="@font/sf_ui_text_bold"
         android:text="My Transactions"
         android:textColor="@color/main_green"
         android:textSize="28sp"

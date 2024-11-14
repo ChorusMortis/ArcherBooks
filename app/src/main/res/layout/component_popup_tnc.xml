@@ -75,7 +75,7 @@
             app:layout_constraintStart_toStartOf="@+id/tnc_popup_term_2"
             app:layout_constraintTop_toBottomOf="@+id/tnc_popup_term_2" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tnc_popup_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/style_rounded_button_on_colored"
             android:backgroundTint="@color/main_green"
-            android:fontFamily="@font/sf_ui_text_regular"
+            app:fontFamily="@font/sf_ui_text_regular"
             android:text="Back"
             android:textAllCaps="false"
             android:textColor="@color/maintext"
