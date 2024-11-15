@@ -21,6 +21,7 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
         calendar.set(2024, 11, 24)
         viewBinding.itemAdminTsTvTransDateValue.text = formatDate(calendar.time)
         modifyTransactionDetails(transaction)
+        setEditStatusButtonIcon(transaction)
     }
 
     private fun formatDate(date: Date): String {
@@ -38,7 +39,7 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
                 setStatusLabelAndVal(R.drawable.icon_timer, R.string.to_return, R.color.book_borrowed, transaction.expectedReturnDate)
             }
             TransactionModel.Status.RETURNED -> {
-                setStatusLabelAndVal(R.drawable.icon_returned, R.string.returned, R.color.main_green, transaction.actualReturnDate!!)
+                setStatusLabelAndVal(R.drawable.icon_returned, R.string.returned, R.color.book_available, transaction.actualReturnDate!!)
             }
             TransactionModel.Status.CANCELLED -> {
                 setStatusLabelAndVal(R.drawable.icon_cancel_transaction, R.string.cancelled, R.color.book_unavailable, transaction.canceledDate!!)
@@ -55,5 +56,35 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
         viewBinding.itemAdminTsTvBorrowStatusLabel.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(viewBinding.root.context, statusColor)))
         viewBinding.itemAdminTsTvBorrowStatusDate.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(viewBinding.root.context, statusColor)))
         viewBinding.itemAdminTsTvBorrowStatusDate.text = formatDate(statusDate)
+    }
+
+    private fun setEditStatusButtonIcon(transaction: TransactionModel) {
+        when (transaction.status) {
+            TransactionModel.Status.FOR_PICKUP -> {
+                viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_for_pickup_edit)
+                viewBinding.itemAdminEditBtn.isEnabled = true
+                viewBinding.itemAdminEditBtn.alpha = 1F
+            }
+            TransactionModel.Status.TO_RETURN -> {
+                viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_to_return_edit)
+                viewBinding.itemAdminEditBtn.isEnabled = true
+                viewBinding.itemAdminEditBtn.alpha = 1F
+            }
+            TransactionModel.Status.RETURNED -> {
+                viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_available)
+                viewBinding.itemAdminEditBtn.isEnabled = false
+                viewBinding.itemAdminEditBtn.alpha = 0.3F
+            }
+            TransactionModel.Status.CANCELLED -> {
+                viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_cancel_transaction)
+                viewBinding.itemAdminEditBtn.isEnabled = false
+                viewBinding.itemAdminEditBtn.alpha = 1F
+            }
+            TransactionModel.Status.OVERDUE -> {
+                viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_to_return_edit)
+                viewBinding.itemAdminEditBtn.isEnabled = true
+                viewBinding.itemAdminEditBtn.alpha = 1F
+            }
+        }
     }
 }
