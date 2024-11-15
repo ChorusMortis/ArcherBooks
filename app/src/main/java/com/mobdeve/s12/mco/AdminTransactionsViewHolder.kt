@@ -38,7 +38,7 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
                 setStatusLabelAndVal(R.drawable.icon_timer, R.string.to_return, R.color.book_borrowed, transaction.expectedReturnDate)
             }
             TransactionModel.Status.RETURNED -> {
-                setStatusLabelAndVal(R.drawable.icon_returned, R.string.returned, R.color.main_green, transaction.actualReturnDate)
+                setStatusLabelAndVal(R.drawable.icon_returned, R.string.returned, R.color.main_green, transaction.actualReturnDate!!)
             }
             TransactionModel.Status.CANCELLED -> {
                 setStatusLabelAndVal(R.drawable.icon_cancel_transaction, R.string.cancelled, R.color.book_unavailable, transaction.canceledDate!!)

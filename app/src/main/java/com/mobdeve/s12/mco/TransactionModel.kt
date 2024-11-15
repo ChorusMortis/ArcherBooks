@@ -9,8 +9,8 @@ class TransactionModel(
     val transactionDate: Date,
     val expectedPickupDate: Date,
     val expectedReturnDate: Date,
-    var actualPickupDate: Date,
-    var actualReturnDate: Date,
+    var actualPickupDate: Date?,
+    var actualReturnDate: Date?,
     var canceledDate: Date?,
     var status: Status = Status.FOR_PICKUP
 ) {

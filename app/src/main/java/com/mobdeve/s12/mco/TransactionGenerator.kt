@@ -15,7 +15,14 @@ class TransactionGenerator {
             val date = calendar.time
 
             for(index in 0..9) {
-                data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, date, date, null, Status.RETURNED ))
+                if(index in intArrayOf(3, 6, 9)) {
+                    data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, date, date, null, Status.RETURNED ))
+                } else if(index in intArrayOf(2, 5, 8)) {
+                    data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, date, null, null, Status.TO_RETURN ))
+                } else {
+                    data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, null, null, null, Status.FOR_PICKUP))
+                }
+
             }
             return data
         }
