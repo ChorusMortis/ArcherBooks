@@ -76,7 +76,7 @@ class MainActivity: AppCompatActivity() {
 
         confirmLogoutDialogBinding.dialogConfirmlogoutBtnConfirm.setOnClickListener {
             dialog.dismiss()
-            // finish activity that was started by Login to logout
+            // finish main activity (all fragments)
             finish()
         }
 

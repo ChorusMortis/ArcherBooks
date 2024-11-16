@@ -54,12 +54,11 @@ class AdminTransactionsActivity : AppCompatActivity() {
         setContentView(adminTransBinding.root)
 
         setRVRecyclerView()
-//        initLogoutButton()
         initFilterButton()
 
-        adminTransBinding.adminTransBtnOptions.setOnClickListener(View.OnClickListener {
+        adminTransBinding.adminTransBtnOptions.setOnClickListener {
             showPopupMenu()
-        })
+        }
     }
 
     private fun showPopupMenu() {
