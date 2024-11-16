@@ -2,11 +2,14 @@ package com.mobdeve.s12.mco
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.mobdeve.s12.mco.databinding.ActivityMainBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmlogoutBinding
 
 class MainActivity: AppCompatActivity() {
 
@@ -44,8 +47,7 @@ class MainActivity: AppCompatActivity() {
                     true
                 }
                 R.id.action_logout -> {
-                    // TODO MCO3: Add secondary confirmation
-                    finish()
+                    showConfirmLogoutDialog()
                     true
                 }
 
@@ -54,6 +56,31 @@ class MainActivity: AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showConfirmLogoutDialog() {
+        val confirmLogoutDialogBinding =
+            ComponentDialogConfirmlogoutBinding.inflate(LayoutInflater.from(this))
+        // use custom style to force dialog to wrap content and not take up entire screen's width
+        val dialog = AlertDialog.Builder(this,  R.style.WrapContentDialog)
+            .setView(confirmLogoutDialogBinding.root)
+            .setCancelable(false)
+            .create()
+
+        // make background transparent so dialog floats
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        confirmLogoutDialogBinding.dialogConfirmlogoutBtnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        confirmLogoutDialogBinding.dialogConfirmlogoutBtnConfirm.setOnClickListener {
+            dialog.dismiss()
+            // finish activity that was started by Login to logout
+            finish()
+        }
+
+        dialog.show()
     }
 
     private fun removeSearchPreferences() {
