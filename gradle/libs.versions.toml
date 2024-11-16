@@ -1,5 +1,6 @@
 [versions]
 agp = "8.6.0"
+firebaseBom = "33.6.0"
 fkBlurViewAndroid = "1.0.1"
 glide = "4.13.0"
 glideTransformations = "4.00"
@@ -28,6 +29,8 @@ navigationUiKtx = "2.8.3"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx-v2xx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
 androidx-navigation-ui-ktx-v2xx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 fk-blur-view-android = { module = "com.github.furkankaplan:fk-blur-view-android", version.ref = "fkBlurViewAndroid" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-transformations = { module = "jp.wasabeef:glide-transformations", version.ref = "glideTransformations" }

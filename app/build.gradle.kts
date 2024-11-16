@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -52,6 +53,8 @@ android {
 
 dependencies {
 
+    implementation(libs.firebase.firestore)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.justifiedtextview)
     implementation(libs.androidx.navigation.fragment.ktx.v2xx)
     implementation(libs.androidx.navigation.ui.ktx.v2xx)
