@@ -5,13 +5,13 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextMenu
 import android.view.ContextThemeWrapper
 import android.view.Gravity
-import android.view.MenuInflater
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.PopupMenu
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ActivityAdminTransactionsBinding
 import com.mobdeve.s12.mco.databinding.ComponentDialogAdminTransBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmlogoutBinding
 
 class AdminTransactionsActivity : AppCompatActivity() {
     companion object {
@@ -93,12 +94,37 @@ class AdminTransactionsActivity : AppCompatActivity() {
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.admin_logout -> {
-                    finish()
+                    showConfirmLogoutDialog()
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun showConfirmLogoutDialog() {
+        val confirmLogoutDialogBinding =
+            ComponentDialogConfirmlogoutBinding.inflate(LayoutInflater.from(this))
+        // use custom style to force dialog to wrap content and not take up entire screen's width
+        val dialog = AlertDialog.Builder(this,  R.style.WrapContentDialog)
+            .setView(confirmLogoutDialogBinding.root)
+            .setCancelable(false)
+            .create()
+
+        // make background transparent so dialog floats
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        confirmLogoutDialogBinding.dialogConfirmlogoutBtnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        confirmLogoutDialogBinding.dialogConfirmlogoutBtnConfirm.setOnClickListener {
+            dialog.dismiss()
+            // finish activity that was started by Login to logout
+            finish()
+        }
+
+        dialog.show()
     }
 
     private fun initFilterButton() {
