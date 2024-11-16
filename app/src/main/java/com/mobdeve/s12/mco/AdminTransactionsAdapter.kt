@@ -30,7 +30,7 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
 
     private fun showEditDialog(context: Context, position: Int) {
         val editDialogBinding = ComponentDialogAdmintransEditstatusBinding.inflate(LayoutInflater.from(context))
-        val dialog = AlertDialog.Builder(context, R.style.WrapContentDialog)
+        val dialog = AlertDialog.Builder(context)
             .setView(editDialogBinding.root)
             .setCancelable(true)
             .create()
@@ -57,12 +57,22 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
 
     private fun setDialogMessage(transaction: TransactionModel, dialogBinding: ComponentDialogAdmintransEditstatusBinding) {
         val message = when (transaction.status) {
-            TransactionModel.Status.FOR_PICKUP -> "Did the borrower pick up the book?"
-            TransactionModel.Status.TO_RETURN -> "Did the borrower return the book?"
-            TransactionModel.Status.OVERDUE -> "Did the borrower return the overdue book?"
+            TransactionModel.Status.FOR_PICKUP -> "Are you sure the borrower has picked up the book?"
+            TransactionModel.Status.TO_RETURN -> "Are you sure the borrower has returned the book?"
+            TransactionModel.Status.OVERDUE -> "Are you sure the borrower has returned the book?"
             TransactionModel.Status.CANCELLED -> "The borrower has cancelled the transaction."
             TransactionModel.Status.RETURNED -> "The borrower has already returned the book."
         }
         dialogBinding.dialogAdmintransTvMessage.text = message
+
+        val header = when (transaction.status) {
+            TransactionModel.Status.FOR_PICKUP -> "Confirm Pickup"
+            TransactionModel.Status.TO_RETURN -> "Confirm Return"
+            TransactionModel.Status.OVERDUE -> "Confirm Return"
+            TransactionModel.Status.CANCELLED -> "Transaction Cancelled"
+            TransactionModel.Status.RETURNED -> "Book Returned"
+        }
+
+        dialogBinding.dialogAdmintransTvLabel.text = header
     }
 }

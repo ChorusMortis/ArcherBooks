@@ -52,6 +52,7 @@ android {
 
 dependencies {
 
+    implementation(libs.justifiedtextview)
     implementation(libs.androidx.navigation.fragment.ktx.v2xx)
     implementation(libs.androidx.navigation.ui.ktx.v2xx)
     implementation(libs.material.v140)
