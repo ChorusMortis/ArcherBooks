@@ -1,9 +1,17 @@
 package com.mobdeve.s12.mco
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.view.ContextMenu
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.MenuInflater
+import android.view.View
 import android.widget.Button
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,8 +53,32 @@ class AdminTransactionsActivity : AppCompatActivity() {
         setContentView(adminTransBinding.root)
 
         setRVRecyclerView()
-        initLogoutButton()
+//        initLogoutButton()
         initFilterButton()
+
+        adminTransBinding.adminTransBtnOptions.setOnClickListener(View.OnClickListener {
+            showPopupMenu()
+        })
+    }
+
+    private fun showPopupMenu() {
+        val wrapper : Context = ContextThemeWrapper(this, R.style.PopupMenuText)
+        val popupMenu = PopupMenu(wrapper, adminTransBinding.adminTransPopupAnchor, Gravity.END)
+        val inflater = popupMenu.menuInflater
+        inflater.inflate(R.menu.admin_options_items, popupMenu.menu)
+
+        try {
+            val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldMPopup.isAccessible = true
+            val mPopup = fieldMPopup.get(popupMenu)
+            mPopup.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java).invoke(mPopup, true)
+        } catch (e : Exception) {
+            Log.e("AdminTransactionsActivity", "Error showing menu icons")
+        } finally {
+            popupMenu.show()
+        }
+
+        initLogoutButton(popupMenu)
     }
 
     private fun setRVRecyclerView() {
@@ -57,10 +89,15 @@ class AdminTransactionsActivity : AppCompatActivity() {
         rvRecyclerView.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
     }
 
-    private fun initLogoutButton() {
-        adminTransBinding.adminTransBtnLogout.setOnClickListener {
-            // end activity which Login started
-            finish()
+    private fun initLogoutButton(popupMenu: PopupMenu) {
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.admin_logout -> {
+                    finish()
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
         }
     }
 

@@ -210,19 +210,30 @@
     app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <ImageButton
-        android:id="@+id/admin_trans_btn_logout"
+        android:id="@+id/admin_trans_btn_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
-        android:background="@color/transparent"
-        android:backgroundTint="@color/white"
-        android:padding="9dp"
-        android:scaleX="1"
-        android:scaleY="1"
-        android:tint="@color/main_green"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:cropToPadding="true"
+        android:elevation="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="20dp"
+        android:rotation="90"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="@+id/admin_trans_tv_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/admin_trans_tv_label"
-        app:srcCompat="@drawable/icon_logout" />
+        app:srcCompat="@drawable/icon_options"
+        app:tint="@color/main_green" />
+
+    <TextView
+        android:id="@+id/admin_trans_popup_anchor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/admin_trans_btn_options"
+        app:layout_constraintEnd_toEndOf="@+id/admin_trans_btn_options" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
