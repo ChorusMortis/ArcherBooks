@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var viewBinding : ActivityRegisterBinding
+    private lateinit var authHandler: AuthHandler
+    private lateinit var firestoreHandler: FirestoreHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewBinding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -36,6 +38,8 @@ class RegisterActivity : AppCompatActivity() {
         viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 if (areAllFieldsValid()) {
+                    authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
+                    authHandler.createAccount(viewBinding.registerEtEmail.text.toString(), viewBinding.registerEtPassword.text.toString(), this@RegisterActivity)
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -91,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private suspend fun isEmailUnique() : Boolean {
-        val firestoreHandler = FirestoreHandler.getInstance(this)
+        firestoreHandler = FirestoreHandler.getInstance(this)!!
         val isUnique = !(firestoreHandler?.doesUserExist(viewBinding.registerEtEmail.text.toString()))!!
         Log.d("RegisterActivity", "Returned isEmailUnique() = $isUnique")
         return isUnique
