@@ -41,10 +41,14 @@ class RegisterActivity : AppCompatActivity() {
                 val newUser = UserModel(viewBinding.registerEtFirstname.text.toString(),
                                         viewBinding.registerEtLastname.text.toString(),
                                         viewBinding.registerEtEmail.text.toString())
+                val passwords = hashMapOf(
+                    "password" to viewBinding.registerEtPassword.text.toString(),
+                    "confirm_password" to viewBinding.registerEtConfirmpassword.text.toString()
+                )
 
-                if (areAllFieldsValid()) {
+                if (areAllFieldsValid(newUser, passwords)) {
                     authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
-                    val userId = authHandler.createAccount(viewBinding.registerEtEmail.text.toString(), viewBinding.registerEtPassword.text.toString(), this@RegisterActivity)
+                    val userId = authHandler.createAccount(newUser.emailAddress, passwords["password"]!!, this@RegisterActivity)
 
                     firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
                     newUser.userId = userId
@@ -65,20 +69,20 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
 
-    private suspend fun areAllFieldsValid() : Boolean {
-        if(!areAllFieldsFilled()) {
+    private suspend fun areAllFieldsValid(newUser: UserModel, passwords: HashMap<String, String>) : Boolean {
+        if(!areAllFieldsFilled(newUser, passwords)) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_incomplete_fields)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
-        } else if(!isEmailAddValid()) {
+        } else if(!isEmailAddValid(newUser.emailAddress)) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_invalid_email)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
-        } else if(!isEmailUnique()) {
+        } else if(!isEmailUnique(newUser.emailAddress)) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_email_already_exists)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
-        } else if(!isPasswordValid()) {
+        } else if(!isPasswordValid(passwords["password"]!!)) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_short_password)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
-        } else if(!arePasswordsMatching()) {
+        } else if(!arePasswordsMatching(passwords)) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_password_mismatch)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
         } else {
@@ -88,37 +92,33 @@ class RegisterActivity : AppCompatActivity() {
         return false
     }
 
-    private fun areAllFieldsFilled() : Boolean {
-        return if(viewBinding.registerEtFirstname.text.toString() == "" ||
-            viewBinding.registerEtLastname.text.toString() == "" ||
-            viewBinding.registerEtEmail.text.toString() == "" ||
-            viewBinding.registerEtPassword.text.toString() == "" ||
-            viewBinding.registerEtConfirmpassword.text.toString() == "") {
-            false
-        } else {
-            true
-        }
+    private fun areAllFieldsFilled(newUser: UserModel, passwords: HashMap<String, String>) : Boolean {
+        return !(newUser.firstName == "" ||
+                newUser.lastName == "" ||
+                newUser.emailAddress == "" ||
+                passwords["password"] == "" ||
+                passwords["confirm_password"] == "")
     }
 
-    private fun isEmailAddValid() : Boolean {
+    private fun isEmailAddValid(emailAdd: String) : Boolean {
         val emailRegex = Regex("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-        return emailRegex.matches(viewBinding.registerEtEmail.text.toString())
+        return emailRegex.matches(emailAdd)
     }
 
-    private suspend fun isEmailUnique() : Boolean {
+    private suspend fun isEmailUnique(emailAdd: String) : Boolean {
         firestoreHandler = FirestoreHandler.getInstance(this)!!
-        val isUnique = !(firestoreHandler?.doesUserExist(viewBinding.registerEtEmail.text.toString()))!!
+        val isUnique = !(firestoreHandler?.doesUserExist(emailAdd))!!
         Log.d("RegisterActivity", "Returned isEmailUnique() = $isUnique")
         return isUnique
     }
 
-    private fun isPasswordValid() : Boolean {
+    private fun isPasswordValid(password: String) : Boolean {
         val strongPasswordRegex = Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")
         val passwordRegex = Regex("^.{8,}$")
-        return passwordRegex.matches(viewBinding.registerEtPassword.text.toString())
+        return passwordRegex.matches(password)
     }
 
-    private fun arePasswordsMatching() : Boolean {
-        return (viewBinding.registerEtPassword.text.toString() == viewBinding.registerEtConfirmpassword.text.toString())
+    private fun arePasswordsMatching(passwords: HashMap<String, String>) : Boolean {
+        return (passwords["password"] == passwords["confirm_password"])
     }
 }
