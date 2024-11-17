@@ -218,6 +218,7 @@
         android:cropToPadding="true"
         android:elevation="10dp"
         android:paddingStart="10dp"
+        android:paddingTop="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="20dp"
         android:rotation="90"
