@@ -13,5 +13,8 @@
     <string name="warning_email_already_exists">An account with this email address already exists.</string>
     <string name="warning_short_password">Password is too short.</string>
     <string name="warning_password_mismatch">Passwords do not match.</string>
+    <string name="warning_user_not_found">User does not exist.</string>
+    <string name="warning_invalid_credentials">The email address or password is incorrect.</string>
+
 
 </resources>

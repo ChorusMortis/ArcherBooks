@@ -3,12 +3,18 @@ package com.mobdeve.s12.mco
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s12.mco.databinding.ActivityLoginBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var viewBinding : ActivityLoginBinding
+    private lateinit var authHandler: AuthHandler
+    private lateinit var firestoreHandler: FirestoreHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -29,19 +35,35 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addListenerSignInBtn() {
-        // TODO MCO3: Get input, validate if email address is unique, and add account to database
-        // TODO MCO3: Add password and confirm password validation
-        // TODO MCO3: Add input validation (1) empty fields, (2) whitespaces, (3) invalid characters
-        // TODO MCO3: Password validation (1) length, (2) characters
-
         viewBinding.loginBtnLoginbtn.setOnClickListener(View.OnClickListener {
-            val intent : Intent
-            intent = if(viewBinding.loginEtEmail.text.toString() == "Admin") { // TODO MCO3: Change this to detect user auth with Firebase
-                Intent(this, AdminTransactionsActivity::class.java)
-            } else {
-                Intent(this, MainActivity::class.java)
+            CoroutineScope(Dispatchers.Main).launch {
+                val user = hashMapOf(
+                    "emailAddress" to viewBinding.loginEtEmail.text.toString(),
+                    "password" to viewBinding.loginEtPassword.text.toString()
+                )
+
+                if (areAllFieldsValid(user)) {
+                    authHandler = AuthHandler.getInstance(this@LoginActivity)!!
+                    val loggingInStatus = authHandler.loginAccount(user["emailAddress"]!!, user["password"]!!)
+                    if(loggingInStatus == "Success") {
+                        setWarningMessage(R.string.warning_user_not_found, View.GONE)
+
+                        val toast = Toast.makeText(this@LoginActivity, "User successfully logged in.", Toast.LENGTH_SHORT)
+                        toast.show()
+
+                        val intent : Intent = if(user["emailAddress"] == "Admin") { // TODO MCO3: Change this based on your designated admin email
+                            Intent(this@LoginActivity, AdminTransactionsActivity::class.java)
+                        } else {
+                            Intent(this@LoginActivity, MainActivity::class.java)
+                        }
+                        startActivity(intent)
+                    } else if(loggingInStatus == "User not found") {
+                        setWarningMessage(R.string.warning_user_not_found, View.VISIBLE)
+                    } else if(loggingInStatus == "Invalid credentials") {
+                        setWarningMessage(R.string.warning_invalid_credentials, View.VISIBLE)
+                    }
+                }
             }
-            startActivity(intent)
         })
     }
 
@@ -51,5 +73,32 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         })
+    }
+
+    private fun areAllFieldsValid(user: HashMap<String, String>) : Boolean {
+        if(!areAllFieldsFilled(user)) {
+            setWarningMessage(R.string.warning_incomplete_fields, View.VISIBLE)
+        } else if(!isEmailAddValid(user["emailAddress"]!!)) {
+            setWarningMessage(R.string.warning_invalid_email, View.VISIBLE)
+        } else {
+            setWarningMessage(R.string.warning_invalid_email, View.GONE)
+            return true
+        }
+        return false
+    }
+
+    private fun areAllFieldsFilled(user: HashMap<String, String>): Boolean {
+        return !(user["emailAddress"] == "" ||
+                user["password"] == "")
+    }
+
+    private fun isEmailAddValid(emailAdd: String) : Boolean {
+        val emailRegex = Regex("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+        return emailRegex.matches(emailAdd)
+    }
+
+    private fun setWarningMessage(message: Int, visibility: Int) {
+        viewBinding.registerTvWarning.text = viewBinding.root.context.getString(message)
+        viewBinding.registerTvWarning.visibility = visibility
     }
 }

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.ktx.Firebase
@@ -11,7 +13,7 @@ import kotlinx.coroutines.tasks.await
 
 class AuthHandler(context: Context) {
 
-    private lateinit var auth : FirebaseAuth
+    private val auth = Firebase.auth
 
     companion object {
         private var instance : AuthHandler? = null
@@ -27,7 +29,6 @@ class AuthHandler(context: Context) {
     }
 
     suspend fun createAccount(email: String, password: String, activity: Activity) : String {
-        auth = Firebase.auth
         return try {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
             val userId = result.user?.uid
@@ -36,6 +37,23 @@ class AuthHandler(context: Context) {
             userId!!
         } catch (e: Exception) {
             Log.w("AuthHandler", "Error adding user to Firebase Authentication.", e)
+            ""
+        }
+    }
+
+    suspend fun loginAccount(email: String, password: String) : String {
+        return try {
+            val user = auth.signInWithEmailAndPassword(email, password).await()
+            Log.d("AuthHandler", "User with id = ${user.user?.email} successfully logged in.")
+            "Success"
+        } catch(e: FirebaseAuthInvalidUserException) {
+            Log.w("AuthHandler", "User not found!", e)
+            "User not found"
+        } catch(e: FirebaseAuthInvalidCredentialsException) {
+            Log.w("AuthHandler", "Invalid credentials!", e)
+            "Invalid credentials"
+        } catch(e: Exception) {
+            Log.w("AuthHandler", "Error logging in to Firebase Auth")
             ""
         }
     }

@@ -34,8 +34,10 @@
         android:background="@drawable/style_rectange_top_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/login_gl_cardviewtop" />
+        app:layout_constraintTop_toTopOf="@+id/login_gl_cardviewtop"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/login_tv_headertitle"
@@ -111,12 +113,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:fontFamily="@font/sf_ui_text_bold"
         android:text="Forgot password?"
         android:textColor="#61AA63"
         android:textSize="14sp"
         android:textStyle="bold"
+        app:fontFamily="@font/sf_ui_text_bold"
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn_loginbtn" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/register_tv_warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:text="Please fill up all fields to proceed."
+        android:textColor="@color/book_borrowed"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/login_btn_loginbtn"
+        app:layout_constraintStart_toStartOf="@+id/login_btn_loginbtn"
         app:layout_constraintTop_toBottomOf="@+id/login_et_password" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -134,7 +150,7 @@
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/login_et_password"
-        app:layout_constraintTop_toBottomOf="@+id/login_tv_forgotpassword" />
+        app:layout_constraintTop_toBottomOf="@+id/register_tv_warning" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_gl_altsignin"
@@ -159,13 +175,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:fontFamily="@font/sf_ui_text_regular"
         android:text="Or continue with"
         android:textColor="#8D8D8D"
         android:textSize="14sp"
+        app:fontFamily="@font/sf_ui_text_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_btn_loginbtn" />
+        app:layout_constraintTop_toBottomOf="@+id/login_tv_forgotpassword" />
 
     <View
         android:id="@+id/login_div_divider2"
