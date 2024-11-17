@@ -6,24 +6,22 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
-class FirebaseHandler(context: Context?) {
+class FirestoreHandler(context: Context?) {
 
-    private val USERS_COLLECTION = "users"
-    private val BOOKS_COLLECTION = "books"
-    private val TRANSACTIONS_COLLECTION = "transactions"
+    private val usersCollection = "users"
+    private val booksCollection = "books"
+    private val transactionsCollection = "transactions"
 
     private lateinit var database : FirebaseFirestore
 
     companion object {
-        private var instance : FirebaseHandler? = null
+        private var instance : FirestoreHandler? = null
 
         @Synchronized
-        fun getInstance(context: Context): FirebaseHandler? {
+        fun getInstance(context: Context): FirestoreHandler? {
             if(instance == null) {
-                instance = FirebaseHandler(context.applicationContext)
+                instance = FirestoreHandler(context.applicationContext)
             }
 
             return instance
@@ -31,18 +29,18 @@ class FirebaseHandler(context: Context?) {
     }
 
     suspend fun doesUserExist(emailAdd: String) : Boolean {
-        val database = Firebase.firestore
+        database = Firebase.firestore
 
         return try {
-            val result = database.collection(USERS_COLLECTION)
+            val result = database.collection(usersCollection)
                 .whereEqualTo("emailAddress", emailAdd)
                 .get()
                 .await()
 
-            Log.d("FirebaseHandler", "Returned doesUserExist() = ${result.documents.isNotEmpty()}")
+            Log.d("FirestoreHandler", "Returned doesUserExist() = ${result.documents.isNotEmpty()}")
             result.documents.isNotEmpty()
         } catch (e: Exception) {
-            Log.w("FirebaseHandler", "Error getting documents.", e)
+            Log.w("FirestoreHandler", "Error getting documents.", e)
             false
         }
     }

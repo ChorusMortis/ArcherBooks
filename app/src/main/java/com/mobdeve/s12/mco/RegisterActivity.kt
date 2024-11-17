@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -93,8 +91,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private suspend fun isEmailUnique() : Boolean {
-        val firebaseHandler = FirebaseHandler.getInstance(this)
-        val isUnique = !(firebaseHandler?.doesUserExist(viewBinding.registerEtEmail.text.toString()))!!
+        val firestoreHandler = FirestoreHandler.getInstance(this)
+        val isUnique = !(firestoreHandler?.doesUserExist(viewBinding.registerEtEmail.text.toString()))!!
         Log.d("RegisterActivity", "Returned isEmailUnique() = $isUnique")
         return isUnique
     }
