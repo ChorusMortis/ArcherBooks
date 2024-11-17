@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.auth.User
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,9 +38,18 @@ class RegisterActivity : AppCompatActivity() {
     private fun addListenerCreateAccountBtn() {
         viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
+                val newUser = UserModel(viewBinding.registerEtFirstname.text.toString(),
+                                        viewBinding.registerEtLastname.text.toString(),
+                                        viewBinding.registerEtEmail.text.toString())
+
                 if (areAllFieldsValid()) {
                     authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
-                    authHandler.createAccount(viewBinding.registerEtEmail.text.toString(), viewBinding.registerEtPassword.text.toString(), this@RegisterActivity)
+                    val userId = authHandler.createAccount(viewBinding.registerEtEmail.text.toString(), viewBinding.registerEtPassword.text.toString(), this@RegisterActivity)
+
+                    firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
+                    newUser.userId = userId
+                    firestoreHandler.createUser(newUser)
+
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -79,7 +89,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun areAllFieldsFilled() : Boolean {
-        return if(viewBinding.registerEtFullname.text.toString() == "" ||
+        return if(viewBinding.registerEtFirstname.text.toString() == "" ||
+            viewBinding.registerEtLastname.text.toString() == "" ||
             viewBinding.registerEtEmail.text.toString() == "" ||
             viewBinding.registerEtPassword.text.toString() == "" ||
             viewBinding.registerEtConfirmpassword.text.toString() == "") {

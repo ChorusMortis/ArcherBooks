@@ -45,4 +45,16 @@ class FirestoreHandler(context: Context?) {
         }
     }
 
+    fun createUser(user: UserModel) {
+        database = Firebase.firestore
+        database.collection(usersCollection)
+            .document(user.userId)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d("FirestoreHandler", "Successfully created user with ID ${user.userId}")
+            }.addOnFailureListener {
+                Log.w("FirestoreHandler", "Error saving new user.")
+            }
+    }
+
 }

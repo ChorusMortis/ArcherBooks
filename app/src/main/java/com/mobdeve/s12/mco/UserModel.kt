@@ -2,7 +2,6 @@ package com.mobdeve.s12.mco
 
 class UserModel {
     var userId: String = "-1"
-        private set
     var firstName: String
         private set
     var lastName: String
