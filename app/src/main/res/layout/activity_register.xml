@@ -6,256 +6,307 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_login_register_gradient_leftright">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_registertitle"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="Sign up"
-        android:textColor="@color/white"
-        android:textSize="28sp"
-        android:textStyle="normal"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintBottom_toTopOf="@+id/register_gl_cardviewtop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/register_gl_cardviewtop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.125" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/register_iv_cardbackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/style_rectange_top_radius"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_gl_cardviewtop" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/register_tv_registertitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="Sign up"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="normal"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintBottom_toTopOf="@+id/register_gl_cardviewtop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/register_gl_cardviewtop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.125" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/register_tv_headertitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Get Started"
+                android:textColor="#61AA63"
+                android:textSize="36sp"
+                app:fontFamily="@font/sf_ui_text_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/register_tv_headersubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Create your new account"
+                android:textColor="#61AA63"
+                android:textSize="16sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_tv_headertitle" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/register_et_firstname"
+                android:layout_width="325dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/style_rounded_button_transparent"
+                android:backgroundTint="#61AA63"
+                android:ems="10"
+                android:hint="First name"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColorHint="#888888"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_tv_headersubtitle" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/register_et_lastname"
+                android:layout_width="325dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_rounded_button_transparent"
+                android:backgroundTint="#61AA63"
+                android:ems="10"
+                android:hint="Last name"
+                android:inputType="text"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColorHint="#888888"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_et_firstname" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/register_et_email"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_rounded_button_transparent"
+                android:backgroundTint="#61AA63"
+                android:ems="10"
+                android:hint="Email address"
+                android:inputType="textEmailAddress"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColorHint="#888888"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="@+id/register_et_firstname"
+                app:layout_constraintStart_toStartOf="@+id/register_et_firstname"
+                app:layout_constraintTop_toBottomOf="@+id/register_et_lastname" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/register_et_password"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_rounded_button_transparent"
+                android:backgroundTint="#61AA63"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColorHint="#888888"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="@+id/register_et_email"
+                app:layout_constraintStart_toStartOf="@+id/register_et_email"
+                app:layout_constraintTop_toBottomOf="@+id/register_et_email" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/register_et_confirmpassword"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/style_rounded_button_transparent"
+                android:backgroundTint="#61AA63"
+                android:ems="10"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColorHint="#888888"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="@+id/register_et_password"
+                app:layout_constraintStart_toStartOf="@+id/register_et_password"
+                app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
+
+            <TextView
+                android:id="@+id/register_tv_warning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Please fill up all fields to proceed."
+                android:textColor="@color/book_borrowed"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
+                app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
+                app:layout_constraintTop_toBottomOf="@+id/register_et_confirmpassword" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/register_btn_registerbtn"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/style_rounded_button_on_colored"
+                android:backgroundTint="#61AA63"
+                android:text="Create Account"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/register_et_confirmpassword"
+                app:layout_constraintStart_toStartOf="@+id/register_et_confirmpassword"
+                app:layout_constraintTop_toBottomOf="@+id/register_tv_warning" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/register_gl_altsignup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+            <View
+                android:id="@+id/register_div_divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="12dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="@+id/register_tv_altsignuptext"
+                app:layout_constraintEnd_toStartOf="@+id/register_tv_altsignuptext"
+                app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
+                app:layout_constraintTop_toTopOf="@+id/register_tv_altsignuptext" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/register_tv_altsignuptext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Or continue with"
+                android:textColor="#8D8D8D"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_btn_registerbtn" />
+
+            <View
+                android:id="@+id/register_div_divider2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="@+id/register_tv_altsignuptext"
+                app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
+                app:layout_constraintStart_toEndOf="@+id/register_tv_altsignuptext"
+                app:layout_constraintTop_toTopOf="@+id/register_tv_altsignuptext" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/register_btn_signupgoogle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/style_rounded_button_transparent"
+                android:backgroundTint="@color/black"
+                android:drawableStart="@drawable/icon_google_logo"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:paddingStart="62sp"
+                android:paddingEnd="62sp"
+                android:text="Sign up with Google"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
+                app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
+                app:layout_constraintTop_toBottomOf="@+id/register_tv_altsignuptext" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/register_tv_logintitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:text="Already have an account?"
+                android:textColor="#8D8D8D"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.37"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_btn_signupgoogle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/register_tv_loginhyperlink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Sign in"
+                android:textColor="#61AA63"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/register_tv_logintitle"
+                app:layout_constraintStart_toEndOf="@+id/register_tv_logintitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/register_iv_cardbackground"
+        android:id="@+id/register_iv_cardbackground2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/style_rectange_top_radius"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_headertitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Get Started"
-        android:textColor="#61AA63"
-        android:textSize="34sp"
-        app:fontFamily="@font/sf_ui_text_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/register_gl_cardviewtop" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_headersubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Create your new account"
-        android:textColor="#61AA63"
-        android:textSize="15sp"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_headertitle" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/register_et_fullname"
-        android:layout_width="325dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/style_rounded_button_transparent"
-        android:backgroundTint="#61AA63"
-        android:ems="10"
-        android:hint="Full name"
-        android:inputType="text"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:singleLine="true"
-        android:textColorHint="#888888"
-        android:textSize="14sp"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_headersubtitle" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/register_et_email"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/style_rounded_button_transparent"
-        android:backgroundTint="#61AA63"
-        android:ems="10"
-        android:hint="Email address"
-        android:inputType="textEmailAddress"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:singleLine="true"
-        android:textColorHint="#888888"
-        android:textSize="14sp"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_fullname"
-        app:layout_constraintStart_toStartOf="@+id/register_et_fullname"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_fullname" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/register_et_password"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/style_rounded_button_transparent"
-        android:backgroundTint="#61AA63"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:singleLine="true"
-        android:textColorHint="#888888"
-        android:textSize="14sp"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_email"
-        app:layout_constraintStart_toStartOf="@+id/register_et_email"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_email" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/register_et_confirmpassword"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/style_rounded_button_transparent"
-        android:backgroundTint="#61AA63"
-        android:ems="10"
-        android:hint="Confirm password"
-        android:inputType="textPassword"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:singleLine="true"
-        android:textColorHint="#888888"
-        android:textSize="14sp"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_password"
-        app:layout_constraintStart_toStartOf="@+id/register_et_password"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
-
-    <TextView
-        android:id="@+id/register_tv_warning"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/sf_ui_text_regular"
-        android:text="Please fill up all fields to proceed."
-        android:textColor="@color/book_borrowed"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
-        app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
-        app:layout_constraintTop_toBottomOf="@+id/register_et_confirmpassword" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/register_btn_registerbtn"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/style_rounded_button_on_colored"
-        android:backgroundTint="#61AA63"
-        android:text="Create Account"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/register_et_confirmpassword"
-        app:layout_constraintStart_toStartOf="@+id/register_et_confirmpassword"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_warning" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/register_gl_altsignup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-
-    <View
-        android:id="@+id/register_div_divider1"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginEnd="12dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/register_tv_altsignuptext"
-        app:layout_constraintEnd_toStartOf="@+id/register_tv_altsignuptext"
-        app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
-        app:layout_constraintTop_toTopOf="@+id/register_tv_altsignuptext" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_altsignuptext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Or continue with"
-        android:textColor="#8D8D8D"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_btn_registerbtn" />
-
-    <View
-        android:id="@+id/register_div_divider2"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/register_tv_altsignuptext"
-        app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
-        app:layout_constraintStart_toEndOf="@+id/register_tv_altsignuptext"
-        app:layout_constraintTop_toTopOf="@+id/register_tv_altsignuptext" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/register_btn_signupgoogle"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/style_rounded_button_transparent"
-        android:backgroundTint="@color/black"
-        android:drawableStart="@drawable/icon_google_logo"
-        android:drawablePadding="15dp"
-        android:gravity="center_vertical"
-        android:paddingStart="62sp"
-        android:paddingEnd="62sp"
-        android:text="Sign up with Google"
-        android:textAllCaps="false"
-        android:textSize="14sp"
-        app:fontFamily="@font/sf_ui_text_regular"
-        app:layout_constraintEnd_toEndOf="@+id/register_btn_registerbtn"
-        app:layout_constraintStart_toStartOf="@+id/register_btn_registerbtn"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_altsignuptext" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_logintitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Already have an account?"
-        android:textColor="#8D8D8D"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.37"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_btn_signupgoogle" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_loginhyperlink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:text="Sign in"
-        android:textColor="#61AA63"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/register_tv_logintitle"
-        app:layout_constraintStart_toEndOf="@+id/register_tv_logintitle" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
