@@ -6,11 +6,23 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.auth.User
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.firebase.Firebase
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.auth
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.security.MessageDigest
+import java.util.UUID
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -37,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun addListenerCreateAccountBtn() {
-        viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
+        viewBinding.registerBtnRegisterbtn.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 val newUser = UserModel(viewBinding.registerEtFirstname.text.toString(),
                                         viewBinding.registerEtLastname.text.toString(),
@@ -62,15 +74,75 @@ class RegisterActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-        })
+        }
     }
 
     private fun addListenerSignUpWithGoogleBtn() {
-        // TODO MCO3: Add Google Handling
-        viewBinding.registerBtnSignupgoogle.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        })
+        viewBinding.registerBtnSignupgoogle.setOnClickListener {
+            val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId(getString(R.string.server_client_id))
+                .setAutoSelectEnabled(true)
+                .setNonce(getNonce())
+            .build()
+
+            val request: GetCredentialRequest = GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build()
+
+            val credentialManager = CredentialManager.create(this)
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val result = credentialManager.getCredential(
+                        request = request,
+                        context = this@RegisterActivity,
+                    )
+                    Log.d("RegisterActivity", "Getting credentials success")
+                    handleGoogleSignup(result)
+                } catch (e: GetCredentialException) {
+                    Log.e("RegisterActivity", e.toString())
+                    showGoogleSignupWarning()
+                }
+            }
+        }
+    }
+
+    private suspend fun handleGoogleSignup(result: GetCredentialResponse) {
+        val credential = result.credential
+        if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+            try {
+                val googleIdTokenCredential = GoogleIdTokenCredential
+                    .createFrom(credential.data)
+                val googleIdToken = googleIdTokenCredential.idToken
+
+                val googleCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
+                Firebase.auth.signInWithCredential(googleCredential).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("FirebaseAuth", "Firebase auth sign in success")
+                        viewBinding.registerTvWarning.visibility = View.GONE
+                        // TODO: create account in database
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Log.e("FirebaseAuth", "Firebase auth sign in fail", task.exception)
+                        showGoogleSignupWarning()
+                    }
+                }.await()
+
+            } catch (e: GoogleIdTokenParsingException) {
+                Log.e("FirebaseAuth", "Received an invalid google id token response", e)
+                showGoogleSignupWarning()
+            }
+        } else {
+            Log.e("RegisterActivity", "Unexpected type of credential")
+            showGoogleSignupWarning()
+        }
+    }
+
+    private fun showGoogleSignupWarning() {
+        viewBinding.registerTvWarning.text = getString(R.string.warning_google_register_fail)
+        viewBinding.registerTvWarning.visibility = View.VISIBLE
     }
 
     private suspend fun areAllFieldsValid(newUser: UserModel, passwords: HashMap<String, String>) : Boolean {
@@ -124,5 +196,13 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun arePasswordsMatching(passwords: HashMap<String, String>) : Boolean {
         return (passwords["password"] == passwords["confirm_password"])
+    }
+
+    private fun getNonce(): String {
+        val nonceBytes = UUID.randomUUID().toString().toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(nonceBytes)
+        val hash = digest.fold("") {str, it -> str + "%02x".format(it)}
+        return hash
     }
 }
