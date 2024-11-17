@@ -8,4 +8,10 @@
     <string name="cancelled">Cancelled:</string>
     <string name="returned">Returned:</string>
 
+    <string name="warning_incomplete_fields">Please fill out all fields to proceed.</string>
+    <string name="warning_invalid_email">Please enter a valid email address.</string>
+    <string name="warning_email_already_exists">An account with this email address already exists.</string>
+    <string name="warning_short_password">Password is too short.</string>
+    <string name="warning_password_mismatch">Passwords do not match.</string>
+
 </resources>
