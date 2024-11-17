@@ -53,6 +53,7 @@ android {
 
 dependencies {
 
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.google.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(platform(libs.firebase.bom))

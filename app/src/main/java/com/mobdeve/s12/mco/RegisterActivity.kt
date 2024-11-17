@@ -2,10 +2,15 @@ package com.mobdeve.s12.mco
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.transition.Visibility
+import androidx.lifecycle.lifecycleScope
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -31,9 +36,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun addListenerCreateAccountBtn() {
         viewBinding.registerBtnRegisterbtn.setOnClickListener(View.OnClickListener {
-            if(allFieldsValid()) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+            CoroutineScope(Dispatchers.Main).launch {
+                if (areAllFieldsValid()) {
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         })
     }
@@ -46,14 +53,14 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
 
-    private fun allFieldsValid() : Boolean {
+    private suspend fun areAllFieldsValid() : Boolean {
         if(!areAllFieldsFilled()) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_incomplete_fields)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
         } else if(!isEmailAddValid()) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_invalid_email)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
-        } else if(!isEmailUnique()){
+        } else if(!isEmailUnique()) {
             viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_email_already_exists)
             viewBinding.registerTvWarning.visibility = View.VISIBLE
         } else if(!isPasswordValid()) {
@@ -66,18 +73,17 @@ class RegisterActivity : AppCompatActivity() {
             viewBinding.registerTvWarning.visibility = View.GONE
             return true
         }
-
         return false
     }
 
     private fun areAllFieldsFilled() : Boolean {
-        if(viewBinding.registerEtFullname.text.toString() == "" ||
+        return if(viewBinding.registerEtFullname.text.toString() == "" ||
             viewBinding.registerEtEmail.text.toString() == "" ||
             viewBinding.registerEtPassword.text.toString() == "" ||
             viewBinding.registerEtConfirmpassword.text.toString() == "") {
-            return false
+            false
         } else {
-            return true
+            true
         }
     }
 
@@ -86,9 +92,11 @@ class RegisterActivity : AppCompatActivity() {
         return emailRegex.matches(viewBinding.registerEtEmail.text.toString())
     }
 
-    private fun isEmailUnique() : Boolean {
-        // TODO MCO3: Access database
-        return true
+    private suspend fun isEmailUnique() : Boolean {
+        val firebaseHandler = FirebaseHandler.getInstance(this)
+        val isUnique = !(firebaseHandler?.doesUserExist(viewBinding.registerEtEmail.text.toString()))!!
+        Log.d("RegisterActivity", "Returned isEmailUnique() = $isUnique")
+        return isUnique
     }
 
     private fun isPasswordValid() : Boolean {
