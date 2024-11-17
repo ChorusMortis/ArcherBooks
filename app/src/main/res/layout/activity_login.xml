@@ -44,7 +44,7 @@
         android:layout_marginTop="32dp"
         android:text="Welcome Back"
         android:textColor="#61AA63"
-        android:textSize="34sp"
+        android:textSize="36sp"
         app:fontFamily="@font/sf_ui_text_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -69,7 +69,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_et_email"
         android:layout_width="325dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/style_rounded_button_transparent"
         android:backgroundTint="#61AA63"
@@ -89,7 +89,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/login_et_password"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/style_rounded_button_transparent"
         android:backgroundTint="#61AA63"
@@ -122,7 +122,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn_loginbtn"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/style_rounded_button_on_colored"
         android:backgroundTint="#61AA63"
@@ -181,7 +181,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn_signingoogle"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/style_rounded_button_transparent"
         android:backgroundTint="@color/black"
