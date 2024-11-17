@@ -52,6 +52,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.credentials.play.services.auth)
+    implementation(libs.com.google.firebase.firebase.auth)
+    implementation(libs.androidx.credentials.credentials.v100.x3)
+    implementation(libs.play.services.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
