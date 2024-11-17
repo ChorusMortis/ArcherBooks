@@ -13,7 +13,7 @@ class FirestoreHandler(context: Context?) {
     private val booksCollection = "books"
     private val transactionsCollection = "transactions"
 
-    private lateinit var database : FirebaseFirestore
+    private val database = Firebase.firestore
 
     companion object {
         private var instance : FirestoreHandler? = null
@@ -29,8 +29,6 @@ class FirestoreHandler(context: Context?) {
     }
 
     suspend fun doesUserExist(emailAdd: String) : Boolean {
-        database = Firebase.firestore
-
         return try {
             val result = database.collection(usersCollection)
                 .whereEqualTo("emailAddress", emailAdd)
@@ -46,7 +44,6 @@ class FirestoreHandler(context: Context?) {
     }
 
     fun createUser(user: UserModel) {
-        database = Firebase.firestore
         database.collection(usersCollection)
             .document(user.userId)
             .set(user)
