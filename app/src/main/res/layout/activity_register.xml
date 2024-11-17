@@ -180,7 +180,7 @@
                 app:layout_constraintStart_toStartOf="@+id/register_et_password"
                 app:layout_constraintTop_toBottomOf="@+id/register_et_password" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/register_tv_warning"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
