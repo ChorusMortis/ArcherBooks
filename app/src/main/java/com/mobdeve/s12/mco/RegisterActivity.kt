@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.auth.User
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
@@ -53,6 +54,9 @@ class RegisterActivity : AppCompatActivity() {
                     firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
                     newUser.userId = userId
                     firestoreHandler.createUser(newUser)
+
+                    val toast = Toast.makeText(this@RegisterActivity, "Account successfully created!", Toast.LENGTH_SHORT)
+                    toast.show()
 
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
