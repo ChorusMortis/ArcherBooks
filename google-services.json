@@ -12,7 +12,20 @@
           "package_name": "com.mobdeve.s12.mco"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "616434012446-080no1bvs74a009aks7le98rpdc8bknv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobdeve.s12.mco",
+            "certificate_hash": "2c727c3565e0089104b9ad47dc739b5507f2b5e6"
+          }
+        },
+        {
+          "client_id": "616434012446-kdvcdg2cinf39af8t25t849hbtjg9sto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD5RgFZ9sUvpSZ-0-_dOMv14fztAOm-qYU"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616434012446-kdvcdg2cinf39af8t25t849hbtjg9sto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
