@@ -52,7 +52,9 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.google.firebase.auth)
     implementation(libs.firebase.firestore)
