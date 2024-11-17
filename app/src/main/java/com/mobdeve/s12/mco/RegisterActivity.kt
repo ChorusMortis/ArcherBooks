@@ -147,22 +147,17 @@ class RegisterActivity : AppCompatActivity() {
 
     private suspend fun areAllFieldsValid(newUser: UserModel, passwords: HashMap<String, String>) : Boolean {
         if(!areAllFieldsFilled(newUser, passwords)) {
-            viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_incomplete_fields)
-            viewBinding.registerTvWarning.visibility = View.VISIBLE
+            setWarningMessage(R.string.warning_incomplete_fields, View.VISIBLE)
         } else if(!isEmailAddValid(newUser.emailAddress)) {
-            viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_invalid_email)
-            viewBinding.registerTvWarning.visibility = View.VISIBLE
+            setWarningMessage(R.string.warning_invalid_email, View.VISIBLE)
         } else if(!isEmailUnique(newUser.emailAddress)) {
-            viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_email_already_exists)
-            viewBinding.registerTvWarning.visibility = View.VISIBLE
+            setWarningMessage(R.string.warning_email_already_exists, View.VISIBLE)
         } else if(!isPasswordValid(passwords["password"]!!)) {
-            viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_short_password)
-            viewBinding.registerTvWarning.visibility = View.VISIBLE
+            setWarningMessage(R.string.warning_short_password, View.VISIBLE)
         } else if(!arePasswordsMatching(passwords)) {
-            viewBinding.registerTvWarning.text = viewBinding.root.context.getString(R.string.warning_password_mismatch)
-            viewBinding.registerTvWarning.visibility = View.VISIBLE
+            setWarningMessage(R.string.warning_password_mismatch, View.VISIBLE)
         } else {
-            viewBinding.registerTvWarning.visibility = View.GONE
+            setWarningMessage(R.string.warning_invalid_credentials, View.GONE)
             return true
         }
         return false
@@ -196,6 +191,11 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun arePasswordsMatching(passwords: HashMap<String, String>) : Boolean {
         return (passwords["password"] == passwords["confirm_password"])
+    }
+
+    private fun setWarningMessage(message: Int, visibility: Int) {
+        viewBinding.registerTvWarning.text = viewBinding.root.context.getString(message)
+        viewBinding.registerTvWarning.visibility = visibility
     }
 
     private fun getNonce(): String {

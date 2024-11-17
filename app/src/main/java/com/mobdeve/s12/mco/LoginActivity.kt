@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setWarningMessage(message: Int, visibility: Int) {
-        viewBinding.registerTvWarning.text = viewBinding.root.context.getString(message)
-        viewBinding.registerTvWarning.visibility = visibility
+        viewBinding.loginTvWarning.text = viewBinding.root.context.getString(message)
+        viewBinding.loginTvWarning.visibility = visibility
     }
 }

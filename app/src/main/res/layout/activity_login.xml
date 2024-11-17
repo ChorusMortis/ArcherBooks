@@ -122,7 +122,7 @@
         app:layout_constraintTop_toBottomOf="@+id/login_btn_loginbtn" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_tv_warning"
+        android:id="@+id/login_tv_warning"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -150,7 +150,7 @@
         app:layout_constraintEnd_toEndOf="@+id/login_et_password"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/login_et_password"
-        app:layout_constraintTop_toBottomOf="@+id/register_tv_warning" />
+        app:layout_constraintTop_toBottomOf="@+id/login_tv_warning" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_gl_altsignin"
