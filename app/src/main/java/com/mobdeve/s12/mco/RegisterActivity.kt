@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -96,6 +97,9 @@ class RegisterActivity : AppCompatActivity() {
                     )
                     Log.d("RegisterActivity", "Getting credentials success")
                     handleGoogleSignup(result)
+                } catch (e: GetCredentialCancellationException) {
+                    Log.w("RegisterActivity", "${e.toString()}, doing nothing")
+                    // do nothing since it's not really a bad thing to cancel
                 } catch (e: GetCredentialException) {
                     Log.e("RegisterActivity", e.toString())
                     showGoogleSignupWarning()
