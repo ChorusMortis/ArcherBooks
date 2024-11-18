@@ -2,8 +2,12 @@ package com.mobdeve.s12.mco
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s12.mco.databinding.ActivityLandingBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LandingActivity : AppCompatActivity() {
 
@@ -20,6 +24,7 @@ class LandingActivity : AppCompatActivity() {
 
     private fun addListenerLoginBtn() {
         viewBinding.mainBtnLogin.setOnClickListener {
+
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }

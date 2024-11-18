@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.okhttp3.okhttp)
     implementation(libs.play.services.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)

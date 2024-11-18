@@ -23,12 +23,12 @@ class SearchResultsFragment : Fragment() {
         const val SEARCH_RESULTS_FILTER_PREF = "SEARCH_RESULTS_FILTER_PREF"
     }
 
-    private enum class SortOption {
+    enum class SortOption {
         RELEVANCE,
         NEWEST,
     }
 
-    private enum class FilterOption {
+    enum class FilterOption {
         ALL,
         TITLE,
         AUTHOR,
