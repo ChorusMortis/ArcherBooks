@@ -37,7 +37,7 @@
         android:paddingStart="50dp"
         android:paddingEnd="58dp"
         android:singleLine="true"
-        android:textColor="@color/main_green"
+        android:textColor="@color/text_over_white_bg"
         android:textColorHint="@color/text_over_white_bg"
         android:textSize="12sp"
         app:fontFamily="@font/sf_ui_text_regular"
