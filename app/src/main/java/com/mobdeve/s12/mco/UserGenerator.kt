@@ -11,7 +11,7 @@ class UserGenerator {
 
             for(index in 0..9)
             {
-                data.add(UserModel("user_${index}", firstNames[index], lastNames[index], "${firstNames[index].trim().lowercase()}_${lastNames[index].trim().lowercase()}@dlsu.edu.ph"))
+                data.add(UserModel("user_${index}", firstNames[index], lastNames[index], "${firstNames[index].trim().lowercase()}_${lastNames[index].trim().lowercase()}@dlsu.edu.ph", UserModel.SignUpMethod.EMAIL))
             }
 
             return data
