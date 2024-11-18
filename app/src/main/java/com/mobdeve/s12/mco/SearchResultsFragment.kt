@@ -108,16 +108,7 @@ class SearchResultsFragment : Fragment() {
                 actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_NEXT ||
                 actionId == EditorInfo.IME_NULL) {
 
-                searchStartingIndex = 0 // reset book starting index every time search is first triggered
-                val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
-                val googleBooksAPIHandler = GoogleBooksAPIHandler()
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
-                    Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
-                    this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(retrievedBooks!!)
-                    hideKeyboard(view)
-                }
+               initialSearch(view)
                 true
 
             } else {
@@ -126,7 +117,18 @@ class SearchResultsFragment : Fragment() {
         }
     }
 
+    private fun initialSearch(view: View) {
+        searchStartingIndex = 0 // reset book starting index every time search is first triggered
+        val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
+        val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
+        CoroutineScope(Dispatchers.Main).launch {
+            val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
+            Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
+            this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(retrievedBooks!!)
+            hideKeyboard(view)
+        }
+    }
 
     private fun hideKeyboard(view: View) {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -169,6 +171,7 @@ class SearchResultsFragment : Fragment() {
                 editor.apply()
             }
 
+            initialSearch(this.requireView())
             bottomSheetDialog.dismiss()
         }
 
