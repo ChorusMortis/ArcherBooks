@@ -179,7 +179,7 @@ class RegisterActivity : AppCompatActivity() {
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Log.e("FirebaseAuth", "Google sign in to registered account with email success")
+                    Log.e("FirebaseAuth", "Google sign in to registered account with email fail")
                     showGoogleSignupWarning()
                 }
             }
