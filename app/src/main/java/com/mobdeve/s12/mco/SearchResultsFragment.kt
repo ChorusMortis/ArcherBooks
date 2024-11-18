@@ -13,10 +13,12 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.internal.ViewUtils.dpToPx
 import com.mobdeve.s12.mco.databinding.ComponentDialogSearchBinding
 import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
@@ -144,6 +146,9 @@ class SearchResultsFragment : Fragment() {
 
     private fun repeatedSearch(view: View) {
         isLoading = true
+        searchResultsBinding.searchProgressBar.visibility = View.VISIBLE
+        val layoutParams = searchResultsBinding.searchRvResults.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.bottomMargin = 20
         val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
@@ -157,6 +162,8 @@ class SearchResultsFragment : Fragment() {
                 hasMoreData = false
             }
             isLoading = false
+            searchResultsBinding.searchProgressBar.visibility = View.GONE
+            layoutParams.bottomMargin = 0
             hideKeyboard(view)
         }
     }
