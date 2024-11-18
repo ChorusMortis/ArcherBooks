@@ -3,7 +3,6 @@ package com.mobdeve.s12.mco
 import android.content.Context
 import android.util.Log
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -12,6 +11,8 @@ class FirestoreHandler(context: Context?) {
     private val usersCollection = "users"
     private val booksCollection = "books"
     private val transactionsCollection = "transactions"
+
+    private val EMAIL_FIELD = "emailAddress"
 
     private val database = Firebase.firestore
 
@@ -54,4 +55,22 @@ class FirestoreHandler(context: Context?) {
             }
     }
 
+    suspend fun getUserFromEmail(email: String): Map<String, Any>? {
+        return try {
+            val result = database.collection(usersCollection)
+                .whereEqualTo(EMAIL_FIELD, email)
+                .limit(1)
+                .get()
+                .await()
+
+            if (!result.isEmpty) {
+                result.documents.first().data
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("getUserFromEmail", e.toString())
+            null
+        }
+    }
 }
