@@ -14,6 +14,7 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.mobdeve.s12.mco.databinding.ComponentPopupBorrowBinding
 import com.mobdeve.s12.mco.databinding.ComponentPopupTncBinding
 import java.text.SimpleDateFormat
@@ -48,8 +49,14 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private fun setDataOnViews() {
-        viewBinding.bookDetailsIvCover.setImageResource(this.intent.getIntExtra(COVER_KEY, R.drawable.book_grinch))
-        viewBinding.bookDetailsIvCover2.setImageResource(this.intent.getIntExtra(COVER_KEY, R.drawable.book_grinch))
+//        viewBinding.bookDetailsIvCover.setImageResource(this.intent.getStringExtra(COVER_KEY))
+//        viewBinding.bookDetailsIvCover2.setImageResource(this.intent.getStringExtra(COVER_KEY))
+        Glide.with(viewBinding.root.context)
+            .load(this.intent.getStringExtra(COVER_KEY))
+            .into(viewBinding.bookDetailsIvCover)
+        Glide.with(viewBinding.root.context)
+            .load(this.intent.getStringExtra(COVER_KEY))
+            .into(viewBinding.bookDetailsIvCover2)
         viewBinding.bookDetailsTvTitle.text = this.intent.getStringExtra(TITLE_KEY)
         viewBinding.bookDetailsTvAuthors.text = this.intent.getStringExtra(AUTHORS_KEY)
         viewBinding.bookDetailsTvYear.text = this.intent.getStringExtra(YEAR_PUBLISHED_KEY)

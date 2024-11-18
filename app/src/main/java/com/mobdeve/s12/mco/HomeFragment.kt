@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.mobdeve.s12.mco.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -58,8 +59,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setContentBOTD(botd: BookModel) {
-        viewBinding.homeBotdIvBg.setImageResource(botd.coverResource)
-        viewBinding.homeBotdIvCover.setImageResource(botd.coverResource)
+//        viewBinding.homeBotdIvBg.setImageResource(botd.coverResource)
+//        viewBinding.homeBotdIvCover.setImageResource(botd.coverResource)
+        Glide.with(this)
+            .load(botd.coverResource)
+            .into(viewBinding.homeBotdIvBg)
+        Glide.with(this)
+            .load(botd.coverResource)
+            .into(viewBinding.homeBotdIvCover)
         viewBinding.homeBotdTvTitle.text = botd.title
         viewBinding.homeBotdTvAuthors.text = botd.authors.joinToString(", ")
         viewBinding.homeBotdTvDate.text = botd.publishYear

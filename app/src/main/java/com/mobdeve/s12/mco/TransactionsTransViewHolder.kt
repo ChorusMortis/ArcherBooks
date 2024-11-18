@@ -3,6 +3,8 @@ package com.mobdeve.s12.mco
 import android.icu.util.Calendar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.mobdeve.s12.mco.BookDetailsActivity.Companion.COVER_KEY
 import com.mobdeve.s12.mco.databinding.ItemTsCardBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -10,7 +12,10 @@ import java.util.Locale
 
 class TransactionsTransViewHolder(private val viewBinding: ItemTsCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(book: BookModel) {
-        viewBinding.itemTsTvCover.setImageResource(book.coverResource)
+//        viewBinding.itemTsTvCover.setImageResource(book.coverResource)
+        Glide.with(viewBinding.root.context)
+            .load(book.coverResource)
+            .into(viewBinding.itemTsTvCover)
         viewBinding.itemTsTvTitle.text = book.title
         viewBinding.itemTsTvAuthors.text = book.authors.joinToString(", ")
 

@@ -6,7 +6,7 @@ class BookModel(
     val authors: ArrayList<String>,
     val description: String,
     val publisher: String,
-    val coverResource: Int,
+    val coverResource: String,
     val shelfLocation: String,
     val publishYear: String,
     val pageCount: String,

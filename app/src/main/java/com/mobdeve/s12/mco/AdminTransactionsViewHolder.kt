@@ -5,6 +5,7 @@ import com.mobdeve.s12.mco.databinding.ItemAdminTsCardBinding
 import android.icu.util.Calendar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -13,7 +14,10 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
     fun bindData(transaction: TransactionModel) {
         // TODO MCO3: Get from transactions collection
 
-        viewBinding.itemAdminTsTvCover.setImageResource(transaction.book.coverResource)
+//        viewBinding.itemAdminTsTvCover.setImageResource(transaction.book.coverResource)
+        Glide.with(viewBinding.root.context)
+            .load(transaction.book.coverResource)
+            .into(viewBinding.itemAdminTsTvCover)
         viewBinding.itemAdminTsTvTitle.text = transaction.book.title
         viewBinding.itemAdminTsTvBorrowerName.text = transaction.user.firstName + " " + transaction.user.lastName
 

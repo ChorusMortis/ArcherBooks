@@ -92,6 +92,9 @@ class GoogleBooksAPIHandler {
                 pageCount = "Unknown"
             }
 
+            // Handle Book Cover
+            var bookCover = "https://books.google.com/books/publisher/content/images/frontcover/${bookObject.getString("id")}?fife=w640-h960&source=gbs_api"
+
             retrievedBooksArr.add(
                 BookModel(
                     bookObject.getString("id"),
@@ -99,7 +102,7 @@ class GoogleBooksAPIHandler {
                     authors,
                     description,
                     publisher,
-                    R.drawable.book_harry_potter,
+                    bookCover,
                     generateRandomShelfLocation(),
                     publishedDate,
                     pageCount,

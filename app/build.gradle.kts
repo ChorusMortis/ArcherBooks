@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.github.glide.v4151)
     implementation(libs.okhttp3.okhttp)
     implementation(libs.play.services.auth)
     implementation(libs.androidx.credentials)
