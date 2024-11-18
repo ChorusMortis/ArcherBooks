@@ -15,6 +15,7 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ComponentDialogSearchBinding
 import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
@@ -22,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
+import java.lang.Integer.min
 import kotlin.random.Random
 
 
@@ -58,7 +60,11 @@ class SearchResultsFragment : Fragment() {
     private var activeSearchFilterOption : FilterOption = FilterOption.ALL
     private var tempActiveSearchFilterOption : FilterOption? = null
 
+    private lateinit var rvAdapter: SearchResultsResultsAdapter
+    private lateinit var gridLayoutManager: GridLayoutManager
     private var searchStartingIndex = 0
+    private var isLoading = false
+    private var hasMoreData = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         searchResultsBinding = FragmentSearchBinding.inflate(inflater, container, false)
@@ -77,9 +83,13 @@ class SearchResultsFragment : Fragment() {
 
         addListenerSearchBtn()
 
-        searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
-        searchResultsBinding.searchRvResults.layoutManager = GridLayoutManager(activity, 2)
+        rvAdapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
+        searchResultsBinding.searchRvResults.adapter = rvAdapter
+        gridLayoutManager = GridLayoutManager(activity, 2)
+        searchResultsBinding.searchRvResults.layoutManager = gridLayoutManager
         searchResultsBinding.searchRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+
+        addRVScrollListener()
 
         return searchResultsBinding.root
     }
@@ -125,7 +135,28 @@ class SearchResultsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
             Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
-            this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(retrievedBooks!!)
+            rvAdapter = SearchResultsResultsAdapter(retrievedBooks!!)
+            this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = rvAdapter
+            hideKeyboard(view)
+            searchStartingIndex += min(retrievedBooks.size, 20)
+        }
+    }
+
+    private fun repeatedSearch(view: View) {
+        isLoading = true
+        val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
+        val googleBooksAPIHandler = GoogleBooksAPIHandler()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
+            Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
+            if(!retrievedBooks.isNullOrEmpty()) {
+                rvAdapter.addBooks(retrievedBooks)
+                searchStartingIndex += min(retrievedBooks.size, 20)
+            } else {
+                hasMoreData = false
+            }
+            isLoading = false
             hideKeyboard(view)
         }
     }
@@ -133,6 +164,26 @@ class SearchResultsFragment : Fragment() {
     private fun hideKeyboard(view: View) {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun addRVScrollListener() {
+        searchResultsBinding.searchRvResults.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val visibleItemCount = gridLayoutManager.childCount
+                val totalItemCount = gridLayoutManager.itemCount
+                val firstVisibleItemPosition = gridLayoutManager.findFirstVisibleItemPosition()
+
+                if(!isLoading && hasMoreData) {
+                    if(visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= 20) {
+                        repeatedSearch(requireView())
+                    }
+                }
+            }
+        })
     }
 
     private fun showSortResultsDialog() {

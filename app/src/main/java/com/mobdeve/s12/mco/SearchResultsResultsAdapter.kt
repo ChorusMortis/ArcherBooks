@@ -45,4 +45,10 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
             holder.itemView.context.startActivity(intent)
         })
     }
+
+    fun addBooks(newBooks: ArrayList<BookModel>) {
+        val startingIndex = data.size
+        data.addAll(newBooks)
+        notifyItemRangeInserted(startingIndex, newBooks.size)
+    }
 }
