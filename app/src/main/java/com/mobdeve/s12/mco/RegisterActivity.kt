@@ -51,7 +51,8 @@ class RegisterActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 val newUser = UserModel(viewBinding.registerEtFirstname.text.toString(),
                                         viewBinding.registerEtLastname.text.toString(),
-                                        viewBinding.registerEtEmail.text.toString())
+                                        viewBinding.registerEtEmail.text.toString(),
+                                        UserModel.SignUpMethod.EMAIL)
                 val passwords = hashMapOf(
                     "password" to viewBinding.registerEtPassword.text.toString(),
                     "confirm_password" to viewBinding.registerEtConfirmpassword.text.toString()
