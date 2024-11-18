@@ -73,6 +73,8 @@ class RegisterActivity : AppCompatActivity() {
 
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
+                    authHandler.logoutAccount()
+                    finish()
                 }
             }
         }
@@ -83,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
             val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
                 .setServerClientId(getString(R.string.server_client_id))
-                .setAutoSelectEnabled(true)
+                .setAutoSelectEnabled(false)
                 .setNonce(getNonce())
             .build()
 
@@ -171,6 +173,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private suspend fun signIntoExistingAccountWithGoogle(user: FirebaseUser, email: String, googleCredential: AuthCredential) {
         firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
+        authHandler = AuthHandler.getInstance(this)!!
         val foundUser = firestoreHandler.getUserFromEmail(email)
         if (foundUser?.get("signUpMethod") == UserModel.SignUpMethod.EMAIL.name) {
             authHandler.googleLinkAccount(user, googleCredential).addOnCompleteListener { linkTask ->
@@ -178,6 +181,8 @@ class RegisterActivity : AppCompatActivity() {
                     Log.d("FirebaseAuth", "Google sign in to registered account with email success")
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
+                    authHandler.logoutAccount()
+                    finish()
                 } else {
                     Log.e("FirebaseAuth", "Google sign in to registered account with email fail")
                     showGoogleSignupWarning()
@@ -187,6 +192,8 @@ class RegisterActivity : AppCompatActivity() {
             Log.d("FirebaseAuth", "Google sign in to registered account with Google success")
             val intent = Intent(this@RegisterActivity, MainActivity::class.java)
             startActivity(intent)
+            authHandler.logoutAccount()
+            finish()
         }
     }
 
