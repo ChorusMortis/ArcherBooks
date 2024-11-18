@@ -67,7 +67,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_ts_tv_trans_date_value"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:ellipsize="end"
@@ -77,6 +77,7 @@
         android:textColor="@color/text_over_white_bg"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/item_ts_tv_trans_date_label"
+        app:layout_constraintEnd_toEndOf="@+id/item_ts_tv_authors"
         app:layout_constraintStart_toEndOf="@+id/item_ts_tv_trans_date_label"
         app:layout_constraintTop_toTopOf="@+id/item_ts_tv_trans_date_label" />
 
@@ -109,7 +110,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_ts_tv_borrow_status_date"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:ellipsize="end"
@@ -119,6 +120,7 @@
         android:textColor="@color/book_borrowed"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/item_ts_tv_borrow_status_label"
+        app:layout_constraintEnd_toEndOf="@+id/item_ts_tv_trans_date_value"
         app:layout_constraintStart_toEndOf="@+id/item_ts_tv_borrow_status_label"
         app:layout_constraintTop_toTopOf="@+id/item_ts_tv_borrow_status_label" />
 
