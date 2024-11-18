@@ -66,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
                     newUser.userId = userId
                     firestoreHandler.createUser(newUser)
 
-                    val toast = Toast.makeText(this@RegisterActivity, "Account successfully created!", Toast.LENGTH_SHORT)
+                    val toast = Toast.makeText(this@RegisterActivity, "Account successfully created.", Toast.LENGTH_SHORT)
                     toast.show()
 
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
