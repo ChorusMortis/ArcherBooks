@@ -105,7 +105,8 @@ class SearchResultsFragment : Fragment() {
     private fun addListenerSearchBtn() {
         searchResultsBinding.searchEtSearchBar.setOnEditorActionListener{ view, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_GO ||
-                actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_NEXT) {
+                actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_NEXT ||
+                actionId == EditorInfo.IME_NULL) {
 
                 searchStartingIndex = 0 // reset book starting index every time search is first triggered
                 val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
