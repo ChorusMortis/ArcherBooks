@@ -10,10 +10,7 @@ import com.mobdeve.s12.mco.databinding.ItemRvCardBinding
 class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRVViewHolder {
-        val itemRVViewBinding: ItemRvCardBinding = ItemRvCardBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false)
+        val itemRVViewBinding: ItemRvCardBinding = ItemRvCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val rvViewHolder = HomeRVViewHolder(itemRVViewBinding)
 
         addListenerCard(rvViewHolder, itemRVViewBinding)

@@ -8,7 +8,7 @@ class BookModel(
     val publisher: String,
     val coverResource: Int,
     val shelfLocation: String,
-    val publishYear: Int,
+    val publishYear: String,
     val pageCount: Int,
     var hasTransaction: HasTransaction = HasTransaction.ACTIVE) {
     enum class HasTransaction {

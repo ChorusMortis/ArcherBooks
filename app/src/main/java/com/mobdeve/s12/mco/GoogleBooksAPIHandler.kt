@@ -79,10 +79,11 @@ class GoogleBooksAPIHandler {
             }
 
             // Handle Published Date
-            val publishedDate = bookVolumeInfo.optString("publishedDate")
-            var publishedDateInt = -1
+            var publishedDate = bookVolumeInfo.optString("publishedDate")
             if(!publishedDate.isNullOrEmpty()) {
-                publishedDateInt = publishedDate.substring(0, 4).toInt()
+                publishedDate = publishedDate.substring(0, 4)
+            } else {
+                publishedDate = "Unknown Date"
             }
 
             retrievedBooksArr.add(
@@ -94,7 +95,7 @@ class GoogleBooksAPIHandler {
                     publisher,
                     R.drawable.book_harry_potter,
                     generateRandomShelfLocation(),
-                    publishedDateInt,
+                    publishedDate,
                     bookVolumeInfo.optInt("pageCount"),
                     BookModel.HasTransaction.NONE
                 )

@@ -52,7 +52,7 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding.bookDetailsIvCover2.setImageResource(this.intent.getIntExtra(COVER_KEY, R.drawable.book_grinch))
         viewBinding.bookDetailsTvTitle.text = this.intent.getStringExtra(TITLE_KEY)
         viewBinding.bookDetailsTvAuthors.text = this.intent.getStringExtra(AUTHORS_KEY)
-        viewBinding.bookDetailsTvYear.text = this.intent.getIntExtra(YEAR_PUBLISHED_KEY, -1).toString()
+        viewBinding.bookDetailsTvYear.text = this.intent.getStringExtra(YEAR_PUBLISHED_KEY)
         viewBinding.bookDetailsTvPublisher.text = "Published by ${this.intent.getStringExtra(PUBLISHER_KEY)}"
         viewBinding.bookDetailsTvShelfLocation.text = this.intent.getStringExtra(SHELF_LOCATION_KEY)
         this.intent.getStringExtra(STATUS_KEY)?.let { setStatusIcon(it) }

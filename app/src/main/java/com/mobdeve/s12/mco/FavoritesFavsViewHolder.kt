@@ -8,7 +8,7 @@ class FavoritesFavsViewHolder(private val viewBinding: ItemFCardBinding): Recycl
         viewBinding.itemFvTvCover.setImageResource(book.coverResource)
         viewBinding.itemFvTvTitle.text = book.title
         viewBinding.itemFvTvAuthors.text = book.authors.joinToString(", ")
-        viewBinding.itemFvTvPubyear.text = book.publishYear.toString()
+        viewBinding.itemFvTvPubyear.text = book.publishYear
 
         // if(book in current user's favorites list) -> select toggled on favorite button
         // else -> select toggled off

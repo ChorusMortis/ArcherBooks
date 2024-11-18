@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
         viewBinding.homeBotdIvCover.setImageResource(botd.coverResource)
         viewBinding.homeBotdTvTitle.text = botd.title
         viewBinding.homeBotdTvAuthors.text = botd.authors.joinToString(", ")
-        viewBinding.homeBotdTvDate.text = botd.publishYear.toString()
+        viewBinding.homeBotdTvDate.text = botd.publishYear
     }
 
     private fun addListenerBOTD(botd: BookModel) {

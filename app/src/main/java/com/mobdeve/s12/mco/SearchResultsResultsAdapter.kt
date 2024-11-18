@@ -9,10 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ItemSrCardBinding
 
 class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : RecyclerView.Adapter<SearchResultsResultsViewHolder>() {
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): SearchResultsResultsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultsResultsViewHolder {
         val itemSearchResultsCardBinding = ItemSrCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val srViewHolder = SearchResultsResultsViewHolder(itemSearchResultsCardBinding)
         addListenerCard(srViewHolder, itemSearchResultsCardBinding)
