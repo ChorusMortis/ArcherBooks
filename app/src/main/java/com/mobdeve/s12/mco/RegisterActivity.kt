@@ -13,14 +13,11 @@ import androidx.credentials.exceptions.GetCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.google.firebase.Firebase
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
 import com.mobdeve.s12.mco.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.security.MessageDigest
 import java.util.UUID
 
@@ -107,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun handleGoogleSignup(result: GetCredentialResponse) {
+    private fun handleGoogleSignup(result: GetCredentialResponse) {
         val credential = result.credential
         if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
             try {
@@ -116,7 +113,9 @@ class RegisterActivity : AppCompatActivity() {
                 val googleIdToken = googleIdTokenCredential.idToken
 
                 val googleCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
-                Firebase.auth.signInWithCredential(googleCredential).addOnCompleteListener { task ->
+
+                authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
+                authHandler.googleSignIn(googleCredential).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.d("FirebaseAuth", "Firebase auth sign in success")
                         viewBinding.registerTvWarning.visibility = View.GONE
@@ -128,8 +127,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.e("FirebaseAuth", "Firebase auth sign in fail", task.exception)
                         showGoogleSignupWarning()
                     }
-                }.await()
-
+                }
             } catch (e: GoogleIdTokenParsingException) {
                 Log.e("FirebaseAuth", "Received an invalid google id token response", e)
                 showGoogleSignupWarning()

@@ -3,11 +3,12 @@ package com.mobdeve.s12.mco
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -56,5 +57,9 @@ class AuthHandler(context: Context) {
             Log.w("AuthHandler", "Error logging in to Firebase Auth")
             ""
         }
+    }
+
+    fun googleSignIn(googleCredential: AuthCredential): Task<AuthResult> {
+        return auth.signInWithCredential(googleCredential)
     }
 }
