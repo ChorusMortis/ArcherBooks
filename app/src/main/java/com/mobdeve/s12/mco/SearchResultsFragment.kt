@@ -1,12 +1,16 @@
 package com.mobdeve.s12.mco
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -14,6 +18,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ComponentDialogSearchBinding
 import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONArray
+import kotlin.random.Random
+
 
 class SearchResultsFragment : Fragment() {
     companion object {
@@ -48,6 +58,8 @@ class SearchResultsFragment : Fragment() {
     private var activeSearchFilterOption : FilterOption = FilterOption.ALL
     private var tempActiveSearchFilterOption : FilterOption? = null
 
+    private var searchStartingIndex = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         searchResultsBinding = FragmentSearchBinding.inflate(inflater, container, false)
 
@@ -62,6 +74,8 @@ class SearchResultsFragment : Fragment() {
         searchResultsBinding.searchBtnFilterSort.setOnClickListener {
             showSortResultsDialog()
         }
+
+        addListenerSearchBtn()
 
         searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
         searchResultsBinding.searchRvResults.layoutManager = GridLayoutManager(activity, 2)
@@ -86,6 +100,36 @@ class SearchResultsFragment : Fragment() {
         prefFilterOption?.let {
             activeSearchFilterOption = it
         }
+    }
+
+    private fun addListenerSearchBtn() {
+        searchResultsBinding.searchEtSearchBar.setOnEditorActionListener{ view, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_GO ||
+                actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_NEXT) {
+
+                searchStartingIndex = 0 // reset book starting index every time search is first triggered
+                val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
+                val googleBooksAPIHandler = GoogleBooksAPIHandler()
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
+                    Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
+                    this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = SearchResultsResultsAdapter(retrievedBooks!!)
+                    hideKeyboard(view)
+                }
+                true
+
+            } else {
+                false
+            }
+        }
+    }
+
+
+
+    private fun hideKeyboard(view: View) {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun showSortResultsDialog() {

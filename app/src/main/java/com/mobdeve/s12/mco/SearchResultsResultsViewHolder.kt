@@ -8,6 +8,7 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding)
         viewBinding.itemSrIvCover.setImageResource(book.coverResource)
         viewBinding.itemSrTvTitle.text = book.title
         viewBinding.itemSrAuthors.text = book.authors.joinToString(", ")
+        viewBinding.itemSrYear.text = book.publishYear.toString()
 
         // TODO MCO3: Pass Transaction array list to adapter, then pass the specific transaction to ViewHolder via bindData fun
         // Then, create a conditional to properly check icon to set

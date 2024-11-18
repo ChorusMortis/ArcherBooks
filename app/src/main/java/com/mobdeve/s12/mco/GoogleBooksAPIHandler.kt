@@ -7,8 +7,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import kotlin.random.Random
 
 class GoogleBooksAPIHandler {
 
@@ -16,7 +18,7 @@ class GoogleBooksAPIHandler {
                sortOption: SearchResultsFragment.SortOption,
                filterOption: SearchResultsFragment.FilterOption,
                startIndex: Int,
-               maxResults: Int) : JSONObject? {
+               maxResults: Int) : ArrayList<BookModel>? {
         val client = OkHttpClient()
         var url = "https://www.googleapis.com/books/v1/volumes?q="
         url += stringifyFilterAndQuery(query, filterOption) + "&" +
@@ -30,7 +32,11 @@ class GoogleBooksAPIHandler {
                 if (response.isSuccessful) {
                     val json = JSONObject(response.body?.string()!!)
                     Log.d("GoogleBooksAPIHandler", "Successfully retrieved response with number of items = ${json.getInt("totalItems")}" )
-                    json
+
+                    val retrievedBooksJSON = json.getJSONArray("items")
+                    val convertedBooks = generateBookObjects(retrievedBooksJSON)
+                    Log.d("GoogleBooksAPIHandler", "Successfully converted books to BookModel type with size = ${convertedBooks.size}" )
+                    convertedBooks
                 } else {
                     Log.d("GoogleBooksAPIHandler", "Failed to retrieve response" )
                     null
@@ -40,6 +46,78 @@ class GoogleBooksAPIHandler {
                 null
             }
         }
+    }
+
+    private fun generateBookObjects(retrievedBooksJSON : JSONArray) : ArrayList<BookModel> {
+        val retrievedBooksArr : ArrayList<BookModel> = arrayListOf()
+
+
+        for(index in 0 until retrievedBooksJSON.length()) {
+            val bookObject = retrievedBooksJSON.getJSONObject(index)
+            val bookVolumeInfo = bookObject.getJSONObject("volumeInfo")
+
+            // Handle Authors
+            val authors : ArrayList<String> = arrayListOf()
+            val authorsJSONArray = bookVolumeInfo.optJSONArray("authors")
+            if(authorsJSONArray != null) {
+                for(authorIndex in 0 until authorsJSONArray.length()) {
+                    authors.add(authorsJSONArray.getString(authorIndex))
+                }
+            } else {
+                authors.add("Unknown")
+            }
+
+            // Handle Description
+            var description = bookVolumeInfo.optString("description")
+            if(description.isNullOrEmpty()) {
+                description = "This book does not have any description yet."
+            }
+
+            // Handle Publisher
+            var publisher = bookVolumeInfo.optString("publisher")
+            if(publisher.isNullOrEmpty()) {
+                publisher = "Unknown"
+            }
+
+            // Handle Published Date
+            val publishedDate = bookVolumeInfo.optString("publishedDate")
+            var publishedDateInt = -1
+            if(!publishedDate.isNullOrEmpty()) {
+                publishedDateInt = publishedDate.substring(0, 4).toInt()
+            }
+
+            retrievedBooksArr.add(
+                BookModel(
+                    bookObject.getString("id"),
+                    bookVolumeInfo.getString("title"),
+                    authors,
+                    description,
+                    publisher,
+                    R.drawable.book_harry_potter,
+                    generateRandomShelfLocation(),
+                    publishedDateInt,
+                    bookVolumeInfo.optInt("pageCount"),
+                    BookModel.HasTransaction.NONE
+                )
+            )
+        }
+
+        return retrievedBooksArr
+    }
+
+    private fun generateRandomShelfLocation() : String {
+        return getRandomInt(7, 14).toString() + "th Flr. " + getRandomInt(1, 50).toString() + getRandomCapitalLetter()
+    }
+
+    private fun getRandomInt(min: Int, max: Int): Int {
+        return Random.nextInt(min, max + 1)
+    }
+
+    private fun getRandomCapitalLetter(): Char {
+        val min = 65
+        val max = 90
+        val randomCode = Random.nextInt(min, max + 1)
+        return randomCode.toChar()
     }
 
     // Helper Methods
