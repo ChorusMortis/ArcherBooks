@@ -57,6 +57,8 @@ class LoginActivity : AppCompatActivity() {
                             Intent(this@LoginActivity, MainActivity::class.java)
                         }
                         startActivity(intent)
+//                        authHandler.logoutAccount()
+                        finish()
                     } else if(loggingInStatus == "User not found") {
                         setWarningMessage(R.string.warning_user_not_found, View.VISIBLE)
                     } else if(loggingInStatus == "Invalid credentials") {
@@ -72,6 +74,8 @@ class LoginActivity : AppCompatActivity() {
         viewBinding.loginBtnSigningoogle.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+//            authHandler.logoutAccount()
+            finish()
         })
     }
 
