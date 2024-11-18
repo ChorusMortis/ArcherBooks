@@ -51,7 +51,6 @@ class GoogleBooksAPIHandler {
     private fun generateBookObjects(retrievedBooksJSON : JSONArray) : ArrayList<BookModel> {
         val retrievedBooksArr : ArrayList<BookModel> = arrayListOf()
 
-
         for(index in 0 until retrievedBooksJSON.length()) {
             val bookObject = retrievedBooksJSON.getJSONObject(index)
             val bookVolumeInfo = bookObject.getJSONObject("volumeInfo")
@@ -64,7 +63,7 @@ class GoogleBooksAPIHandler {
                     authors.add(authorsJSONArray.getString(authorIndex))
                 }
             } else {
-                authors.add("Unknown")
+                authors.add("Unknown Author")
             }
 
             // Handle Description
