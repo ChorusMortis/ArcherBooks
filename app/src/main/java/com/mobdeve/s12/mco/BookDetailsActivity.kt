@@ -57,7 +57,7 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding.bookDetailsTvShelfLocation.text = this.intent.getStringExtra(SHELF_LOCATION_KEY)
         this.intent.getStringExtra(STATUS_KEY)?.let { setStatusIcon(it) }
         viewBinding.bookDetailsTvStatus.text = this.intent.getStringExtra(STATUS_KEY)
-        viewBinding.bookDetailsTvPages.text = "${this.intent.getIntExtra(PAGES_KEY, 0).toString()} pages"
+        viewBinding.bookDetailsTvPages.text = "${this.intent.getStringExtra(PAGES_KEY)} pages"
         viewBinding.bookDetailsTvDescription.text = this.intent.getStringExtra(DESCRIPTION_KEY)
     }
 

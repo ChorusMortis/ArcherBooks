@@ -80,10 +80,16 @@ class GoogleBooksAPIHandler {
 
             // Handle Published Date
             var publishedDate = bookVolumeInfo.optString("publishedDate")
-            if(!publishedDate.isNullOrEmpty()) {
-                publishedDate = publishedDate.substring(0, 4)
+            publishedDate = if(!publishedDate.isNullOrEmpty()) {
+                publishedDate.substring(0, 4)
             } else {
-                publishedDate = "Unknown Date"
+                "Unknown Date"
+            }
+
+            // Handle Page Count
+            var pageCount = bookVolumeInfo.optInt("pageCount").toString()
+            if(pageCount == "0") {
+                pageCount = "Unknown"
             }
 
             retrievedBooksArr.add(
@@ -96,7 +102,7 @@ class GoogleBooksAPIHandler {
                     R.drawable.book_harry_potter,
                     generateRandomShelfLocation(),
                     publishedDate,
-                    bookVolumeInfo.optInt("pageCount"),
+                    pageCount,
                     BookModel.HasTransaction.NONE
                 )
             )
