@@ -13,20 +13,16 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.internal.ViewUtils.dpToPx
 import com.mobdeve.s12.mco.databinding.ComponentDialogSearchBinding
 import com.mobdeve.s12.mco.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONArray
 import java.lang.Integer.min
-import kotlin.random.Random
 
 
 class SearchResultsFragment : Fragment() {
@@ -85,13 +81,14 @@ class SearchResultsFragment : Fragment() {
 
         addListenerSearchBtn()
 
-        rvAdapter = SearchResultsResultsAdapter(BookGenerator.generateSampleBooks())
+        rvAdapter = SearchResultsResultsAdapter(arrayListOf())
         searchResultsBinding.searchRvResults.adapter = rvAdapter
         gridLayoutManager = GridLayoutManager(activity, 2)
         searchResultsBinding.searchRvResults.layoutManager = gridLayoutManager
         searchResultsBinding.searchRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         addRVScrollListener()
+        searchResultsBinding.searchEtSearchBar.requestFocus()
 
         return searchResultsBinding.root
     }
@@ -130,6 +127,8 @@ class SearchResultsFragment : Fragment() {
     }
 
     private fun initialSearch(view: View) {
+        isLoading = true
+        searchResultsBinding.initialSearchProgressBar.visibility = View.VISIBLE
         searchStartingIndex = 0 // reset book starting index every time search is first triggered
         val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
@@ -141,14 +140,16 @@ class SearchResultsFragment : Fragment() {
             this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = rvAdapter
             hideKeyboard(view)
             searchStartingIndex += min(retrievedBooks.size, 20)
+            isLoading = false
+            searchResultsBinding.initialSearchProgressBar.visibility = View.GONE
         }
     }
 
     private fun repeatedSearch(view: View) {
         isLoading = true
-        searchResultsBinding.searchProgressBar.visibility = View.VISIBLE
+        searchResultsBinding.scrollSearchProgressBar.visibility = View.VISIBLE
         val layoutParams = searchResultsBinding.searchRvResults.layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.bottomMargin = 20
+        layoutParams.bottomMargin = 40
         val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
@@ -162,7 +163,7 @@ class SearchResultsFragment : Fragment() {
                 hasMoreData = false
             }
             isLoading = false
-            searchResultsBinding.searchProgressBar.visibility = View.GONE
+            searchResultsBinding.scrollSearchProgressBar.visibility = View.GONE
             layoutParams.bottomMargin = 0
             hideKeyboard(view)
         }
