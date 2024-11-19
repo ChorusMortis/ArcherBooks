@@ -73,7 +73,6 @@ class RegisterActivity : AppCompatActivity() {
 
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
-                    authHandler.logoutAccount()
                     finish()
                 }
             }
