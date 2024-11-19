@@ -2,19 +2,22 @@ package com.mobdeve.s12.mco
 
 class UserModel {
     var userId: String = "-1"
-    var firstName: String
+    var firstName: String = ""
         private set
-    var lastName: String
+    var lastName: String = ""
         private set
-    var emailAddress: String
+    var emailAddress: String = ""
         private set
-    var signUpMethod: SignUpMethod
+    var signUpMethod: SignUpMethod = SignUpMethod.EMAIL
         private set
 
     enum class SignUpMethod {
         EMAIL,
         GOOGLE
     }
+
+    // don't delete; used for Firebase toObject method which requires empty constructor
+    constructor()
 
     constructor(userId: String, firstName: String, lastName: String, emailAddress: String, signUpMethod: SignUpMethod) {
         this.userId = userId

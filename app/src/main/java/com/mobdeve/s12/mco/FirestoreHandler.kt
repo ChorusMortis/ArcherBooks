@@ -13,6 +13,10 @@ class FirestoreHandler(context: Context?) {
     private val transactionsCollection = "transactions"
 
     private val EMAIL_FIELD = "emailAddress"
+    private val FIRST_NAME_FIELD = "firstName"
+    private val LAST_NAME_FIELD = "lastName"
+    private val SIGNUP_METHOD_FIELD = "signUpMethod"
+    private val USER_ID_FIELD = "userId"
 
     private val database = Firebase.firestore
 
@@ -55,7 +59,7 @@ class FirestoreHandler(context: Context?) {
             }
     }
 
-    suspend fun getUserFromEmail(email: String): Map<String, Any>? {
+    suspend fun getUserByEmail(email: String): UserModel? {
         return try {
             val result = database.collection(usersCollection)
                 .whereEqualTo(EMAIL_FIELD, email)
@@ -64,8 +68,10 @@ class FirestoreHandler(context: Context?) {
                 .await()
 
             if (!result.isEmpty) {
-                result.documents.first().data
+                result.documents.first().toObject(UserModel::class.java)
             } else {
+                // none found
+                Log.w("getUserFromEmail", "No user found with email $email")
                 null
             }
         } catch (e: Exception) {

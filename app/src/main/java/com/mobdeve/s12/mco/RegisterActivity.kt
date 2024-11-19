@@ -81,6 +81,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun addListenerSignUpWithGoogleBtn() {
         viewBinding.registerBtnSignupgoogle.setOnClickListener {
+            // create credential option for Google specifically
             val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
                 .setServerClientId(getString(R.string.server_client_id))
@@ -88,6 +89,7 @@ class RegisterActivity : AppCompatActivity() {
                 .setNonce(getNonce())
             .build()
 
+            // create credential request for Credential Manager
             val request: GetCredentialRequest = GetCredentialRequest.Builder()
                 .addCredentialOption(googleIdOption)
                 .build()
@@ -99,6 +101,7 @@ class RegisterActivity : AppCompatActivity() {
                         request = request,
                         context = this@RegisterActivity,
                     )
+                    // Google credential obtained, handle it
                     Log.d("RegisterActivity", "Getting credentials success")
                     handleGoogleSignup(result)
                 } catch (e: GetCredentialCancellationException) {
@@ -116,10 +119,12 @@ class RegisterActivity : AppCompatActivity() {
         val credential = result.credential
         if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
             try {
+                // get Google auth credential from Google credential
                 val googleIdTokenCredential = GoogleIdTokenCredential
                     .createFrom(credential.data)
                 val googleIdToken = googleIdTokenCredential.idToken
                 val googleCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
+                // sign into Google account with Google auth credential
                 googleSignIn(googleCredential)
             } catch (e: GoogleIdTokenParsingException) {
                 Log.e("FirebaseAuth", "Received an invalid google id token response", e)
@@ -133,21 +138,21 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun googleSignIn(googleCredential: AuthCredential) {
         authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
+        // signs into existing Google account, creating Google account if it doesn't exist yet
+        // NOTE: if user registered using email/pw with the same email exists, account auth
+        // provider changes into Google only (only Google can be used to sign into it)
         authHandler.googleSignIn(googleCredential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                // hide any error if sign in with Google is successful
                 Log.d("FirebaseAuth", "Firebase auth sign in success")
                 viewBinding.registerTvWarning.visibility = View.GONE
 
+                // get authenticated user and its email, exit early if email does not exist
                 val user = task.result?.user
                 val email = user?.email ?: return@addOnCompleteListener
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    if (isEmailUnique(email)) {
-                        createGoogleAccount(user, email)
-                    } else {
-                        signIntoExistingAccountWithGoogle(user, email, googleCredential)
-                    }
-                }
+                // create Google account in database (if it doesn't exist yet) and go to MainActivity
+                createGoogleAccountInDb(user, email)
             } else {
                 Log.e("FirebaseAuth", "Firebase auth sign in fail", task.exception)
                 showGoogleSignupWarning()
@@ -155,43 +160,24 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun createGoogleAccount(user: FirebaseUser, email: String) {
+    private fun createGoogleAccountInDb(user: FirebaseUser, email: String) {
+        // split names (assume last word/name is last name, the rest is first name)
         val names = user.displayName?.let { splitName(it) }
         val firstName = names?.first
         val lastName = names?.second
 
-        if (firstName != null && lastName != null) {
-            val newUser = UserModel(user.uid, firstName, lastName, email, UserModel.SignUpMethod.GOOGLE)
+        CoroutineScope(Dispatchers.Main).launch {
             firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
-            firestoreHandler.createUser(newUser)
-            Log.d("FirebaseAuth", "Create new user in Firestore with Google success")
-            val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    private suspend fun signIntoExistingAccountWithGoogle(user: FirebaseUser, email: String, googleCredential: AuthCredential) {
-        firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
-        authHandler = AuthHandler.getInstance(this)!!
-        val foundUser = firestoreHandler.getUserFromEmail(email)
-        if (foundUser?.get("signUpMethod") == UserModel.SignUpMethod.EMAIL.name) {
-            authHandler.googleLinkAccount(user, googleCredential).addOnCompleteListener { linkTask ->
-                if (linkTask.isSuccessful) {
-                    Log.d("FirebaseAuth", "Google sign in to registered account with email success")
-                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    authHandler.logoutAccount()
-                    finish()
-                } else {
-                    Log.e("FirebaseAuth", "Google sign in to registered account with email fail")
-                    showGoogleSignupWarning()
-                }
+            // check if user entry in collection with the same email already exists
+            val existingUser = firestoreHandler.getUserByEmail(email)
+            // create user entry in Firebase db if user entry with same email does not exist
+            if (firstName != null && lastName != null && existingUser == null) {
+                val newUser = UserModel(user.uid, firstName, lastName, email, UserModel.SignUpMethod.GOOGLE)
+                firestoreHandler.createUser(newUser)
             }
-        } else {
-            Log.d("FirebaseAuth", "Google sign in to registered account with Google success")
+            // start activity regardless of whether user entry was written into db
             val intent = Intent(this@RegisterActivity, MainActivity::class.java)
             startActivity(intent)
-            authHandler.logoutAccount()
             finish()
         }
     }
