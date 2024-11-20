@@ -18,6 +18,7 @@
     <string name="warning_user_not_found">User does not exist.</string>
     <string name="warning_invalid_credentials">The email address or password is incorrect.</string>
 
+    <string name="warning_generic_login_fail">Login failed. Try logging in again or sign in with Google.</string>
     <string name="warning_google_login_fail">Login with Google failed. Please login with your email or try again later.</string>
     <string name="warning_google_register_fail">Registration with Google failed. Please register with your email or try again later.</string>
 </resources>

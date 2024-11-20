@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addListenerSignInBtn() {
-        viewBinding.loginBtnLoginbtn.setOnClickListener(View.OnClickListener {
+        viewBinding.loginBtnLoginbtn.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 val user = hashMapOf(
                     "emailAddress" to viewBinding.loginEtEmail.text.toString(),
@@ -57,30 +57,33 @@ class LoginActivity : AppCompatActivity() {
                 )
 
                 if (areAllFieldsValid(user)) {
-                    authHandler = AuthHandler.getInstance(this@LoginActivity)!!
-                    val loggingInStatus = authHandler.loginAccount(user["emailAddress"]!!, user["password"]!!)
-                    if(loggingInStatus == "Success") {
-                        setWarningMessage(R.string.warning_user_not_found, View.GONE)
+                    return@launch
+                }
 
-                        val toast = Toast.makeText(this@LoginActivity, "User successfully logged in.", Toast.LENGTH_SHORT)
-                        toast.show()
+                authHandler = AuthHandler.getInstance(this@LoginActivity)!!
+                val loggingInStatus = authHandler.loginAccount(user["emailAddress"]!!, user["password"]!!)
+                if(loggingInStatus == "Success") {
+                    setWarningMessage(R.string.warning_user_not_found, View.GONE)
 
-                        val intent : Intent = if(user["emailAddress"] == "Admin") { // TODO MCO3: Change this based on your designated admin email
-                            Intent(this@LoginActivity, AdminTransactionsActivity::class.java)
-                        } else {
-                            Intent(this@LoginActivity, MainActivity::class.java)
-                        }
-                        startActivity(intent)
-//                        authHandler.logoutAccount()
-                        finish()
-                    } else if(loggingInStatus == "User not found") {
-                        setWarningMessage(R.string.warning_user_not_found, View.VISIBLE)
-                    } else if(loggingInStatus == "Invalid credentials") {
-                        setWarningMessage(R.string.warning_invalid_credentials, View.VISIBLE)
+                    val toast = Toast.makeText(this@LoginActivity, "User successfully logged in.", Toast.LENGTH_SHORT)
+                    toast.show()
+
+                    val intent : Intent = if(user["emailAddress"] == "Admin") { // TODO MCO3: Change this based on your designated admin email
+                        Intent(this@LoginActivity, AdminTransactionsActivity::class.java)
+                    } else {
+                        Intent(this@LoginActivity, MainActivity::class.java)
                     }
+                    startActivity(intent)
+                    finish()
+                } else if(loggingInStatus == "User not found") {
+                    setWarningMessage(R.string.warning_user_not_found, View.VISIBLE)
+                } else if(loggingInStatus == "Invalid credentials") {
+                    setWarningMessage(R.string.warning_invalid_credentials, View.VISIBLE)
+                } else {
+                    setWarningMessage(R.string.warning_generic_login_fail, View.VISIBLE)
                 }
             }
-        })
+        }
     }
 
     private fun addListenerSignInWithGoogleBtn() {
