@@ -16,7 +16,7 @@
     <string name="warning_short_password">Password is too short.</string>
     <string name="warning_password_mismatch">Passwords do not match.</string>
     <string name="warning_user_not_found">User does not exist.</string>
-    <string name="warning_invalid_credentials">The email address or password is incorrect.</string>
+    <string name="warning_invalid_credentials">The email address or password is incorrect. If you\'ve created or logged into your account with Google before, please sign in with Google instead.</string>
 
     <string name="warning_generic_login_fail">Login failed. Try logging in again or sign in with Google.</string>
     <string name="warning_google_login_fail">Login with Google failed. Please login with your email or try again later.</string>
