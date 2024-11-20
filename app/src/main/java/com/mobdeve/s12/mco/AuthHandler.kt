@@ -63,11 +63,7 @@ class AuthHandler(context: Context) {
     fun googleSignIn(googleCredential: AuthCredential): Task<AuthResult> {
         return auth.signInWithCredential(googleCredential)
     }
-
-    fun googleLinkAccount(user: FirebaseUser, googleCredential: AuthCredential): Task<AuthResult> {
-        return user.linkWithCredential(googleCredential)
-    }
-
+    
     fun logoutAccount() {
         Log.d("AuthHandler", "Successfully logged out user.")
         this.auth.signOut()
