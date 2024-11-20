@@ -141,7 +141,7 @@ class RegisterActivity : AppCompatActivity() {
         // signs into existing Google account, creating Google account if it doesn't exist yet
         // NOTE: if user registered using email/pw with the same email exists, account auth
         // provider changes into Google only (only Google can be used to sign into it)
-        authHandler.googleSignIn(googleCredential).addOnCompleteListener { task ->
+        authHandler.authSignInWithCredential(googleCredential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // hide any error if sign in with Google is successful
                 Log.d("FirebaseAuth", "Firebase auth sign in success")
