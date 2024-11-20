@@ -2,13 +2,27 @@ package com.mobdeve.s12.mco
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.mobdeve.s12.mco.databinding.ActivityLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.security.MessageDigest
+import java.util.UUID
 
 class LoginActivity : AppCompatActivity() {
 
@@ -70,13 +84,111 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addListenerSignInWithGoogleBtn() {
-        // TODO MCO3: Add Google Handling
-        viewBinding.loginBtnSigningoogle.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        viewBinding.loginBtnSigningoogle.setOnClickListener {
+            // create credential option for Google specifically
+            val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId(getString(R.string.server_client_id))
+                .setAutoSelectEnabled(false)
+                .setNonce(getNonce())
+                .build()
+
+            // create credential request for Credential Manager
+            val request: GetCredentialRequest = GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build()
+
+            val credentialManager = CredentialManager.create(this)
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val result = credentialManager.getCredential(
+                        request = request,
+                        context = this@LoginActivity,
+                    )
+                    // Google credential obtained, handle it
+                    Log.d("LoginActivity", "Getting credentials success")
+                    handleGoogleSignin(result)
+                } catch (e: GetCredentialCancellationException) {
+                    Log.w("LoginActivity", "$e, doing nothing")
+                    // do nothing since it's not really a bad thing to cancel
+                } catch (e: GetCredentialException) {
+                    Log.e("LoginActivity", e.toString())
+                    showGoogleSigninWarning()
+                }
+            }
+        }
+    }
+
+    private fun handleGoogleSignin(result: GetCredentialResponse) {
+        val credential = result.credential
+        if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+            try {
+                // get Google auth credential from Google credential
+                val googleIdTokenCredential = GoogleIdTokenCredential
+                    .createFrom(credential.data)
+                val googleIdToken = googleIdTokenCredential.idToken
+                val googleCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
+                // sign into Google account with Google auth credential
+                googleSignIn(googleCredential)
+            } catch (e: GoogleIdTokenParsingException) {
+                Log.e("FirebaseAuth", "Received an invalid google id token response", e)
+                showGoogleSigninWarning()
+            }
+        } else {
+            Log.e("LoginActivity", "Unexpected type of credential")
+            showGoogleSigninWarning()
+        }
+    }
+
+    private fun googleSignIn(googleCredential: AuthCredential) {
+        authHandler = AuthHandler.getInstance(this@LoginActivity)!!
+        // signs into existing Google account, creating Google account if it doesn't exist yet
+        // NOTE: if user registered using email/pw with the same email exists, account auth
+        // provider changes into Google only (only Google can be used to sign into it)
+        authHandler.googleSignIn(googleCredential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // hide any error if sign in with Google is successful
+                Log.d("FirebaseAuth", "Firebase auth sign in success")
+                viewBinding.loginTvWarning.visibility = View.GONE
+
+                // get authenticated user and its email, exit early if email does not exist
+                val user = task.result?.user
+                val email = user?.email ?: return@addOnCompleteListener
+
+                // create Google account in database (if it doesn't exist yet) and go to MainActivity
+                createGoogleAccountInDb(user, email)
+            } else {
+                Log.e("FirebaseAuth", "Firebase auth sign in fail", task.exception)
+                showGoogleSigninWarning()
+            }
+        }
+    }
+
+    private fun createGoogleAccountInDb(user: FirebaseUser, email: String) {
+        // split names (assume last word/name is last name, the rest is first name)
+        val names = user.displayName?.let { splitName(it) }
+        val firstName = names?.first
+        val lastName = names?.second
+
+        CoroutineScope(Dispatchers.Main).launch {
+            firestoreHandler = FirestoreHandler.getInstance(this@LoginActivity)!!
+            // check if user entry in collection with the same email already exists
+            val existingUser = firestoreHandler.getUserByEmail(email)
+            // create user entry in Firebase db if user entry with same email does not exist
+            if (firstName != null && lastName != null && existingUser == null) {
+                val newUser = UserModel(user.uid, firstName, lastName, email, UserModel.SignUpMethod.GOOGLE)
+                firestoreHandler.createUser(newUser)
+            }
+            // start activity regardless of whether user entry was written into db
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
-//            authHandler.logoutAccount()
             finish()
-        })
+        }
+    }
+
+    private fun showGoogleSigninWarning() {
+        viewBinding.loginTvWarning.text = getString(R.string.warning_google_login_fail)
+        viewBinding.loginTvWarning.visibility = View.VISIBLE
     }
 
     private fun areAllFieldsValid(user: HashMap<String, String>) : Boolean {
@@ -104,5 +216,21 @@ class LoginActivity : AppCompatActivity() {
     private fun setWarningMessage(message: Int, visibility: Int) {
         viewBinding.loginTvWarning.text = viewBinding.root.context.getString(message)
         viewBinding.loginTvWarning.visibility = visibility
+    }
+
+    private fun splitName(fullName: String): Pair<String, String> {
+        val names = fullName.split(" ")
+        val firstName = names.dropLast(1).joinToString(" ")
+        // assume the last word/name is only the last name
+        val lastName = names.lastOrNull() ?: ""
+        return Pair(firstName, lastName)
+    }
+
+    private fun getNonce(): String {
+        val nonceBytes = UUID.randomUUID().toString().toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(nonceBytes)
+        val hash = digest.fold("") {str, it -> str + "%02x".format(it)}
+        return hash
     }
 }
