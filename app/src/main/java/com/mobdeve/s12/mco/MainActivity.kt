@@ -48,7 +48,8 @@ class MainActivity: AppCompatActivity() {
                 }
                 R.id.action_logout -> {
                     showConfirmLogoutDialog()
-                    true
+                    // don't highlight logout button
+                    false
                 }
 
                 else -> {
