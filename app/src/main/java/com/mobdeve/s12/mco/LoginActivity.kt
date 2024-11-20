@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                     "password" to viewBinding.loginEtPassword.text.toString()
                 )
 
-                if (areAllFieldsValid(user)) {
+                if (!areAllFieldsValid(user)) {
                     return@launch
                 }
 
