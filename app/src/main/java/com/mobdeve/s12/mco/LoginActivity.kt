@@ -65,8 +65,7 @@ class LoginActivity : AppCompatActivity() {
                 if(loggingInStatus == "Success") {
                     setWarningMessage(R.string.warning_user_not_found, View.GONE)
 
-                    val toast = Toast.makeText(this@LoginActivity, "User successfully logged in.", Toast.LENGTH_SHORT)
-                    toast.show()
+                    showLoginSuccessToast()
 
                     val intent : Intent = if(user["emailAddress"] == "Admin") { // TODO MCO3: Change this based on your designated admin email
                         Intent(this@LoginActivity, AdminTransactionsActivity::class.java)
@@ -182,6 +181,7 @@ class LoginActivity : AppCompatActivity() {
                 val newUser = UserModel(user.uid, firstName, lastName, email, UserModel.SignUpMethod.GOOGLE)
                 firestoreHandler.createUser(newUser)
             }
+            showLoginSuccessToast()
             // start activity regardless of whether user entry was written into db
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
@@ -214,6 +214,10 @@ class LoginActivity : AppCompatActivity() {
     private fun setWarningMessage(message: Int, visibility: Int) {
         viewBinding.loginTvWarning.text = viewBinding.root.context.getString(message)
         viewBinding.loginTvWarning.visibility = visibility
+    }
+
+    private fun showLoginSuccessToast() {
+        Toast.makeText(this@LoginActivity, "User successfully logged in.", Toast.LENGTH_SHORT).show()
     }
 
     private fun splitName(fullName: String): Pair<String, String> {
