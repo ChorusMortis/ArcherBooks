@@ -68,8 +68,7 @@ class RegisterActivity : AppCompatActivity() {
                     newUser.userId = userId
                     firestoreHandler.createUser(newUser)
 
-                    val toast = Toast.makeText(this@RegisterActivity, "Account successfully created.", Toast.LENGTH_SHORT)
-                    toast.show()
+                    showRegistrationSuccessToast()
 
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(intent)
@@ -174,6 +173,7 @@ class RegisterActivity : AppCompatActivity() {
             if (firstName != null && lastName != null && existingUser == null) {
                 val newUser = UserModel(user.uid, firstName, lastName, email, UserModel.SignUpMethod.GOOGLE)
                 firestoreHandler.createUser(newUser)
+                showRegistrationSuccessToast()
             }
             // start activity regardless of whether user entry was written into db
             val intent = Intent(this@RegisterActivity, MainActivity::class.java)
@@ -233,6 +233,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun setWarningMessage(message: Int, visibility: Int) {
         viewBinding.registerTvWarning.text = viewBinding.root.context.getString(message)
         viewBinding.registerTvWarning.visibility = visibility
+    }
+
+    private fun showRegistrationSuccessToast() {
+        Toast.makeText(this@RegisterActivity, "Account successfully created.", Toast.LENGTH_SHORT).show()
     }
 
     private fun splitName(fullName: String): Pair<String, String> {
