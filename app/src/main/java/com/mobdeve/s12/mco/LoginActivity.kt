@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                     // do nothing since it's not really a bad thing to cancel
                 } catch (e: GetCredentialException) {
                     Log.e("LoginActivity", e.toString())
-                    showGoogleSigninWarning()
+                    setWarningMessage(R.string.warning_google_login_fail, View.VISIBLE)
                 }
             }
         }
@@ -132,11 +132,11 @@ class LoginActivity : AppCompatActivity() {
                 googleSignIn(googleCredential)
             } catch (e: GoogleIdTokenParsingException) {
                 Log.e("FirebaseAuth", "Received an invalid google id token response", e)
-                showGoogleSigninWarning()
+                setWarningMessage(R.string.warning_google_login_fail, View.VISIBLE)
             }
         } else {
             Log.e("LoginActivity", "Unexpected type of credential")
-            showGoogleSigninWarning()
+            setWarningMessage(R.string.warning_google_login_fail, View.VISIBLE)
         }
     }
 
@@ -159,7 +159,7 @@ class LoginActivity : AppCompatActivity() {
                 createGoogleAccountInDb(user, email)
             } else {
                 Log.e("FirebaseAuth", "Firebase auth sign in fail", task.exception)
-                showGoogleSigninWarning()
+                setWarningMessage(R.string.warning_google_login_fail, View.VISIBLE)
             }
         }
     }
@@ -184,11 +184,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-    }
-
-    private fun showGoogleSigninWarning() {
-        viewBinding.loginTvWarning.text = getString(R.string.warning_google_login_fail)
-        viewBinding.loginTvWarning.visibility = View.VISIBLE
     }
 
     private fun areAllFieldsValid(user: HashMap<String, String>) : Boolean {
