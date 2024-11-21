@@ -137,11 +137,12 @@ class SearchResultsFragment : Fragment() {
             val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
             Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
             rvAdapter = SearchResultsResultsAdapter(retrievedBooks!!)
-            this@SearchResultsFragment.searchResultsBinding.searchRvResults.adapter = rvAdapter
+            searchResultsBinding.searchRvResults.adapter = rvAdapter
             hideKeyboard(view)
             searchStartingIndex += min(retrievedBooks.size, 20)
             isLoading = false
             searchResultsBinding.initialSearchProgressBar.visibility = View.GONE
+            setNoResultsMsgVisibility(retrievedBooks)
         }
     }
 
@@ -161,6 +162,7 @@ class SearchResultsFragment : Fragment() {
                 searchStartingIndex += min(retrievedBooks.size, 20)
             } else {
                 hasMoreData = false
+                setNoResultsMsgVisibility(retrievedBooks)
             }
             isLoading = false
             searchResultsBinding.scrollSearchProgressBar.visibility = View.GONE
@@ -192,6 +194,11 @@ class SearchResultsFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setNoResultsMsgVisibility(results: List<BookModel>?) {
+        val visibility = if (results.isNullOrEmpty()) View.VISIBLE else View.GONE
+        searchResultsBinding.searchTvNoresultsMessage.visibility = visibility
     }
 
     private fun showSortResultsDialog() {
