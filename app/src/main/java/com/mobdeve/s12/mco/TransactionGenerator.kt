@@ -1,9 +1,8 @@
 package com.mobdeve.s12.mco
 
 import android.icu.util.Calendar
+import com.google.firebase.Timestamp
 import com.mobdeve.s12.mco.TransactionModel.Status
-import java.time.LocalDate
-import java.util.Date
 
 class TransactionGenerator {
     companion object {
@@ -13,14 +12,15 @@ class TransactionGenerator {
             val calendar = Calendar.getInstance()
             calendar.set(2024, 11, 12)
             val date = calendar.time
+            val timestamp = Timestamp(date)
 
             for(index in 0..9) {
                 if(index in intArrayOf(3, 6, 9)) {
-                    data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, date, date, null, Status.RETURNED ))
+                    data.add(TransactionModel("transaction_1", books[index], users[index], timestamp, timestamp, timestamp, timestamp, timestamp, null, Status.RETURNED ))
                 } else if(index in intArrayOf(2, 5, 8)) {
-                    data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, date, null, null, Status.TO_RETURN ))
+                    data.add(TransactionModel("transaction_1", books[index], users[index], timestamp, timestamp, timestamp, timestamp, null, null, Status.TO_RETURN ))
                 } else {
-                    data.add(TransactionModel("transaction_1", books[index], users[index], date, date, date, null, null, null, Status.FOR_PICKUP))
+                    data.add(TransactionModel("transaction_1", books[index], users[index], timestamp, timestamp, timestamp, null, null, null, Status.FOR_PICKUP))
                 }
 
             }

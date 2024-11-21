@@ -2,7 +2,9 @@ package com.mobdeve.s12.mco
 
 import android.content.Context
 import android.util.Log
+import com.google.android.gms.auth.api.Auth
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -78,5 +80,25 @@ class FirestoreHandler(context: Context?) {
             Log.e("getUserFromEmail", e.toString())
             null
         }
+    }
+
+    fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp, context: Context) {
+        val authHandler = AuthHandler.getInstance(context)
+        val currentUserId = authHandler?.getCurrentUser()?.uid
+        Log.d("FirestoreHandler", "User $currentUserId is trying to create a new transaction.")
+
+        val newTransaction = hashMapOf(
+            "bookId" to bookId,
+            "user" to database.collection(usersCollection).document(currentUserId!!),
+            "transactionDate" to transactionDate,
+            "expectedPickupDate" to expectedPickupDate,
+            "expectedReturnDate" to expectedReturnDate,
+            "actualPickupDate" to null,
+            "actualReturnDate" to null,
+            "canceledDate" to null,
+            "status" to TransactionModel.Status.FOR_PICKUP.toString()
+        )
+
+        database.collection(transactionsCollection).add(newTransaction)
     }
 }

@@ -132,6 +132,19 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/borrow_popup_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_ui_text_regular"
+            android:text="Please fill out all fields to proceed."
+            android:textColor="@color/book_borrowed"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/borrow_popup_cl_end_date_btn"
+            app:layout_constraintStart_toStartOf="@+id/borrow_popup_cl_end_date_btn"
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cl_end_date_btn" />
+
         <CheckBox
             android:id="@+id/borrow_popup_cb_terms_and_conditions"
             android:layout_width="wrap_content"
@@ -144,7 +157,7 @@
             android:textColorLink="@color/main_green"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/borrow_popup_cl_end_date_btn"
-            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_cl_end_date_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/borrow_popup_warning" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/borrow_popup_tv_terms_and_conditions_btn"

@@ -6,6 +6,7 @@ import android.icu.util.Calendar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -23,14 +24,15 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
 
         val calendar = Calendar.getInstance()
         calendar.set(2024, 11, 24)
-        viewBinding.itemAdminTsTvTransDateValue.text = formatDate(calendar.time)
+        viewBinding.itemAdminTsTvTransDateValue.text = formatDate(Timestamp(calendar.time))
         modifyTransactionDetails(transaction)
         setEditStatusButtonIcon(transaction)
     }
 
-    private fun formatDate(date: Date): String {
+    private fun formatDate(timestamp: Timestamp): String {
+        val date = timestamp.toDate()
         val dateFormat = "MMM d, yyyy"
-        val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
+        val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.ENGLISH)
         return simpleDateFormat.format(date)
     }
 
@@ -54,7 +56,7 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
         }
     }
 
-    private fun setStatusLabelAndVal(icon: Int, statusLabel: Int, statusColor: Int, statusDate: Date) {
+    private fun setStatusLabelAndVal(icon: Int, statusLabel: Int, statusColor: Int, statusDate: Timestamp) {
         viewBinding.itemAdminTsIvBorrowStatusIcon.setImageResource(icon)
         viewBinding.itemAdminTsTvBorrowStatusLabel.text = viewBinding.root.context.getString(statusLabel)
         viewBinding.itemAdminTsTvBorrowStatusLabel.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(viewBinding.root.context, statusColor)))
