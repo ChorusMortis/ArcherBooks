@@ -24,7 +24,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -48,6 +47,7 @@ class BookDetailsActivity : AppCompatActivity() {
     private lateinit var viewBinding : ActivityBookDetailsBinding
     private lateinit var book : BookModel
     private val dateFormat = "MMM d, yyyy"
+    private val shortenedDateFormat = "MMM d"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +56,7 @@ class BookDetailsActivity : AppCompatActivity() {
 
         setDataOnViews()
         addListenerAndApiLimitBackBtn()
+        styleStatusAndBorrowBtn()
         addListenerBorrowBtn()
     }
 
@@ -71,27 +72,64 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding.bookDetailsTvYear.text = this.intent.getStringExtra(YEAR_PUBLISHED_KEY)
         viewBinding.bookDetailsTvPublisher.text = "Published by ${this.intent.getStringExtra(PUBLISHER_KEY)}"
         viewBinding.bookDetailsTvShelfLocation.text = this.intent.getStringExtra(SHELF_LOCATION_KEY)
-        this.intent.getStringExtra(STATUS_KEY)?.let { setStatusIcon(it) }
         viewBinding.bookDetailsTvStatus.text = this.intent.getStringExtra(STATUS_KEY)
         viewBinding.bookDetailsTvPages.text = "${this.intent.getStringExtra(PAGES_KEY)} pages"
         viewBinding.bookDetailsTvDescription.text = this.intent.getStringExtra(DESCRIPTION_KEY)
     }
 
-    private fun setStatusIcon(status: String) {
-        val statusResource : Int
+    private fun styleStatusAndBorrowBtn() {
+        CoroutineScope(Dispatchers.Main).launch {
+            viewBinding.bookDetailsLoadingCover.visibility = View.VISIBLE
+            viewBinding.bookDetailsProgressBar.visibility = View.VISIBLE
 
-        if(status == "Book Available") {
-            statusResource = R.drawable.icon_available
-        } else if(status == "Book Unavailable") {
-            statusResource = R.drawable.icon_unavailable
-        } else if(status == "Overdue") {
-            statusResource = R.drawable.icon_overdue
-            viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this, R.color.book_borrowed))
-        } else {
-            statusResource = R.drawable.icon_timer
-            viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this, R.color.book_borrowed))
+            val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
+            val authHandler = AuthHandler.getInstance(this@BookDetailsActivity)
+
+            val latestTransactionOfBook = firestoreHandler?.getLatestTransaction(this@BookDetailsActivity.intent.getStringExtra(ID_KEY)!!)
+            val currentUserId = authHandler?.getCurrentUser()?.uid
+            Log.d("BookDetailsActivity", "$latestTransactionOfBook")
+            var statusResource = R.drawable.icon_unavailable
+            var statusText = viewBinding.root.context.getString(R.string.book_unavailable)
+            var textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_unavailable)
+            var borrowBtnOpacity = 0.3f
+            var borrowBtnText = "Unavailable"
+            var borrowBtnEnabled = false
+            // TODO: Borrow Button UI
+            if(latestTransactionOfBook == null ||
+                latestTransactionOfBook.status == TransactionModel.Status.CANCELLED ||
+                latestTransactionOfBook.status == TransactionModel.Status.RETURNED)  {
+                statusResource = R.drawable.icon_available
+                statusText = viewBinding.root.context.getString(R.string.book_available)
+                textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_available)
+                borrowBtnOpacity = 1.0f
+                borrowBtnText = "Borrow"
+                borrowBtnEnabled = true
+            } else if(latestTransactionOfBook.user.userId == currentUserId) {
+                statusResource = R.drawable.icon_timer
+                textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed)
+                borrowBtnText = "Borrowed"
+                borrowBtnEnabled = false
+
+                if(latestTransactionOfBook.status == TransactionModel.Status.FOR_PICKUP) {
+                    statusText = "${viewBinding.root.context.getString(R.string.for_pickup)} ${convertTimestampToString(latestTransactionOfBook.expectedPickupDate)}"
+                } else if(latestTransactionOfBook.status == TransactionModel.Status.TO_RETURN) {
+                    statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
+                } else if(latestTransactionOfBook.status == TransactionModel.Status.OVERDUE) {
+                    statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
+                }
+            }
+
+            viewBinding.bookDetailsIvStatus.setImageResource(statusResource)
+            viewBinding.bookDetailsTvStatus.text = statusText
+            viewBinding.bookDetailsTvStatus.setTextColor(textColor)
+            viewBinding.bookDetailsIbBorrowBtn.alpha = borrowBtnOpacity
+            viewBinding.bookDetailsIbBorrowBtn.text = borrowBtnText
+            viewBinding.bookDetailsIbBorrowBtn.isEnabled = borrowBtnEnabled
+
+            viewBinding.bookDetailsLoadingCover.visibility = View.GONE
+            viewBinding.bookDetailsProgressBar.visibility = View.GONE
         }
-        viewBinding.bookDetailsIvStatus.setImageResource(statusResource)
+
     }
 
     private fun addListenerAndApiLimitBackBtn() {
@@ -202,6 +240,7 @@ class BookDetailsActivity : AppCompatActivity() {
                     viewBinding.bookDetailsIbBorrowBtn.text = "Borrowed"
                     viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
                     val toast = Toast.makeText(this@BookDetailsActivity, "Borrow transaction successfully made.", Toast.LENGTH_SHORT)
+                    toast.show()
                     window.dismiss()
                 }
             }
@@ -232,9 +271,15 @@ class BookDetailsActivity : AppCompatActivity() {
             val date: Date = formatter.parse(strDate)!!
             return Timestamp(date)
         } catch (e: Exception) {
-            Log.e("BookDetailsActivity", "Error converting string to date: ${e.toString()}")
+            Log.e("BookDetailsActivity", "Error converting string to date: $e")
             return null
         }
+    }
+
+    private fun convertTimestampToString(timestamp: Timestamp) : String {
+        val formatter = SimpleDateFormat(shortenedDateFormat, Locale.ENGLISH)
+        return formatter.format(timestamp.toDate())
+
     }
 
     /*** Terms and Conditions Popup Functions ***/
