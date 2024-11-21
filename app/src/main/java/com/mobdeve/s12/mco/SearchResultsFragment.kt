@@ -67,12 +67,6 @@ class SearchResultsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         searchResultsBinding = FragmentSearchBinding.inflate(inflater, container, false)
 
-//        // reset sorting to relevance and filtering to all when search is done
-//        searchResultsBinding.searchresultsIbSearchbtn.setOnClickListener {
-//            activeSortOption = SortOption.RELEVANCE
-//            activeSearchFilterOption = FilterOption.ALL
-//        }
-
         initPreferences()
 
         searchResultsBinding.searchBtnFilterSort.setOnClickListener {
@@ -91,6 +85,13 @@ class SearchResultsFragment : Fragment() {
         searchResultsBinding.searchEtSearchBar.requestFocus()
 
         return searchResultsBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // reset sorting to relevance and filtering to all when search is done
+        activeSortOption = SortOption.RELEVANCE
+        activeSearchFilterOption = FilterOption.ALL
     }
 
     private fun initPreferences() {
