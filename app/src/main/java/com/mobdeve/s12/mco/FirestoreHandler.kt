@@ -125,9 +125,6 @@ class FirestoreHandler(context: Context?) {
                 val userRef = transaction["user"] as DocumentReference
                 val user = userRef.get().await().toObject(UserModel::class.java)
 
-                Log.d("FirestoreHandler", "Book: $book")
-                Log.d("FirestoreHandler", "User: $user")
-
                 if(book != null && user != null) {
                     val transactionObject = TransactionModel(
                         transaction["id"].toString(),
@@ -145,8 +142,6 @@ class FirestoreHandler(context: Context?) {
                 } else {
                     null
                 }
-
-
             } else {
                 // none found
                 Log.w("FirestoreHandler", "No transaction found of the book with ID: $bookId")
