@@ -1,15 +1,12 @@
 package com.mobdeve.s12.mco
 
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.IOException
 import kotlin.random.Random
 
 class GoogleBooksAPIHandler {
@@ -136,62 +133,7 @@ class GoogleBooksAPIHandler {
 
         for(index in 0 until retrievedBooksJSON.length()) {
             val bookObject = retrievedBooksJSON.getJSONObject(index)
-            val bookVolumeInfo = bookObject.getJSONObject("volumeInfo")
-
-            // Handle Authors
-            val authors : ArrayList<String> = arrayListOf()
-            val authorsJSONArray = bookVolumeInfo.optJSONArray("authors")
-            if(authorsJSONArray != null) {
-                for(authorIndex in 0 until authorsJSONArray.length()) {
-                    authors.add(authorsJSONArray.getString(authorIndex))
-                }
-            } else {
-                authors.add("Unknown Author")
-            }
-
-            // Handle Description
-            var description = bookVolumeInfo.optString("description")
-            if(description.isNullOrEmpty()) {
-                description = "This book does not have any description yet."
-            }
-
-            // Handle Publisher
-            var publisher = bookVolumeInfo.optString("publisher")
-            if(publisher.isNullOrEmpty()) {
-                publisher = "Unknown"
-            }
-
-            // Handle Published Date
-            var publishedDate = bookVolumeInfo.optString("publishedDate")
-            publishedDate = if(!publishedDate.isNullOrEmpty()) {
-                publishedDate.substring(0, 4)
-            } else {
-                "Unknown Date"
-            }
-
-            // Handle Page Count
-            var pageCount = bookVolumeInfo.optInt("pageCount").toString()
-            if(pageCount == "0") {
-                pageCount = "Unknown"
-            }
-
-            // Handle Book Cover
-            var bookCover = "https://books.google.com/books/publisher/content/images/frontcover/${bookObject.getString("id")}?fife=w640-h960&source=gbs_api"
-
-            retrievedBooksArr.add(
-                BookModel(
-                    bookObject.getString("id"),
-                    bookVolumeInfo.getString("title"),
-                    authors,
-                    description,
-                    publisher,
-                    bookCover,
-                    generateRandomShelfLocation(),
-                    publishedDate,
-                    pageCount,
-                    BookModel.HasTransaction.NONE
-                )
-            )
+            retrievedBooksArr.add(generateBookObject(bookObject))
         }
 
         return retrievedBooksArr
