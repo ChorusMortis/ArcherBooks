@@ -233,6 +233,10 @@ class BookDetailsActivity : AppCompatActivity() {
     private fun addListenerConfirmBtn(window: PopupWindow, borrowPopupBinding: ComponentPopupBorrowBinding) {
         borrowPopupBinding.borrowPopupConfirmBtn.setOnClickListener(View.OnClickListener {
             if(allBorrowFieldsFilled(borrowPopupBinding)) {
+                // show progress bar
+                viewBinding.bookDetailsLoadingCover.visibility = View.VISIBLE
+                viewBinding.bookDetailsProgressBar.visibility = View.VISIBLE
+
                 val expectedPickupDate = convertStringToTimestamp(borrowPopupBinding.borrowPopupTvStartDateValue.text.toString())
                 val expectedReturnDate = convertStringToTimestamp(borrowPopupBinding.borrowPopupTvEndDateValue.text.toString())
                 val transactionDate = Timestamp.now()
@@ -242,6 +246,9 @@ class BookDetailsActivity : AppCompatActivity() {
                     val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
                     firestoreHandler?.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!, this@BookDetailsActivity)
 
+                    viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_timer)
+                    viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} $expectedPickupDate"
+                    viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed))
                     viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
                     viewBinding.bookDetailsIbBorrowBtn.text = "Borrowed"
                     viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
