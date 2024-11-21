@@ -79,22 +79,27 @@ class BookDetailsActivity : AppCompatActivity() {
 
     private fun styleStatusAndBorrowBtn() {
         CoroutineScope(Dispatchers.Main).launch {
+            // show progress bar
             viewBinding.bookDetailsLoadingCover.visibility = View.VISIBLE
             viewBinding.bookDetailsProgressBar.visibility = View.VISIBLE
 
+            // get backend handlers
             val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
             val authHandler = AuthHandler.getInstance(this@BookDetailsActivity)
 
+            // get transaction and user data
             val latestTransactionOfBook = firestoreHandler?.getLatestTransaction(this@BookDetailsActivity.intent.getStringExtra(ID_KEY)!!)
             val currentUserId = authHandler?.getCurrentUser()?.uid
-            Log.d("BookDetailsActivity", "$latestTransactionOfBook")
+
+            // default styling (for unavailable book status)
             var statusResource = R.drawable.icon_unavailable
             var statusText = viewBinding.root.context.getString(R.string.book_unavailable)
             var textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_unavailable)
             var borrowBtnOpacity = 0.3f
             var borrowBtnText = "Unavailable"
             var borrowBtnEnabled = false
-            // TODO: Borrow Button UI
+
+            // modify styling if status is available or borrowed
             if(latestTransactionOfBook == null ||
                 latestTransactionOfBook.status == TransactionModel.Status.CANCELLED ||
                 latestTransactionOfBook.status == TransactionModel.Status.RETURNED)  {
@@ -119,6 +124,7 @@ class BookDetailsActivity : AppCompatActivity() {
                 }
             }
 
+            // set appropriate styling
             viewBinding.bookDetailsIvStatus.setImageResource(statusResource)
             viewBinding.bookDetailsTvStatus.text = statusText
             viewBinding.bookDetailsTvStatus.setTextColor(textColor)
@@ -126,6 +132,7 @@ class BookDetailsActivity : AppCompatActivity() {
             viewBinding.bookDetailsIbBorrowBtn.text = borrowBtnText
             viewBinding.bookDetailsIbBorrowBtn.isEnabled = borrowBtnEnabled
 
+            // hide progress bar
             viewBinding.bookDetailsLoadingCover.visibility = View.GONE
             viewBinding.bookDetailsProgressBar.visibility = View.GONE
         }
