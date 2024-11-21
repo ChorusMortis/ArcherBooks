@@ -130,6 +130,7 @@ class SearchResultsFragment : Fragment() {
     private fun initialSearch(view: View) {
         isLoading = true
         searchResultsBinding.initialSearchProgressBar.visibility = View.VISIBLE
+        searchResultsBinding.searchTvNoresultsMessage.visibility = View.GONE
         searchStartingIndex = 0 // reset book starting index every time search is first triggered
         val searchQuery = searchResultsBinding.searchEtSearchBar.text.toString()
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
