@@ -9,6 +9,8 @@
     <string name="overdue">Overdue:</string>
     <string name="cancelled">Cancelled:</string>
     <string name="returned">Returned:</string>
+    <string name="book_available">Book Available</string>
+    <string name="book_unavailable">Book Unavailable</string>
 
     <string name="warning_incomplete_fields">Please fill out all fields to proceed.</string>
     <string name="warning_invalid_email">Please enter a valid email address.</string>
