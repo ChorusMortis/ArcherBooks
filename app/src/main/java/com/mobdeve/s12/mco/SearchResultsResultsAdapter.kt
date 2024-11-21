@@ -52,4 +52,9 @@ class SearchResultsResultsAdapter(private val data: ArrayList<BookModel>) : Recy
         data.addAll(newBooks)
         notifyItemRangeInserted(startingIndex, newBooks.size)
     }
+
+    fun removeAllBooks() {
+        data.clear()
+        this.notifyDataSetChanged()
+    }
 }
