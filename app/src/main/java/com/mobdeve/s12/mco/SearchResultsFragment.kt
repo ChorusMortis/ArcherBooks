@@ -134,7 +134,7 @@ class SearchResultsFragment : Fragment() {
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
         CoroutineScope(Dispatchers.Main).launch {
-            val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
+            val retrievedBooks = googleBooksAPIHandler.getBooks(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
             Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
             rvAdapter = SearchResultsResultsAdapter(retrievedBooks!!)
             searchResultsBinding.searchRvResults.adapter = rvAdapter
@@ -155,7 +155,7 @@ class SearchResultsFragment : Fragment() {
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
         CoroutineScope(Dispatchers.Main).launch {
-            val retrievedBooks = googleBooksAPIHandler.getBookDetails(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
+            val retrievedBooks = googleBooksAPIHandler.getBooks(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
             Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
             if(!retrievedBooks.isNullOrEmpty()) {
                 rvAdapter.addBooks(retrievedBooks)

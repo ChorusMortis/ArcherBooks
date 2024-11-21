@@ -97,11 +97,11 @@ class GoogleBooksAPIHandler {
         )
     }
 
-    suspend fun getBookDetails(query: String,
-               sortOption: SearchResultsFragment.SortOption,
-               filterOption: SearchResultsFragment.FilterOption,
-               startIndex: Int,
-               maxResults: Int) : ArrayList<BookModel>? {
+    suspend fun getBooks(query: String,
+                         sortOption: SearchResultsFragment.SortOption,
+                         filterOption: SearchResultsFragment.FilterOption,
+                         startIndex: Int,
+                         maxResults: Int) : ArrayList<BookModel>? {
         val client = OkHttpClient()
         var url = "https://www.googleapis.com/books/v1/volumes?q="
         url += stringifyFilterAndQuery(query, filterOption) + "&" +
