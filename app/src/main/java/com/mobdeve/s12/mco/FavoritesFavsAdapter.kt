@@ -29,6 +29,7 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView
     private fun addListenerCard(holder : FavoritesFavsViewHolder, itemFavsViewBinding: ItemFCardBinding) {
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
+            intent.putExtra(BookDetailsActivity.ID_KEY, data[holder.bindingAdapterPosition].id)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
             intent.putExtra(BookDetailsActivity.YEAR_PUBLISHED_KEY, data[holder.bindingAdapterPosition].publishYear)
             intent.putExtra(BookDetailsActivity.AUTHORS_KEY, data[holder.bindingAdapterPosition].authors.joinToString(", "))

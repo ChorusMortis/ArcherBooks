@@ -8,6 +8,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -66,5 +67,9 @@ class AuthHandler(context: Context) {
     fun logoutAccount() {
         Log.d("AuthHandler", "Successfully logged out user.")
         this.auth.signOut()
+    }
+
+    fun getCurrentUser() : FirebaseUser? {
+        return this.auth.currentUser
     }
 }

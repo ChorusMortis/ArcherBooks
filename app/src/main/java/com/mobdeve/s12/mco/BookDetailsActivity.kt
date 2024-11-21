@@ -6,25 +6,34 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s12.mco.databinding.ActivityBookDetailsBinding
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.google.firebase.Timestamp
 import com.mobdeve.s12.mco.databinding.ComponentPopupBorrowBinding
 import com.mobdeve.s12.mco.databinding.ComponentPopupTncBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
 class BookDetailsActivity : AppCompatActivity() {
 
     companion object {
+        const val ID_KEY = "ID_KEY"
         const val TITLE_KEY = "TITLE_KEY"
         const val YEAR_PUBLISHED_KEY = "YEAR_PUBLISHED_KEY"
         const val AUTHORS_KEY = "AUTHORS_KEY"
@@ -37,6 +46,8 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private lateinit var viewBinding : ActivityBookDetailsBinding
+    private lateinit var book : BookModel
+    private val dateFormat = "MMM d, yyyy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +60,6 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private fun setDataOnViews() {
-//        viewBinding.bookDetailsIvCover.setImageResource(this.intent.getStringExtra(COVER_KEY))
-//        viewBinding.bookDetailsIvCover2.setImageResource(this.intent.getStringExtra(COVER_KEY))
         Glide.with(viewBinding.root.context)
             .load(this.intent.getStringExtra(COVER_KEY))
             .into(viewBinding.bookDetailsIvCover)
@@ -121,7 +130,7 @@ class BookDetailsActivity : AppCompatActivity() {
             addListenerBorrowPopupDates(borrowPopupBinding, window)
             addListenerBorrowPopupTNC(borrowPopupBinding)
             addListenerCancelBtn(borrowPopupBinding.borrowPopupCancelBtn, window)
-            addListenerConfirmBtn(borrowPopupBinding.borrowPopupTvStartDateValue.text.toString(), borrowPopupBinding.borrowPopupTvEndDateValue.text.toString(), window, borrowPopupBinding.borrowPopupConfirmBtn)
+            addListenerConfirmBtn(window, borrowPopupBinding)
 
             window.showAtLocation(borrowPopupBinding.root, Gravity.CENTER, 0, 0)
         })
@@ -167,7 +176,6 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateDate(dateHolder: TextView, calendar: Calendar) {
-        val dateFormat = "MMM d, yyyy"
         val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.US)
         dateHolder.text = simpleDateFormat.format(calendar.time)
     }
@@ -178,11 +186,55 @@ class BookDetailsActivity : AppCompatActivity() {
         })
     }
 
-    private fun addListenerConfirmBtn(pickupDate: String, returnDate: String, window: PopupWindow, confirmBtn: Button) {
-        // TODO MCO3: Handle adding of transactions to users
-        confirmBtn.setOnClickListener(View.OnClickListener {
-            window.dismiss()
+    private fun addListenerConfirmBtn(window: PopupWindow, borrowPopupBinding: ComponentPopupBorrowBinding) {
+        borrowPopupBinding.borrowPopupConfirmBtn.setOnClickListener(View.OnClickListener {
+            if(allBorrowFieldsFilled(borrowPopupBinding)) {
+                val expectedPickupDate = convertStringToTimestamp(borrowPopupBinding.borrowPopupTvStartDateValue.text.toString())
+                val expectedReturnDate = convertStringToTimestamp(borrowPopupBinding.borrowPopupTvEndDateValue.text.toString())
+                val transactionDate = Timestamp.now()
+                val bookId = this.intent.getStringExtra(ID_KEY)
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
+                    firestoreHandler?.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!, this@BookDetailsActivity)
+
+                    viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
+                    viewBinding.bookDetailsIbBorrowBtn.text = "Borrowed"
+                    viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+                    val toast = Toast.makeText(this@BookDetailsActivity, "Borrow transaction successfully made.", Toast.LENGTH_SHORT)
+                    window.dismiss()
+                }
+            }
         })
+    }
+
+    private fun allBorrowFieldsFilled(borrowPopupBinding: ComponentPopupBorrowBinding) : Boolean {
+        val defaultDateValue = "Select a date"
+        if(borrowPopupBinding.borrowPopupTvStartDateValue.text.toString() == defaultDateValue ||
+            borrowPopupBinding.borrowPopupTvEndDateValue.text.toString() == defaultDateValue ) {
+            borrowPopupBinding.borrowPopupWarning.visibility = View.VISIBLE
+            borrowPopupBinding.borrowPopupWarning.text = viewBinding.root.context.getString(R.string.warning_incomplete_fields)
+        } else if(!borrowPopupBinding.borrowPopupCbTermsAndConditions.isChecked) {
+            borrowPopupBinding.borrowPopupWarning.visibility = View.VISIBLE
+            borrowPopupBinding.borrowPopupWarning.text = viewBinding.root.context.getString(R.string.warning_unchecked_tnc)
+        } else {
+            borrowPopupBinding.borrowPopupWarning.visibility = View.GONE
+            return true
+        }
+
+        return false
+    }
+
+    private fun convertStringToTimestamp(strDate: String) : Timestamp? {
+        val formatter = SimpleDateFormat(dateFormat, Locale.ENGLISH)
+
+        try {
+            val date: Date = formatter.parse(strDate)!!
+            return Timestamp(date)
+        } catch (e: Exception) {
+            Log.e("BookDetailsActivity", "Error converting string to date: ${e.toString()}")
+            return null
+        }
     }
 
     /*** Terms and Conditions Popup Functions ***/
