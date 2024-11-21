@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        setDisplayName()
         setRVRecyclerView()
         addListenerSearchBtn()
         scrollToTop()
@@ -33,6 +34,16 @@ class HomeFragment : Fragment() {
         setContentBOTD(botd)
         addListenerBOTD(botd)
         return viewBinding.root
+    }
+
+    private fun setDisplayName() {
+        val authHandler = AuthHandler.getInstance(requireActivity())
+        authHandler?.let {
+            val userFullName = authHandler.getUserFullName()
+            userFullName?.let {
+                viewBinding.homeTvUserName.text = userFullName
+            }
+        }
     }
 
     private fun setRVRecyclerView() {
