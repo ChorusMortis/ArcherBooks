@@ -140,8 +140,8 @@ class SearchResultsFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             val retrievedBooks = googleBooksAPIHandler.getBooks(searchQuery, activeSortOption, activeSearchFilterOption, searchStartingIndex, 20)
             Log.d("SearchResultsFragment", "Retrieved number of books from GoogleBooksAPIHandler = ${retrievedBooks?.size}")
-            rvAdapter = SearchResultsResultsAdapter(retrievedBooks!!)
-            searchResultsBinding.searchRvResults.adapter = rvAdapter
+            rvAdapter.removeAllBooks()
+            rvAdapter.addBooks(retrievedBooks!!)
             hideKeyboard(view)
             searchStartingIndex += min(retrievedBooks.size, 20)
             isLoading = false
