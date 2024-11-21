@@ -5,6 +5,9 @@ import android.util.Log
 import com.google.android.gms.auth.api.Auth
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -19,6 +22,9 @@ class FirestoreHandler(context: Context?) {
     private val LAST_NAME_FIELD = "lastName"
     private val SIGNUP_METHOD_FIELD = "signUpMethod"
     private val USER_ID_FIELD = "userId"
+
+    private val BOOK_ID_FIELD = "bookId"
+    private val TRANSACTION_DATE_FIELD = "transactionDate"
 
     private val database = Firebase.firestore
 
@@ -100,5 +106,55 @@ class FirestoreHandler(context: Context?) {
         )
 
         database.collection(transactionsCollection).add(newTransaction)
+    }
+
+    suspend fun getLatestTransaction(bookId: String): TransactionModel? {
+        return try {
+            val result = database.collection(transactionsCollection)
+                .whereEqualTo(BOOK_ID_FIELD, bookId)
+                .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            if (!result.isEmpty) {
+                Log.d("FirestoreHandler", "Successfully returned the latest transaction of the book!")
+                val googleBooksAPIHandler = GoogleBooksAPIHandler()
+                val book = googleBooksAPIHandler.getBook(bookId)
+
+                val transaction = result.first().data
+                val userRef = transaction["user"] as DocumentReference
+                val user = userRef.get().await().toObject(UserModel::class.java)
+
+                Log.d("FirestoreHandler", "Book: $book")
+                Log.d("FirestoreHandler", "User: $user")
+
+                if(book != null && user != null) {
+                    val transactionObject = TransactionModel(
+                        transaction["id"].toString(),
+                        book,
+                        user,
+                        transaction["transactionDate"] as Timestamp,
+                        transaction["expectedPickupDate"] as Timestamp,
+                        transaction["expectedReturnDate"] as Timestamp,
+                        transaction["actualPickupDate"] as Timestamp?,
+                        transaction["actualReturnDate"] as Timestamp?,
+                        transaction["canceledDate"] as Timestamp?,
+                        TransactionModel.Status.valueOf(transaction["status"].toString())
+                    )
+                    transactionObject
+                } else {
+                    null
+                }
+
+
+            } else {
+                // none found
+                Log.w("FirestoreHandler", "No transaction found of the book with ID: $bookId")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("FirestoreHandler", "Search for latest transaction exception: $e")
+            null
+        }
     }
 }
