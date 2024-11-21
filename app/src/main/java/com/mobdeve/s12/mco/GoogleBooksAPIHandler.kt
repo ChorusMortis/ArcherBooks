@@ -142,7 +142,7 @@ class GoogleBooksAPIHandler {
             SearchResultsFragment.FilterOption.PUBLISHER -> "publisher:"
             SearchResultsFragment.FilterOption.SUBJECT -> "subject:"
         }
-        return specifier + formatQueryString(query)
+        return if (query.isBlank()) "" else specifier + formatQueryString(query)
     }
 
     private fun stringifySortingParam(sortOption: SearchResultsFragment.SortOption) : String {
