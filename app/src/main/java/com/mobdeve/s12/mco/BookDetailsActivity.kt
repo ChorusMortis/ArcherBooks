@@ -136,7 +136,6 @@ class BookDetailsActivity : AppCompatActivity() {
             viewBinding.bookDetailsLoadingCover.visibility = View.GONE
             viewBinding.bookDetailsProgressBar.visibility = View.GONE
         }
-
     }
 
     private fun addListenerAndApiLimitBackBtn() {

@@ -97,6 +97,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon_available" />
 
+        <ProgressBar
+            android:id="@+id/item_sr_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:elevation="15dp"
+            android:indeterminateTint="@color/main_green"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/item_search_results_status_icon"
+            app:layout_constraintEnd_toEndOf="@+id/item_search_results_status_icon"
+            app:layout_constraintStart_toStartOf="@+id/item_search_results_status_icon"
+            app:layout_constraintTop_toTopOf="@+id/item_search_results_status_icon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
