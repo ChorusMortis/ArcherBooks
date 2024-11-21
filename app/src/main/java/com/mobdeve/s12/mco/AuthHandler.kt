@@ -29,6 +29,18 @@ class AuthHandler(context: Context) {
         }
     }
 
+    fun getUserUid(): String? {
+        return auth.currentUser?.uid
+    }
+
+    fun getUserFullName(): String? {
+        return auth.currentUser?.displayName
+    }
+
+    fun getUserEmail(): String? {
+        return auth.currentUser?.email
+    }
+
     suspend fun createAccount(email: String, password: String, activity: Activity) : String {
         return try {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
