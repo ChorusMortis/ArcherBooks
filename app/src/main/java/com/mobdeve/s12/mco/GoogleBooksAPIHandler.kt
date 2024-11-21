@@ -39,7 +39,7 @@ class GoogleBooksAPIHandler {
                     convertedBooks
                 } else {
                     Log.d("GoogleBooksAPIHandler", "Failed to retrieve response" )
-                    null
+                    ArrayList()
                 }
             } catch(e: Exception) {
                 e.printStackTrace()
