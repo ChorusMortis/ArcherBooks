@@ -184,6 +184,27 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun getAllFavorites() : ArrayList<String>? {
+        return try {
+            val currentUser = getCurrentUserModel()
+
+            if(currentUser != null) {
+                Log.d("FirestoreHandler", "Successfully returning the favorites list (empty or not) from the backend!")
+                currentUser.favorites
+            } else {
+                Log.e("FirestoreHandler", "Obtained user from AuthHandler was null when called from getAllFavorites()")
+                null
+            }
+
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error getting all favorited books from Firestore", e)
+            null
+        }
+
+
+
+    }
+
     /* Transactions Collection */
 
     fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
