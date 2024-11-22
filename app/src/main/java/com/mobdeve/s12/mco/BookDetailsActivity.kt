@@ -252,6 +252,10 @@ class BookDetailsActivity : AppCompatActivity() {
                     viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
                     viewBinding.bookDetailsIbCancelBtn.visibility = View.VISIBLE
 
+                    // hide progress bar
+                    viewBinding.bookDetailsLoadingCover.visibility = View.GONE
+                    viewBinding.bookDetailsProgressBar.visibility = View.GONE
+
                     val toast = Toast.makeText(this@BookDetailsActivity, "Borrow transaction successfully made.", Toast.LENGTH_SHORT)
                     toast.show()
                     window.dismiss()
