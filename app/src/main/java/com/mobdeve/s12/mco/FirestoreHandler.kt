@@ -112,6 +112,17 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun createBook(bookId: String) {
+        val googleBooksAPIHandler = GoogleBooksAPIHandler()
+        val bookObject = googleBooksAPIHandler.getBook(bookId)
+        if(bookObject != null) {
+            database.collection(booksCollection).document(bookId).set(bookObject)
+            Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
+        } else {
+            Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
+        }
+    }
+
     fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getCurrentUser()?.uid
