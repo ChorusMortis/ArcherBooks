@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/style_dialog_radius"
+    android:backgroundTint="@color/gray_bg"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_confirm_cancel_tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:text="Cancel Request"
+        android:textColor="@color/book_borrowed"
+        android:textSize="22sp"
+        app:fontFamily="@font/sf_ui_text_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_confirm_cancel_tv_message"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="Are you sure you want to cancel your borrow request for this book?"
+        android:textColor="@color/text_over_gray_bg"
+        android:textSize="14sp"
+        app:fontFamily="@font/sf_ui_text_regular"
+        android:justificationMode="inter_word"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_confirm_cancel_tv_label" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_confirm_cancel_btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/style_rounded_button_on_colored"
+        android:backgroundTint="@color/text_over_gray_bg"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/maintext"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_confirm_cancel_gl_midwayvert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_confirm_cancel_tv_message" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_confirm_cancel_btn_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/style_rounded_button_on_colored"
+        android:backgroundTint="@color/book_borrowed"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/maintext"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_confirm_cancel_btn_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/dialog_confirm_cancel_gl_midwayvert"
+        app:layout_constraintTop_toTopOf="@+id/dialog_confirm_cancel_btn_cancel" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/dialog_confirm_cancel_gl_midwayvert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
