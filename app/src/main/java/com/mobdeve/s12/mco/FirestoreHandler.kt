@@ -22,6 +22,7 @@ class FirestoreHandler private constructor(context: Context) {
     private val RECENTLY_VIEWED_FIELD = "recentlyViewed"
     private val SIGNUP_METHOD_FIELD = "signUpMethod"
     private val USER_ID_FIELD = "userId"
+    private val FAVORITES_FIELD = "favorites"
 
     private val BOOK_ID_FIELD = "bookId"
     private val TRANSACTION_DATE_FIELD = "transactionDate"
@@ -126,6 +127,23 @@ class FirestoreHandler private constructor(context: Context) {
             Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
         } else {
             Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
+        }
+    }
+
+    suspend fun isBookFavorited(bookId: String): Boolean? {
+        return try {
+            val currentUser = getCurrentUserModel()
+            if(currentUser != null) {
+                Log.d("FirestoreHandler", "Successfully found user when checking for isBookFavorited")
+                currentUser.favorites.contains(bookId)
+            } else {
+                Log.w("FirestoreHandler", "Obtained current user is null when checking for isBookFavorited")
+                null
+            }
+
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error checking if book $bookId is part of current user's favorites.", e)
+            null
         }
     }
 
