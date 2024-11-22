@@ -301,8 +301,7 @@ class BookDetailsActivity : AppCompatActivity() {
                 val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
                 val authHandler = AuthHandler.getInstance(this@BookDetailsActivity)
 
-                val bookCoverResource = this@BookDetailsActivity.intent.getStringExtra(COVER_KEY).toString()
-                val bookId = extractIdFromUrl(bookCoverResource)
+                val bookId = getBookId()
                 val userId = authHandler.getUserUid()
 
                 if(bookId != null && userId != null) {
@@ -328,6 +327,11 @@ class BookDetailsActivity : AppCompatActivity() {
         }
 
         dialog.show()
+    }
+
+    private fun getBookId() : String? {
+        val bookCoverResource = this@BookDetailsActivity.intent.getStringExtra(COVER_KEY).toString()
+        return extractIdFromUrl(bookCoverResource)
     }
 
     private fun extractIdFromUrl(url: String): String? {
