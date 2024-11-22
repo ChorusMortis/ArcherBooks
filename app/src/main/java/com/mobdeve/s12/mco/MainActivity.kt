@@ -65,7 +65,7 @@ class MainActivity: AppCompatActivity() {
         // use custom style to force dialog to wrap content and not take up entire screen's width
         val dialog = AlertDialog.Builder(this,  R.style.WrapContentDialog)
             .setView(confirmLogoutDialogBinding.root)
-            .setCancelable(false)
+            .setCancelable(true)
             .create()
 
         // make background transparent so dialog floats
