@@ -12,6 +12,8 @@ class UserModel {
         private set
     var recentlyViewed: List<String> = emptyList()
         private set
+    var favorites: ArrayList<String> = arrayListOf()
+        private set
 
     enum class SignUpMethod {
         EMAIL,
