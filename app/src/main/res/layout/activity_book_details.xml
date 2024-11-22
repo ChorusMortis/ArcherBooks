@@ -362,6 +362,25 @@
             app:layout_constraintStart_toEndOf="@+id/book_details_ib_fav_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/book_details_ib_cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/style_rounded_button_on_colored"
+            android:backgroundTint="@color/book_borrowed"
+            android:text="Cancel Borrow Request"
+            android:textAllCaps="false"
+            android:textColor="@color/maintext"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:fontFamily="@font/sf_ui_text_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/book_details_ib_fav_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
