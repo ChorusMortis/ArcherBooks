@@ -13,7 +13,7 @@ class GoogleBooksAPIHandler {
 
     suspend fun getBook(bookId: String) : BookModel? {
         val client = OkHttpClient()
-        var url = "https://www.googleapis.com/books/v1/volumes/$bookId"
+        val url = "https://www.googleapis.com/books/v1/volumes/$bookId"
 
         return withContext(Dispatchers.IO) {
             try {
