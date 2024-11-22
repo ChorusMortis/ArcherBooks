@@ -8,16 +8,20 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
+import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmCancelBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmlogoutBinding
 import com.mobdeve.s12.mco.databinding.ComponentPopupBorrowBinding
 import com.mobdeve.s12.mco.databinding.ComponentPopupTncBinding
 import kotlinx.coroutines.CoroutineScope
@@ -57,6 +61,7 @@ class BookDetailsActivity : AppCompatActivity() {
         addListenerAndApiLimitBackBtn()
         styleStatusAndBorrowBtn()
         addListenerBorrowBtn()
+        addListenerCancelBtn()
     }
 
     private fun setDataOnViews() {
@@ -302,6 +307,83 @@ class BookDetailsActivity : AppCompatActivity() {
         val formatter = SimpleDateFormat(shortenedDateFormat, Locale.ENGLISH)
         return formatter.format(timestamp.toDate())
 
+    }
+
+    private fun addListenerCancelBtn() {
+        viewBinding.bookDetailsIbCancelBtn.setOnClickListener(View.OnClickListener {
+            showConfirmCancelDialog()
+        })
+    }
+
+    private fun showConfirmCancelDialog() {
+        val confirmCancelDialogBinding =
+            ComponentDialogConfirmCancelBinding.inflate(LayoutInflater.from(this))
+        // use custom style to force dialog to wrap content and not take up entire screen's width
+        val dialog = AlertDialog.Builder(this,  R.style.WrapContentDialog)
+            .setView(confirmCancelDialogBinding.root)
+            .setCancelable(true)
+            .create()
+
+        // make background transparent so dialog floats
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        confirmCancelDialogBinding.dialogConfirmCancelBtnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        confirmCancelDialogBinding.dialogConfirmCancelBtnConfirm.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                dialog.dismiss()
+
+                // show progress bar
+                viewBinding.bookDetailsLoadingCover.visibility = View.VISIBLE
+                viewBinding.bookDetailsProgressBar.visibility = View.VISIBLE
+
+                val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
+                val authHandler = AuthHandler.getInstance(this@BookDetailsActivity)
+
+                val bookCoverResource = this@BookDetailsActivity.intent.getStringExtra(COVER_KEY).toString()
+                val bookId = extractIdFromUrl(bookCoverResource)
+                val userId = authHandler.getUserUid()
+
+                if(bookId != null && userId != null) {
+                    val transactionId = firestoreHandler.getLatestTransactionId(userId, bookId)
+                    if(transactionId != null) {
+                        firestoreHandler.updateTransaction(transactionId, "status", TransactionModel.Status.CANCELLED.toString())
+                        firestoreHandler.updateTransaction(transactionId, "canceledDate", Timestamp.now())
+                    } else {
+                        Log.e("BookDetailsActivity", "TransactionID is null when attempting to cancel transaction.")
+                    }
+                } else {
+                    Log.e("BookDetailsActivity", "Either the bookId or userId is null when attempting to cancel transaction.")
+                }
+
+                viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_available)
+                viewBinding.bookDetailsTvStatus.text = viewBinding.root.context.getString(R.string.book_available)
+                viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_available))
+                viewBinding.bookDetailsIbBorrowBtn.alpha = 1f
+                viewBinding.bookDetailsIbBorrowBtn.text = "Book Available"
+                viewBinding.bookDetailsIbBorrowBtn.isEnabled = true
+                viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+                viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+
+                val toast = Toast.makeText(this@BookDetailsActivity, "Borrow request was successfully cancelled.", Toast.LENGTH_SHORT)
+                toast.show()
+
+                // show progress bar
+                viewBinding.bookDetailsLoadingCover.visibility = View.GONE
+                viewBinding.bookDetailsProgressBar.visibility = View.GONE
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun extractIdFromUrl(url: String): String? {
+        val regex = Regex("(?<=/books/publisher/content/images/frontcover/)[^?]+")
+        val matchResult = regex.find(url)
+
+        return matchResult?.value
     }
 
     /*** Terms and Conditions Popup Functions ***/
