@@ -90,6 +90,7 @@ class SearchResultsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         // reset sorting to relevance and filtering to all when search is done
+        rvAdapter.notifyDataSetChanged()
         activeSortOption = SortOption.RELEVANCE
         activeSearchFilterOption = FilterOption.ALL
     }
