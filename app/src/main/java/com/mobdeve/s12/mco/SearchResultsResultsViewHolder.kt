@@ -18,6 +18,7 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding)
         viewBinding.itemSrAuthors.text = book.authors.joinToString(", ")
         viewBinding.itemSrYear.text = book.publishYear
 
+        viewBinding.itemSearchResultsStatusIcon.tag = book.id
         setStatusIcon(book)
     }
 
@@ -47,12 +48,14 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding)
                 statusResource = R.drawable.icon_timer
             }
 
-            // set appropriate styling
-            viewBinding.itemSearchResultsStatusIcon.setImageResource(statusResource)
+            if (viewBinding.itemSearchResultsStatusIcon.tag == book.id) {
+                // set appropriate styling
+                viewBinding.itemSearchResultsStatusIcon.setImageResource(statusResource)
 
-            // hide progress bar
-            viewBinding.itemSearchResultsStatusIcon.clearColorFilter()
-            viewBinding.itemSrProgressBar.visibility = View.GONE
+                // hide progress bar
+                viewBinding.itemSearchResultsStatusIcon.clearColorFilter()
+                viewBinding.itemSrProgressBar.visibility = View.GONE
+            }
         }
     }
 }
