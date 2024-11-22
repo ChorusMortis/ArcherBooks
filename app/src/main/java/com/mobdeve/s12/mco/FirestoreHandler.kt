@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
@@ -145,6 +146,25 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error checking if book $bookId is part of current user's favorites.", e)
             null
         }
+    }
+
+    fun removeFromFavorites(bookId: String) {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val currentUserId = authHandler.getUserUid()
+
+        if(currentUserId != null) {
+            database.collection(usersCollection).document(currentUserId)
+                .update(FAVORITES_FIELD, FieldValue.arrayRemove(bookId))
+                .addOnSuccessListener {
+                    Log.d("FirestoreHandler", "Successfully removed book $bookId from current user's favorites!")
+                }
+                .addOnFailureListener {
+                    Log.e("FirestoreHandler", "Error removing book $bookId from current user's favorites")
+                }
+        } else {
+            Log.e("FirestoreHandler", "Obtained userId from AuthHandler was null when called from removeFromFavorites()")
+        }
+
     }
 
     /* Transactions Collection */
