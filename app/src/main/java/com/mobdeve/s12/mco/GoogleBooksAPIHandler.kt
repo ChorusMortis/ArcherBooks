@@ -37,6 +37,17 @@ class GoogleBooksAPIHandler {
         }
     }
 
+    suspend fun getSpecificBooks(bookIds: List<String>): ArrayList<BookModel> {
+        val results = ArrayList<BookModel>()
+        bookIds.forEach { bookId ->
+            val book = getBook(bookId)
+            book?.let {
+                results.add(book)
+            }
+        }
+        return results
+    }
+
     private fun generateBookObject(bookObject : JSONObject) : BookModel {
         val bookVolumeInfo = bookObject.getJSONObject("volumeInfo")
 

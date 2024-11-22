@@ -2,12 +2,10 @@ package com.mobdeve.s12.mco
 
 import android.content.Context
 import android.util.Log
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -20,6 +18,7 @@ class FirestoreHandler(context: Context?) {
     private val EMAIL_FIELD = "emailAddress"
     private val FIRST_NAME_FIELD = "firstName"
     private val LAST_NAME_FIELD = "lastName"
+    private val RECENTLY_VIEWED_FIELD = "recentlyViewed"
     private val SIGNUP_METHOD_FIELD = "signUpMethod"
     private val USER_ID_FIELD = "userId"
 
@@ -151,5 +150,9 @@ class FirestoreHandler(context: Context?) {
             Log.e("FirestoreHandler", "Search for latest transaction exception: $e")
             null
         }
+    }
+
+    suspend fun getRecentlyViewedBookIds(email: String): List<String>? {
+        return getUserByEmail(email)?.recentlyViewed
     }
 }
