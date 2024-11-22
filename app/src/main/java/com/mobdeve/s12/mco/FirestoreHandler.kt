@@ -25,6 +25,7 @@ class FirestoreHandler private constructor(context: Context) {
 
     private val BOOK_ID_FIELD = "bookId"
     private val TRANSACTION_DATE_FIELD = "transactionDate"
+    private val USER_FIELD = "user"
 
     private val database = Firebase.firestore
 
@@ -191,6 +192,31 @@ class FirestoreHandler private constructor(context: Context) {
             }
         } catch (e: Exception) {
             Log.e("FirestoreHandler", "Search for latest transaction exception: $e")
+            null
+        }
+    }
+
+    suspend fun getTransactionId(userId: String, bookId: String): String? {
+        return try {
+            val userRef = database.collection(usersCollection).document(userId)
+
+            val transactions = database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, userRef)
+                .whereEqualTo(BOOK_ID_FIELD, bookId)
+                .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            if (!transactions.isEmpty) {
+                val latestTransaction = transactions.first()
+                Log.d("FirestoreHandler", "Successfully found transaction with ID ${latestTransaction.id}")
+                latestTransaction.id
+            } else {
+                Log.w("FirestoreHandler", "Transaction not found with $userId and bookId $bookId")
+                null
+            }
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error finding transaction ID with userID $userId and bookId $bookId", e)
             null
         }
     }
