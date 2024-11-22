@@ -12,6 +12,10 @@
     <string name="book_available">Book Available</string>
     <string name="book_unavailable">Book Unavailable</string>
 
+    <string name="borrow_btn_available">Borrow</string>
+    <string name="borrow_btn_unavailable">Unavailable</string>
+    <string name="borrow_btn_borrowed">Borrowed</string>
+
     <string name="warning_incomplete_fields">Please fill out all fields to proceed.</string>
     <string name="warning_invalid_email">Please enter a valid email address.</string>
     <string name="warning_email_already_exists">An account with this email address already exists.</string>

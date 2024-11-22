@@ -27,6 +27,7 @@ import com.mobdeve.s12.mco.databinding.ComponentPopupTncBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -95,51 +96,17 @@ class BookDetailsActivity : AppCompatActivity() {
             val latestTransactionOfBook = firestoreHandler.getLatestTransaction(this@BookDetailsActivity.intent.getStringExtra(ID_KEY)!!)
             val currentUserId = authHandler.getCurrentUser()?.uid
 
-            // default styling (for unavailable book status)
-            var statusResource = R.drawable.icon_unavailable
-            var statusText = viewBinding.root.context.getString(R.string.book_unavailable)
-            var textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_unavailable)
-            var borrowBtnOpacity = 0.3f
-            var borrowBtnText = "Unavailable"
-            var borrowBtnEnabled = false
+            // default
+            setUIToUnavailable()
 
             // modify styling if status is available or borrowed
             if(latestTransactionOfBook == null ||
                 latestTransactionOfBook.status == TransactionModel.Status.CANCELLED ||
                 latestTransactionOfBook.status == TransactionModel.Status.RETURNED)  {
-                statusResource = R.drawable.icon_available
-                statusText = viewBinding.root.context.getString(R.string.book_available)
-                textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_available)
-                borrowBtnOpacity = 1.0f
-                borrowBtnText = "Borrow"
-                borrowBtnEnabled = true
+                setUIToAvailable()
             } else if(latestTransactionOfBook.user.userId == currentUserId) {
-                statusResource = R.drawable.icon_timer
-                textColor = ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed)
-                borrowBtnText = "Borrowed"
-                borrowBtnEnabled = false
-
-                if(latestTransactionOfBook.status == TransactionModel.Status.FOR_PICKUP) {
-                    viewBinding.bookDetailsIbCancelBtn.visibility = View.VISIBLE
-                    viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
-                    statusText = "${viewBinding.root.context.getString(R.string.for_pickup)} ${convertTimestampToString(latestTransactionOfBook.expectedPickupDate)}"
-                } else {
-
-                   if(latestTransactionOfBook.status == TransactionModel.Status.TO_RETURN) {
-                        statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
-                   } else if(latestTransactionOfBook.status == TransactionModel.Status.OVERDUE) {
-                        statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
-                   }
-                }
+                setUIToBorrowed(latestTransactionOfBook.status, latestTransactionOfBook.expectedPickupDate, latestTransactionOfBook.expectedReturnDate)
             }
-
-            // set appropriate styling
-            viewBinding.bookDetailsIvStatus.setImageResource(statusResource)
-            viewBinding.bookDetailsTvStatus.text = statusText
-            viewBinding.bookDetailsTvStatus.setTextColor(textColor)
-            viewBinding.bookDetailsIbBorrowBtn.alpha = borrowBtnOpacity
-            viewBinding.bookDetailsIbBorrowBtn.text = borrowBtnText
-            viewBinding.bookDetailsIbBorrowBtn.isEnabled = borrowBtnEnabled
 
             // hide progress bar
             viewBinding.bookDetailsLoadingCover.visibility = View.GONE
@@ -254,13 +221,7 @@ class BookDetailsActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
                     firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
-
-                    viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_timer)
-                    viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} ${convertTimestampToString(expectedPickupDate)}"
-                    viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed))
-
-                    viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
-                    viewBinding.bookDetailsIbCancelBtn.visibility = View.VISIBLE
+                    setUIToBorrowed(TransactionModel.Status.FOR_PICKUP, expectedPickupDate, expectedReturnDate)
 
                     // hide progress bar
                     viewBinding.bookDetailsLoadingCover.visibility = View.GONE
@@ -318,13 +279,12 @@ class BookDetailsActivity : AppCompatActivity() {
     private fun showConfirmCancelDialog() {
         val confirmCancelDialogBinding =
             ComponentDialogConfirmCancelBinding.inflate(LayoutInflater.from(this))
-        // use custom style to force dialog to wrap content and not take up entire screen's width
+
         val dialog = AlertDialog.Builder(this,  R.style.WrapContentDialog)
             .setView(confirmCancelDialogBinding.root)
             .setCancelable(true)
             .create()
 
-        // make background transparent so dialog floats
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         confirmCancelDialogBinding.dialogConfirmCancelBtnCancel.setOnClickListener {
@@ -335,7 +295,6 @@ class BookDetailsActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 dialog.dismiss()
 
-                // show progress bar
                 viewBinding.bookDetailsLoadingCover.visibility = View.VISIBLE
                 viewBinding.bookDetailsProgressBar.visibility = View.VISIBLE
 
@@ -358,19 +317,11 @@ class BookDetailsActivity : AppCompatActivity() {
                     Log.e("BookDetailsActivity", "Either the bookId or userId is null when attempting to cancel transaction.")
                 }
 
-                viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_available)
-                viewBinding.bookDetailsTvStatus.text = viewBinding.root.context.getString(R.string.book_available)
-                viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_available))
-                viewBinding.bookDetailsIbBorrowBtn.alpha = 1f
-                viewBinding.bookDetailsIbBorrowBtn.text = "Book Available"
-                viewBinding.bookDetailsIbBorrowBtn.isEnabled = true
-                viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
-                viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+                setUIToAvailable()
 
                 val toast = Toast.makeText(this@BookDetailsActivity, "Borrow request was successfully cancelled.", Toast.LENGTH_SHORT)
                 toast.show()
 
-                // show progress bar
                 viewBinding.bookDetailsLoadingCover.visibility = View.GONE
                 viewBinding.bookDetailsProgressBar.visibility = View.GONE
             }
@@ -384,6 +335,50 @@ class BookDetailsActivity : AppCompatActivity() {
         val matchResult = regex.find(url)
 
         return matchResult?.value
+    }
+
+    private fun setUIToAvailable() {
+        viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_available)
+        viewBinding.bookDetailsTvStatus.text = viewBinding.root.context.getString(R.string.book_available)
+        viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_available))
+        viewBinding.bookDetailsIbBorrowBtn.alpha = 1f
+        viewBinding.bookDetailsIbBorrowBtn.text = viewBinding.root.context.getString(R.string.borrow_btn_available)
+        viewBinding.bookDetailsIbBorrowBtn.isEnabled = true
+        viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+        viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+    }
+
+    private fun setUIToBorrowed(status: TransactionModel.Status, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
+        viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_timer)
+        viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed))
+        viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+        viewBinding.bookDetailsIbBorrowBtn.text = viewBinding.root.context.getString(R.string.borrow_btn_borrowed)
+        viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
+
+        if(status == TransactionModel.Status.FOR_PICKUP) {
+            viewBinding.bookDetailsIbCancelBtn.visibility = View.VISIBLE
+            viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
+            viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} ${convertTimestampToString(expectedPickupDate)}"
+        } else if(status == TransactionModel.Status.TO_RETURN) {
+            viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+            viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+            viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(expectedReturnDate)}"
+        } else if(status == TransactionModel.Status.OVERDUE) {
+            viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+            viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+            viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(expectedReturnDate)}"
+        }
+    }
+
+    private fun setUIToUnavailable() {
+        viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_unavailable)
+        viewBinding.bookDetailsTvStatus.text = viewBinding.root.context.getString(R.string.book_unavailable)
+        viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_unavailable))
+        viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+        viewBinding.bookDetailsIbBorrowBtn.text = viewBinding.root.context.getString(R.string.borrow_btn_unavailable)
+        viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
+        viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+        viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
     }
 
     /*** Terms and Conditions Popup Functions ***/
