@@ -35,11 +35,21 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView
             intent.putExtra(BookDetailsActivity.AUTHORS_KEY, data[holder.bindingAdapterPosition].authors.joinToString(", "))
             intent.putExtra(BookDetailsActivity.COVER_KEY, data[holder.bindingAdapterPosition].coverResource)
             intent.putExtra(BookDetailsActivity.PUBLISHER_KEY, data[holder.bindingAdapterPosition].publisher)
-            intent.putExtra(BookDetailsActivity.STATUS_KEY, "Book Available") // TODO MCO3 comes from transaction
             intent.putExtra(BookDetailsActivity.SHELF_LOCATION_KEY, data[holder.bindingAdapterPosition].shelfLocation)
             intent.putExtra(BookDetailsActivity.DESCRIPTION_KEY, data[holder.bindingAdapterPosition].description)
             intent.putExtra(BookDetailsActivity.PAGES_KEY, data[holder.bindingAdapterPosition].pageCount)
             holder.itemView.context.startActivity(intent)
         })
+    }
+
+    fun addBooks(newBooks: ArrayList<BookModel>) {
+        val startingIndex = data.size
+        data.addAll(newBooks)
+        notifyItemRangeInserted(startingIndex, newBooks.size)
+    }
+
+    fun removeAllBooks() {
+        data.clear()
+        this.notifyDataSetChanged()
     }
 }
