@@ -2,16 +2,15 @@ package com.mobdeve.s12.mco
 
 import android.content.Context
 import android.util.Log
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
-class FirestoreHandler(context: Context?) {
+class FirestoreHandler private constructor(context: Context) {
+    private val appContext: Context = context.applicationContext
 
     private val usersCollection = "users"
     private val booksCollection = "books"
@@ -20,6 +19,7 @@ class FirestoreHandler(context: Context?) {
     private val EMAIL_FIELD = "emailAddress"
     private val FIRST_NAME_FIELD = "firstName"
     private val LAST_NAME_FIELD = "lastName"
+    private val RECENTLY_VIEWED_FIELD = "recentlyViewed"
     private val SIGNUP_METHOD_FIELD = "signUpMethod"
     private val USER_ID_FIELD = "userId"
 
@@ -29,15 +29,15 @@ class FirestoreHandler(context: Context?) {
     private val database = Firebase.firestore
 
     companion object {
+        @Volatile
         private var instance : FirestoreHandler? = null
 
         @Synchronized
-        fun getInstance(context: Context): FirestoreHandler? {
-            if(instance == null) {
-                instance = FirestoreHandler(context.applicationContext)
+        fun getInstance(context: Context): FirestoreHandler {
+            return instance ?: synchronized(this) {
+                // double-checked locking
+                instance ?: FirestoreHandler(context).also { instance = it }
             }
-
-            return instance
         }
     }
 
@@ -67,6 +67,30 @@ class FirestoreHandler(context: Context?) {
             }
     }
 
+    // Use this function to get the current authenticated user's UserModel object.
+    suspend fun getCurrentUserModel(): UserModel? {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val uid = authHandler.getUserUid() ?: return null
+        return try {
+            val documentSnapshot = database.collection(usersCollection)
+                .document(uid)
+                .get()
+                .await()
+
+            if (documentSnapshot.exists()) {
+                documentSnapshot.toObject(UserModel::class.java)
+            } else {
+                Log.w("FirestoreHandler", "No user found with uid $uid")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("FirestoreHandler", e.toString())
+            null
+        }
+    }
+
+    // Use this function when the user is not logged in or
+    // if it is unclear whether they are authenticated or not.
     suspend fun getUserByEmail(email: String): UserModel? {
         return try {
             val result = database.collection(usersCollection)
@@ -88,9 +112,9 @@ class FirestoreHandler(context: Context?) {
         }
     }
 
-    fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp, context: Context) {
-        val authHandler = AuthHandler.getInstance(context)
-        val currentUserId = authHandler?.getCurrentUser()?.uid
+    fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val currentUserId = authHandler.getCurrentUser()?.uid
         Log.d("FirestoreHandler", "User $currentUserId is trying to create a new transaction.")
 
         val newTransaction = hashMapOf(
@@ -151,5 +175,9 @@ class FirestoreHandler(context: Context?) {
             Log.e("FirestoreHandler", "Search for latest transaction exception: $e")
             null
         }
+    }
+
+    suspend fun getRecentlyViewedBookIds(): List<String>? {
+        return getCurrentUserModel()?.recentlyViewed
     }
 }

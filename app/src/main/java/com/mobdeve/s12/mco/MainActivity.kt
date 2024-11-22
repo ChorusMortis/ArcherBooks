@@ -79,7 +79,7 @@ class MainActivity: AppCompatActivity() {
             dialog.dismiss()
             // finish main activity (all fragments)
             val authHandler = AuthHandler.getInstance(this)
-            authHandler?.logoutAccount()
+            authHandler.logoutAccount()
             finish()
         }
 

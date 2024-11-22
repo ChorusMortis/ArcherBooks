@@ -2,6 +2,7 @@ package com.mobdeve.s12.mco
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mobdeve.s12.mco.databinding.FragmentHomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private val books = BookGenerator.generateSampleBooks()
+    private val rvBooks = ArrayList<BookModel>()
     private val users = UserGenerator.generateSampleUsers()
     private val transactions = TransactionGenerator.generateSampleTransactions(books, users)
 
@@ -36,23 +41,56 @@ class HomeFragment : Fragment() {
         return viewBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        updateRecentlyViewedRV()
+    }
+
     private fun setDisplayName() {
         val authHandler = AuthHandler.getInstance(requireActivity())
-        authHandler?.let {
-            val userFullName = authHandler.getUserFullName()
-            userFullName?.let {
-                viewBinding.homeTvUserName.text = userFullName
-            }
+        val userFullName = authHandler.getUserFullName()
+        userFullName?.let {
+            viewBinding.homeTvUserName.text = userFullName
         }
     }
 
     private fun setRVRecyclerView() {
-        this.rvRecyclerView = viewBinding.homeRvVr
-        this.rvAdapter = HomeRVAdapter(ArrayList(books))
-        this.rvRecyclerView.adapter = this.rvAdapter
-        val mbbLinearLayoutManager = LinearLayoutManager(activity)
-        mbbLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        this.rvRecyclerView.layoutManager = mbbLinearLayoutManager
+        rvRecyclerView = viewBinding.homeRvVr
+        // data is initially empty, get actual data later from db
+        rvAdapter = HomeRVAdapter(rvBooks)
+        rvRecyclerView.adapter = rvAdapter
+        // latest book (end of list) is at first, so reverseLayout = true
+        rvRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, true)
+    }
+
+    private fun updateRecentlyViewedRV() {
+        CoroutineScope(Dispatchers.Main).launch {
+            // get recently viewed book IDs from user via db
+            Log.d("updateRecentlyViewedRV", "Fetching user's recently viewed books array")
+            val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
+            val rvBookIds = firestoreHandler.getRecentlyViewedBookIds()
+            if (rvBookIds == null) {
+                Log.w("updateRecentlyViewedRV", "User has no recently viewed books array")
+                setNoRecentBooksMessageVisibility(emptyList())
+                return@launch
+            }
+
+            // fetch book info from Google Books (each is separate API call because Google doesn't allow batch)
+            Log.i("updateRecentlyViewedRV", "Fetching book info from Google Books, expecting ${rvBookIds.size} books")
+            val gbAPIHandler = GoogleBooksAPIHandler()
+            val fetchedBooks = gbAPIHandler.getSpecificBooks(rvBookIds)
+            // update all books
+            Log.i("updateRecentlyViewedRV", "Updating recycler view, got ${fetchedBooks.size} books")
+            if (rvBookIds.size != fetchedBooks.size) {
+                Log.w("updateRecentlyViewedRV",
+                    "Old book list's size (${rvBookIds.size}) isn't the same as fetched books size (${fetchedBooks.size})")
+            }
+            rvBooks.clear()
+            rvBooks.addAll(fetchedBooks)
+            rvAdapter.notifyItemRangeChanged(0, rvBooks.size)
+            setNoRecentBooksMessageVisibility(fetchedBooks)
+        }
     }
 
     private fun addListenerSearchBtn() {
@@ -97,5 +135,10 @@ class HomeFragment : Fragment() {
             intent.putExtra(BookDetailsActivity.PAGES_KEY, botd.pageCount)
             startActivity(intent)
         })
+    }
+
+    private fun setNoRecentBooksMessageVisibility(rvBooks: List<BookModel>?) {
+        val visibility = if (rvBooks.isNullOrEmpty()) View.VISIBLE else View.GONE
+        viewBinding.homeTvNorecentMessage.visibility = visibility
     }
 }

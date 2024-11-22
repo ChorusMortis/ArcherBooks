@@ -228,6 +228,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_tv_vr_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/home_tv_norecent_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="Your recently viewed books will appear here!"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:fontFamily="@font/sf_ui_text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_tv_vr_label" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

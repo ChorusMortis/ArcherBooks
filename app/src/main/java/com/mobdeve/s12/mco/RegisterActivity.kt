@@ -61,10 +61,10 @@ class RegisterActivity : AppCompatActivity() {
                 )
 
                 if (areAllFieldsValid(newUser, passwords)) {
-                    authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
+                    authHandler = AuthHandler.getInstance(this@RegisterActivity)
                     val userId = authHandler.createAccount(newUser.emailAddress, passwords["password"]!!, this@RegisterActivity)
 
-                    firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
+                    firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)
                     newUser.userId = userId
                     firestoreHandler.createUser(newUser)
 
@@ -136,7 +136,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun googleSignIn(googleCredential: AuthCredential) {
-        authHandler = AuthHandler.getInstance(this@RegisterActivity)!!
+        authHandler = AuthHandler.getInstance(this@RegisterActivity)
         // signs into existing Google account, creating Google account if it doesn't exist yet
         // NOTE: if user registered using email/pw with the same email exists, account auth
         // provider changes into Google only (only Google can be used to sign into it)
@@ -166,7 +166,7 @@ class RegisterActivity : AppCompatActivity() {
         val lastName = names?.second
 
         CoroutineScope(Dispatchers.Main).launch {
-            firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)!!
+            firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)
             // check if user entry in collection with the same email already exists
             val existingUser = firestoreHandler.getUserByEmail(email)
             // create user entry in Firebase db if user entry with same email does not exist
@@ -214,8 +214,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private suspend fun isEmailUnique(emailAdd: String) : Boolean {
-        firestoreHandler = FirestoreHandler.getInstance(this)!!
-        val isUnique = !(firestoreHandler?.doesUserExist(emailAdd))!!
+        firestoreHandler = FirestoreHandler.getInstance(this)
+        val isUnique = !(firestoreHandler.doesUserExist(emailAdd))
         Log.d("RegisterActivity", "Returned isEmailUnique() = $isUnique")
         return isUnique
     }

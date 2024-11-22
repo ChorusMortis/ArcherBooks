@@ -87,8 +87,8 @@ class BookDetailsActivity : AppCompatActivity() {
             val authHandler = AuthHandler.getInstance(this@BookDetailsActivity)
 
             // get transaction and user data
-            val latestTransactionOfBook = firestoreHandler?.getLatestTransaction(this@BookDetailsActivity.intent.getStringExtra(ID_KEY)!!)
-            val currentUserId = authHandler?.getCurrentUser()?.uid
+            val latestTransactionOfBook = firestoreHandler.getLatestTransaction(this@BookDetailsActivity.intent.getStringExtra(ID_KEY)!!)
+            val currentUserId = authHandler.getCurrentUser()?.uid
 
             // default styling (for unavailable book status)
             var statusResource = R.drawable.icon_unavailable
@@ -243,7 +243,7 @@ class BookDetailsActivity : AppCompatActivity() {
 
                 CoroutineScope(Dispatchers.Main).launch {
                     val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
-                    firestoreHandler?.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!, this@BookDetailsActivity)
+                    firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
 
                     viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_timer)
                     viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} $expectedPickupDate"
