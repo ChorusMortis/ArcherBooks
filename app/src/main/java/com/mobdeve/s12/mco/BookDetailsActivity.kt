@@ -59,10 +59,12 @@ class BookDetailsActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         setDataOnViews()
-        addListenerAndApiLimitBackBtn()
         styleStatusAndBorrowBtn()
+        setInitialFavButtonUI()
+        addListenerAndApiLimitBackBtn()
         addListenerBorrowBtn()
         addListenerCancelBtn()
+        addListenerFavoriteBtn()
     }
 
     private fun setDataOnViews() {
@@ -386,6 +388,65 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
         viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
         viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+    }
+
+    /*** Favorite Button Functions ***/
+    private fun setInitialFavButtonUI() {
+        CoroutineScope(Dispatchers.Main).launch {
+            viewBinding.bookDetailsLoadingCover.visibility = View.VISIBLE
+            viewBinding.bookDetailsProgressBar.visibility = View.VISIBLE
+
+            val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
+            val bookId = getBookId()
+
+            if(bookId != null) {
+                val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
+                if(isBookFavorited != null) {
+                    updateFavButton(isBookFavorited)
+                }
+                else {
+                    Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
+                }
+            } else {
+                Log.w("BookDetailsActivity", "Book ID is null when called in setInitialFavButtonUI()")
+            }
+            viewBinding.bookDetailsLoadingCover.visibility = View.GONE
+            viewBinding.bookDetailsProgressBar.visibility = View.GONE
+        }
+    }
+
+    private fun addListenerFavoriteBtn() {
+        viewBinding.bookDetailsIbFavBtn.setOnClickListener(View.OnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
+                val bookId = getBookId()
+
+                if(bookId != null) {
+                    val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
+                    if(isBookFavorited != null) {
+                        if(isBookFavorited == true) {
+                            firestoreHandler.removeFromFavorites(bookId)
+                        } else if(isBookFavorited == false) {
+                            firestoreHandler.addToFavorites(bookId)
+                        }
+                        updateFavButton(!isBookFavorited)
+                    }
+                     else {
+                        Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
+                    }
+                } else {
+                    Log.w("BookDetailsActivity", "Book ID is null when called in addListenerFavoriteBtn()")
+                }
+            }
+        })
+    }
+
+    private fun updateFavButton(newIsBookFavorited : Boolean) {
+        if(newIsBookFavorited) {
+            viewBinding.bookDetailsIbFavBtn.setImageResource(R.drawable.icon_favorite_filled)
+        } else {
+            viewBinding.bookDetailsIbFavBtn.setImageResource(R.drawable.icon_favorite_outlined)
+        }
     }
 
     /*** Terms and Conditions Popup Functions ***/
