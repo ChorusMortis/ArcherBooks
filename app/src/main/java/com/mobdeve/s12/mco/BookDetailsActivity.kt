@@ -246,7 +246,7 @@ class BookDetailsActivity : AppCompatActivity() {
                     firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
 
                     viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_timer)
-                    viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} $expectedPickupDate"
+                    viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} ${convertTimestampToString(expectedPickupDate)}"
                     viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed))
 
                     viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
