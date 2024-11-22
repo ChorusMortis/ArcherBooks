@@ -115,11 +115,16 @@ class BookDetailsActivity : AppCompatActivity() {
                 borrowBtnEnabled = false
 
                 if(latestTransactionOfBook.status == TransactionModel.Status.FOR_PICKUP) {
+                    viewBinding.bookDetailsIbCancelBtn.visibility = View.VISIBLE
+                    viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
                     statusText = "${viewBinding.root.context.getString(R.string.for_pickup)} ${convertTimestampToString(latestTransactionOfBook.expectedPickupDate)}"
-                } else if(latestTransactionOfBook.status == TransactionModel.Status.TO_RETURN) {
-                    statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
-                } else if(latestTransactionOfBook.status == TransactionModel.Status.OVERDUE) {
-                    statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
+                } else {
+
+                   if(latestTransactionOfBook.status == TransactionModel.Status.TO_RETURN) {
+                        statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
+                   } else if(latestTransactionOfBook.status == TransactionModel.Status.OVERDUE) {
+                        statusText = "${viewBinding.root.context.getString(R.string.to_return)} ${convertTimestampToString(latestTransactionOfBook.expectedReturnDate)}"
+                   }
                 }
             }
 
