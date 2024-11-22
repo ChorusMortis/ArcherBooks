@@ -248,9 +248,10 @@ class BookDetailsActivity : AppCompatActivity() {
                     viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_timer)
                     viewBinding.bookDetailsTvStatus.text = "${viewBinding.root.context.getString(R.string.for_pickup)} $expectedPickupDate"
                     viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_borrowed))
-                    viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
-                    viewBinding.bookDetailsIbBorrowBtn.text = "Borrowed"
-                    viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+
+                    viewBinding.bookDetailsIbBorrowBtn.visibility = View.GONE
+                    viewBinding.bookDetailsIbCancelBtn.visibility = View.VISIBLE
+
                     val toast = Toast.makeText(this@BookDetailsActivity, "Borrow transaction successfully made.", Toast.LENGTH_SHORT)
                     toast.show()
                     window.dismiss()
