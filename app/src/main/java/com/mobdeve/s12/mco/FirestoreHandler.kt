@@ -9,7 +9,8 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
-class FirestoreHandler(context: Context?) {
+class FirestoreHandler private constructor(context: Context) {
+    private val appContext: Context = context.applicationContext
 
     private val usersCollection = "users"
     private val booksCollection = "books"
@@ -28,15 +29,15 @@ class FirestoreHandler(context: Context?) {
     private val database = Firebase.firestore
 
     companion object {
+        @Volatile
         private var instance : FirestoreHandler? = null
 
         @Synchronized
-        fun getInstance(context: Context): FirestoreHandler? {
-            if(instance == null) {
-                instance = FirestoreHandler(context.applicationContext)
+        fun getInstance(context: Context): FirestoreHandler {
+            return instance ?: synchronized(this) {
+                // double-checked locking
+                instance ?: FirestoreHandler(context).also { instance = it }
             }
-
-            return instance
         }
     }
 
@@ -87,9 +88,9 @@ class FirestoreHandler(context: Context?) {
         }
     }
 
-    fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp, context: Context) {
-        val authHandler = AuthHandler.getInstance(context)
-        val currentUserId = authHandler?.getCurrentUser()?.uid
+    fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val currentUserId = authHandler.getCurrentUser()?.uid
         Log.d("FirestoreHandler", "User $currentUserId is trying to create a new transaction.")
 
         val newTransaction = hashMapOf(

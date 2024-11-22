@@ -49,11 +49,9 @@ class HomeFragment : Fragment() {
 
     private fun setDisplayName() {
         val authHandler = AuthHandler.getInstance(requireActivity())
-        authHandler?.let {
-            val userFullName = authHandler.getUserFullName()
-            userFullName?.let {
-                viewBinding.homeTvUserName.text = userFullName
-            }
+        val userFullName = authHandler.getUserFullName()
+        userFullName?.let {
+            viewBinding.homeTvUserName.text = userFullName
         }
     }
 

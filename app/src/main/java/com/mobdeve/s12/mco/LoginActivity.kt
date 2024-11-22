@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                     return@launch
                 }
 
-                authHandler = AuthHandler.getInstance(this@LoginActivity)!!
+                authHandler = AuthHandler.getInstance(this@LoginActivity)
                 val loggingInStatus = authHandler.loginAccount(user["emailAddress"]!!, user["password"]!!)
                 if(loggingInStatus == "Success") {
                     setWarningMessage(R.string.warning_user_not_found, View.GONE)
@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun googleSignIn(googleCredential: AuthCredential) {
-        authHandler = AuthHandler.getInstance(this@LoginActivity)!!
+        authHandler = AuthHandler.getInstance(this@LoginActivity)
         // signs into existing Google account, creating Google account if it doesn't exist yet
         // NOTE: if user registered using email/pw with the same email exists, account auth
         // provider changes into Google only (only Google can be used to sign into it)
@@ -173,7 +173,7 @@ class LoginActivity : AppCompatActivity() {
         val lastName = names?.second
 
         CoroutineScope(Dispatchers.Main).launch {
-            firestoreHandler = FirestoreHandler.getInstance(this@LoginActivity)!!
+            firestoreHandler = FirestoreHandler.getInstance(this@LoginActivity)
             // check if user entry in collection with the same email already exists
             val existingUser = firestoreHandler.getUserByEmail(email)
             // create user entry in Firebase db if user entry with same email does not exist

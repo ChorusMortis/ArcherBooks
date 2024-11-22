@@ -14,19 +14,19 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class AuthHandler(context: Context) {
-
+    private val appContext: Context = context.applicationContext
     private val auth = Firebase.auth
 
     companion object {
+        @Volatile
         private var instance : AuthHandler? = null
 
         @Synchronized
-        fun getInstance(context: Context): AuthHandler? {
-            if(instance == null) {
-                instance = AuthHandler(context.applicationContext)
+        fun getInstance(context: Context): AuthHandler {
+            return instance ?: synchronized(this) {
+                // double-checked locking
+                instance ?: AuthHandler(context).also { instance = it }
             }
-
-            return instance
         }
     }
 

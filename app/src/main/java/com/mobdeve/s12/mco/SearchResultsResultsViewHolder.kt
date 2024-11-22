@@ -4,7 +4,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mobdeve.s12.mco.BookDetailsActivity.Companion.ID_KEY
 import com.mobdeve.s12.mco.databinding.ItemSrCardBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,8 +32,8 @@ class SearchResultsResultsViewHolder(private val viewBinding: ItemSrCardBinding)
             val authHandler = AuthHandler.getInstance(viewBinding.root.context)
 
             // get transaction and user data
-            val latestTransactionOfBook = firestoreHandler?.getLatestTransaction(book.id)
-            val currentUserId = authHandler?.getCurrentUser()?.uid
+            val latestTransactionOfBook = firestoreHandler.getLatestTransaction(book.id)
+            val currentUserId = authHandler.getCurrentUser()?.uid
 
             // default styling (for unavailable book status)
             var statusResource = R.drawable.icon_unavailable
