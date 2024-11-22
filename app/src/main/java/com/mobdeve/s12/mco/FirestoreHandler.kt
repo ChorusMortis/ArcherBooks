@@ -196,7 +196,7 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getTransactionId(userId: String, bookId: String): String? {
+    suspend fun getLatestTransactionId(userId: String, bookId: String): String? {
         return try {
             val userRef = database.collection(usersCollection).document(userId)
 
@@ -219,5 +219,16 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error finding transaction ID with userID $userId and bookId $bookId", e)
             null
         }
+    }
+
+    fun updateTransaction(transactionId: String, fieldName: String, newValue: Any) {
+        database.collection(transactionsCollection).document(transactionId)
+            .update(fieldName, newValue)
+            .addOnSuccessListener {
+                Log.d("FirestoreHandler", "Successfully updated $fieldName of transaction $transactionId to $newValue")
+            }
+            .addOnFailureListener{
+                Log.e("FirestoreHandler", "Error updating $fieldName of transaction $transactionId")
+            }
     }
 }
