@@ -73,17 +73,17 @@
                 app:srcCompat="@drawable/book_little_red_riding_hood" />
 
             <ImageButton
-                tools:targetApi="29"
                 android:id="@+id/book_details_back_btn"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
                 android:background="@android:color/transparent"
                 android:clickable="true"
                 android:src="@drawable/icon_back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:targetApi="29" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/book_details_cl_info"
