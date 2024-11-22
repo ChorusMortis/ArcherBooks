@@ -4,16 +4,23 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobdeve.s12.mco.databinding.ComponentDialogFavsBinding
 import com.mobdeve.s12.mco.databinding.FragmentFavoritesBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Integer.min
 
 class FavoritesFragment : Fragment() {
     companion object {
@@ -39,6 +46,14 @@ class FavoritesFragment : Fragment() {
     }
 
     private lateinit var transactionsFragBinding : FragmentFavoritesBinding
+    private lateinit var fAdapter: FavoritesFavsAdapter
+    private lateinit var layoutManager: LinearLayoutManager
+
+    private var dataStartingIndex = 0
+    private var favoritesStringList : ArrayList<String> = arrayListOf()
+    private var displayIncrement = 10
+    private var isLoading = false
+    private var hasMoreData = true
 
     private var sortDialogBinding : ComponentDialogFavsBinding? = null
 
@@ -59,11 +74,94 @@ class FavoritesFragment : Fragment() {
             showSortDialog()
         }
 
-        transactionsFragBinding.favoritesRvFavs.adapter = FavoritesFavsAdapter(BookGenerator.generateSampleBooks())
-        transactionsFragBinding.favoritesRvFavs.layoutManager = LinearLayoutManager(activity)
+        fAdapter = FavoritesFavsAdapter(arrayListOf())
+        transactionsFragBinding.favoritesRvFavs.adapter = fAdapter
+        passInitialData()
+
+        layoutManager = LinearLayoutManager(activity)
+        transactionsFragBinding.favoritesRvFavs.layoutManager = layoutManager
         transactionsFragBinding.favoritesRvFavs.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
+        addRVScrollListener()
+
         return transactionsFragBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+//        fAdapter.notifyDataSetChanged()
+    }
+
+    private fun passInitialData() {
+        dataStartingIndex = 0
+        CoroutineScope(Dispatchers.Main).launch {
+            isLoading = true
+            transactionsFragBinding.favoritesInitialProgressBar.visibility = View.VISIBLE
+            val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+            val googleBooksAPIHandler = GoogleBooksAPIHandler()
+
+            val returnedStringList = firestoreHandler.getAllFavorites()
+            if(returnedStringList != null) {
+                favoritesStringList = returnedStringList
+                val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesStringList.size)
+                Log.d("FavoritesFragment", "End index at initial data is $endIndex")
+                val favoritesBookList = googleBooksAPIHandler.getSpecificBooks(favoritesStringList.subList(dataStartingIndex, endIndex))
+                dataStartingIndex = endIndex
+
+                if(dataStartingIndex == favoritesStringList.size) {
+                    hasMoreData = false
+                }
+
+                fAdapter.addBooks(favoritesBookList)
+            }
+            transactionsFragBinding.favoritesInitialProgressBar.visibility = View.GONE
+            isLoading = false
+        }
+    }
+
+    private fun addRVScrollListener() {
+        transactionsFragBinding.favoritesRvFavs.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if(!isLoading && hasMoreData) {
+                    if(visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= 10) {
+                        incrementData()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun incrementData() {
+        isLoading = true
+        transactionsFragBinding.favoritesScrollProgressBar.visibility = View.VISIBLE
+        val layoutParams = transactionsFragBinding.favoritesRvFavs.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.bottomMargin = 40
+        val googleBooksAPIHandler = GoogleBooksAPIHandler()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesStringList.size)
+            val newDataIds = favoritesStringList.subList(dataStartingIndex, endIndex)
+            Log.d("FavoritesFragment", "Incrementing data with these new book IDs: $newDataIds")
+            val newData = googleBooksAPIHandler.getSpecificBooks(newDataIds)
+            dataStartingIndex = endIndex
+
+            if(dataStartingIndex == favoritesStringList.size) {
+                hasMoreData = false
+            }
+
+            fAdapter.addBooks(newData)
+            transactionsFragBinding.favoritesScrollProgressBar.visibility = View.GONE
+            layoutParams.bottomMargin = 0
+            isLoading = false
+        }
     }
 
     private fun initPreferences() {
