@@ -41,6 +41,7 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    /* Users Collection */
     suspend fun doesUserExist(emailAdd: String) : Boolean {
         return try {
             val result = database.collection(usersCollection)
@@ -112,6 +113,10 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun getRecentlyViewedBookIds(): List<String>? {
+        return getCurrentUserModel()?.recentlyViewed
+    }
+
     suspend fun createBook(bookId: String) {
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
         val bookObject = googleBooksAPIHandler.getBook(bookId)
@@ -122,6 +127,8 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
         }
     }
+
+    /* Transactions Collection */
 
     fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
         val authHandler = AuthHandler.getInstance(appContext)
@@ -186,9 +193,5 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Search for latest transaction exception: $e")
             null
         }
-    }
-
-    suspend fun getRecentlyViewedBookIds(): List<String>? {
-        return getCurrentUserModel()?.recentlyViewed
     }
 }
