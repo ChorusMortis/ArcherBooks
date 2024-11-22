@@ -270,6 +270,8 @@ class BookDetailsActivity : AppCompatActivity() {
 
     }
 
+    /*** Cancel Button Functions ***/
+
     private fun addListenerCancelBtn() {
         viewBinding.bookDetailsIbCancelBtn.setOnClickListener(View.OnClickListener {
             showConfirmCancelDialog()
@@ -341,6 +343,7 @@ class BookDetailsActivity : AppCompatActivity() {
         return matchResult?.value
     }
 
+    /*** UI Update Functions ***/
     private fun setUIToAvailable() {
         viewBinding.bookDetailsIvStatus.setImageResource(R.drawable.icon_available)
         viewBinding.bookDetailsTvStatus.text = viewBinding.root.context.getString(R.string.book_available)
