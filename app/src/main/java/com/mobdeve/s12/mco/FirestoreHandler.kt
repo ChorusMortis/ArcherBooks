@@ -148,6 +148,24 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    fun addToFavorites(bookId: String) {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val currentUserId = authHandler.getUserUid()
+
+        if(currentUserId != null) {
+            database.collection(usersCollection).document(currentUserId)
+                .update(FAVORITES_FIELD, FieldValue.arrayUnion(bookId))
+                .addOnSuccessListener {
+                    Log.d("FirestoreHandler", "Successfully added book $bookId to current user's favorites!")
+                }
+                .addOnFailureListener {
+                    Log.e("FirestoreHandler", "Error adding book $bookId to current user's favorites")
+                }
+        } else {
+            Log.e("FirestoreHandler", "Obtained userId from AuthHandler was null when called from addToFavorites()")
+        }
+    }
+
     fun removeFromFavorites(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getUserUid()
@@ -164,7 +182,6 @@ class FirestoreHandler private constructor(context: Context) {
         } else {
             Log.e("FirestoreHandler", "Obtained userId from AuthHandler was null when called from removeFromFavorites()")
         }
-
     }
 
     /* Transactions Collection */
