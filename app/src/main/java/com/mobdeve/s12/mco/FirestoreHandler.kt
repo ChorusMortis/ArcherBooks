@@ -67,6 +67,30 @@ class FirestoreHandler private constructor(context: Context) {
             }
     }
 
+    // Use this function to get the current authenticated user's UserModel object.
+    suspend fun getCurrentUserModel(): UserModel? {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val uid = authHandler.getUserUid() ?: return null
+        return try {
+            val documentSnapshot = database.collection(usersCollection)
+                .document(uid)
+                .get()
+                .await()
+
+            if (documentSnapshot.exists()) {
+                documentSnapshot.toObject(UserModel::class.java)
+            } else {
+                Log.w("FirestoreHandler", "No user found with uid $uid")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("FirestoreHandler", e.toString())
+            null
+        }
+    }
+
+    // Use this function when the user is not logged in or
+    // if it is unclear whether they are authenticated or not.
     suspend fun getUserByEmail(email: String): UserModel? {
         return try {
             val result = database.collection(usersCollection)
@@ -153,7 +177,7 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getRecentlyViewedBookIds(email: String): List<String>? {
-        return getUserByEmail(email)?.recentlyViewed
+    suspend fun getRecentlyViewedBookIds(): List<String>? {
+        return getCurrentUserModel()?.recentlyViewed
     }
 }

@@ -66,17 +66,12 @@ class HomeFragment : Fragment() {
 
     private fun updateRecentlyViewedRV() {
         CoroutineScope(Dispatchers.Main).launch {
-            // get email from logged in user
-            Log.d("updateRecentlyViewedRV", "Getting user's email")
-            val authHandler = AuthHandler.getInstance(requireActivity())
-            val email = authHandler?.getUserEmail() ?: return@launch
-
-            // get recently viewed book IDs from user via db (using email)
-            Log.d("updateRecentlyViewedRV", "Fetching user's ($email) recently viewed books array")
+            // get recently viewed book IDs from user via db
+            Log.d("updateRecentlyViewedRV", "Fetching user's recently viewed books array")
             val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
-            val rvBookIds = firestoreHandler?.getRecentlyViewedBookIds(email)
+            val rvBookIds = firestoreHandler.getRecentlyViewedBookIds()
             if (rvBookIds == null) {
-                Log.w("updateRecentlyViewedRV", "User ($email) has no recently viewed books array")
+                Log.w("updateRecentlyViewedRV", "User has no recently viewed books array")
                 setNoRecentBooksMessageVisibility(emptyList())
                 return@launch
             }
