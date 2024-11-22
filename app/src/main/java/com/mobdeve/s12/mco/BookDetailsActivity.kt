@@ -45,7 +45,6 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private lateinit var viewBinding : ActivityBookDetailsBinding
-    private lateinit var book : BookModel
     private val dateFormat = "MMM d, yyyy"
     private val shortenedDateFormat = "MMM d"
 
