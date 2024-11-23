@@ -31,7 +31,7 @@ class TransactionsFragment : Fragment() {
 
     enum class FilterOption {
         ALL,
-        TO_PICKUP,
+        FOR_PICKUP,
         TO_RETURN,
         OVERDUE,
         RETURNED,
@@ -156,7 +156,7 @@ class TransactionsFragment : Fragment() {
         filterButtons = sortDialogBinding?.let {
             listOf(
                 FilterOption.ALL to it.dialogHistoryBtnFilterAll,
-                FilterOption.TO_PICKUP to it.dialogHistoryBtnFilterTopickup,
+                FilterOption.FOR_PICKUP to it.dialogHistoryBtnFilterTopickup,
                 FilterOption.TO_RETURN to it.dialogHistoryBtnFilterToreturn,
                 FilterOption.OVERDUE to it.dialogHistoryBtnFilterOverdue,
                 FilterOption.RETURNED to it.dialogHistoryBtnFilterReturned,
