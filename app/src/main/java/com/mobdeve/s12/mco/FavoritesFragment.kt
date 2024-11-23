@@ -55,6 +55,7 @@ class FavoritesFragment : Fragment() {
     private var displayIncrement = 10
     private var isLoading = false
     private var hasMoreData = true
+    private var bookCount = 0
 
     private var sortDialogBinding : ComponentDialogFavsBinding? = null
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
@@ -74,7 +75,9 @@ class FavoritesFragment : Fragment() {
             showSortDialog()
         }
 
-        fAdapter = FavoritesFavsAdapter(arrayListOf())
+        fAdapter = FavoritesFavsAdapter(arrayListOf()) {
+            decrementBookCount()
+        }
         transactionsFragBinding.favoritesRvFavs.adapter = fAdapter
         passInitialData()
 
@@ -103,6 +106,9 @@ class FavoritesFragment : Fragment() {
             val returnedObjList = firestoreHandler.getAllFavorites(activeSortOption)
             if(returnedObjList != null) {
                 favoritesObjList = returnedObjList
+                bookCount = favoritesObjList.size
+                setBookCount()
+
                 val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
                 Log.d("FavoritesFragment", "End index at initial data is $endIndex")
                 val favoritesBookList = ArrayList(favoritesObjList.subList(dataStartingIndex, endIndex))
@@ -161,6 +167,23 @@ class FavoritesFragment : Fragment() {
             layoutParams.bottomMargin = 0
             isLoading = false
         }
+    }
+
+    private fun setBookCount() {
+        var label = " books"
+        if(bookCount == 1) {
+            label = "book"
+        }
+        transactionsFragBinding.favoritesTvOverviewbookcount.text = "$bookCount $label"
+    }
+
+    private fun decrementBookCount() {
+        bookCount--
+        var label = " books"
+        if(bookCount == 1) {
+            label = "book"
+        }
+        transactionsFragBinding.favoritesTvOverviewbookcount.text = "$bookCount $label"
     }
 
     private fun initPreferences() {
