@@ -60,20 +60,28 @@ class RegisterActivity : AppCompatActivity() {
                     "confirm_password" to viewBinding.registerEtConfirmpassword.text.toString()
                 )
 
-                if (areAllFieldsValid(newUser, passwords)) {
-                    authHandler = AuthHandler.getInstance(this@RegisterActivity)
-                    val userId = authHandler.createAccount(newUser.emailAddress, passwords["password"]!!, this@RegisterActivity)
-
-                    firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)
-                    newUser.userId = userId
-                    firestoreHandler.createUser(newUser)
-
-                    showRegistrationSuccessToast()
-
-                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                if (!areAllFieldsValid(newUser, passwords)) {
+                    return@launch
                 }
+
+                viewBinding.registerLoadingCover.visibility = View.VISIBLE
+                viewBinding.registerProgressBar.visibility = View.VISIBLE
+
+                authHandler = AuthHandler.getInstance(this@RegisterActivity)
+                val userId = authHandler.createAccount(newUser.emailAddress, passwords["password"]!!, this@RegisterActivity)
+
+                firestoreHandler = FirestoreHandler.getInstance(this@RegisterActivity)
+                newUser.userId = userId
+                firestoreHandler.createUser(newUser)
+
+                showRegistrationSuccessToast()
+
+                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+
+                viewBinding.registerLoadingCover.visibility = View.GONE
+                viewBinding.registerProgressBar.visibility = View.GONE
             }
         }
     }
@@ -95,6 +103,9 @@ class RegisterActivity : AppCompatActivity() {
 
             val credentialManager = CredentialManager.create(this)
             CoroutineScope(Dispatchers.Main).launch {
+                viewBinding.registerLoadingCover.visibility = View.VISIBLE
+                viewBinding.registerProgressBar.visibility = View.VISIBLE
+
                 try {
                     val result = credentialManager.getCredential(
                         request = request,
@@ -103,13 +114,20 @@ class RegisterActivity : AppCompatActivity() {
                     // Google credential obtained, handle it
                     Log.d("RegisterActivity", "Getting credentials success")
                     handleGoogleSignup(result)
+                    // hide loading cover and progress bar in other function because it uses another thread later
                 } catch (e: GetCredentialCancellationException) {
                     Log.w("RegisterActivity", "$e, doing nothing")
                     // do nothing since it's not really a bad thing to cancel
+                    viewBinding.registerLoadingCover.visibility = View.GONE
+                    viewBinding.registerProgressBar.visibility = View.GONE
                 } catch (e: GetCredentialException) {
                     Log.e("RegisterActivity", e.toString())
                     setWarningMessage(R.string.warning_google_register_fail, View.VISIBLE)
+                    viewBinding.registerLoadingCover.visibility = View.GONE
+                    viewBinding.registerProgressBar.visibility = View.GONE
                 }
+                // loading cover and progress bar isn't all done here because handleGoogleSignup uses another thread
+                // if it's done here, hiding is too early once handleGoogleSignup finishes
             }
         }
     }
@@ -175,6 +193,9 @@ class RegisterActivity : AppCompatActivity() {
                 firestoreHandler.createUser(newUser)
                 showRegistrationSuccessToast()
             }
+            // hide loading cover and progress bar here for proper timing
+            viewBinding.registerLoadingCover.visibility = View.GONE
+            viewBinding.registerProgressBar.visibility = View.GONE
             // start activity regardless of whether user entry was written into db
             val intent = Intent(this@RegisterActivity, MainActivity::class.java)
             startActivity(intent)
