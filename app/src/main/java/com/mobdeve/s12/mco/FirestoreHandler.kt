@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -29,6 +30,9 @@ class FirestoreHandler private constructor(context: Context) {
     private val BOOK_FIELD = "book"
     private val TRANSACTION_DATE_FIELD = "transactionDate"
     private val USER_FIELD = "user"
+    private val FIRST_AUTHOR_INDEX_FIELD = "firstAuthorIndex"
+    private val BOOK_TITLE_INDEX_FIELD = "bookTitleIndex"
+    private val STATUS_FIELD = "status"
 
     private val database = Firebase.firestore
 
@@ -386,6 +390,113 @@ class FirestoreHandler private constructor(context: Context) {
             .addOnFailureListener{
                 Log.e("FirestoreHandler", "Error updating $fieldName of transaction $transactionId")
             }
+    }
+
+    suspend fun getTransactions(increment: Long, sortOption: TransactionsFragment.SortOption,
+                                filterOption: TransactionsFragment.FilterOption,
+                                startAfterDoc: DocumentSnapshot?) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
+        try {
+            val authHandler = AuthHandler.getInstance(appContext)
+            val currentUserId = authHandler.getUserUid()
+            val currentUserRef = database.collection(usersCollection).document(currentUserId!!)
+            Log.d("FirestoreHandler", "currentUserRef is  ${currentUserRef.id}")
+
+            val sortingField = when(sortOption) {
+                TransactionsFragment.SortOption.NEWEST -> TRANSACTION_DATE_FIELD
+                TransactionsFragment.SortOption.AUTHOR -> FIRST_AUTHOR_INDEX_FIELD
+                TransactionsFragment.SortOption.TITLE -> BOOK_TITLE_INDEX_FIELD
+            }
+
+            val order = when(sortOption) {
+                TransactionsFragment.SortOption.NEWEST -> Query.Direction.DESCENDING
+                TransactionsFragment.SortOption.AUTHOR -> Query.Direction.ASCENDING
+                TransactionsFragment.SortOption.TITLE -> Query.Direction.ASCENDING
+            }
+
+            val querySnapshot : QuerySnapshot
+            if(startAfterDoc != null) {
+                if(filterOption == TransactionsFragment.FilterOption.ALL) {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .whereEqualTo(USER_FIELD, currentUserRef)
+                        .orderBy(sortingField, order)
+                        .startAfter(startAfterDoc)
+                        .limit(increment)
+                        .get()
+                        .await()
+                } else {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .whereEqualTo(USER_FIELD, currentUserRef)
+                        .whereEqualTo(STATUS_FIELD, filterOption.toString())
+                        .orderBy(sortingField, order)
+                        .startAfter(startAfterDoc)
+                        .limit(increment)
+                        .get()
+                        .await()
+                }
+            } else {
+                if(filterOption == TransactionsFragment.FilterOption.ALL) {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .whereEqualTo(USER_FIELD, currentUserRef)
+                        .orderBy(sortingField, order)
+                        .limit(increment)
+                        .get()
+                        .await()
+                } else {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .whereEqualTo(USER_FIELD, currentUserRef)
+                        .whereEqualTo(STATUS_FIELD, filterOption.toString())
+                        .orderBy(sortingField, order)
+                        .limit(increment)
+                        .get()
+                        .await()
+                }
+            }
+
+            Log.d("FirestoreHandler", "Got ${querySnapshot.size()} elements from Firestore !")
+            val transObjArr : ArrayList<TransactionModel> = arrayListOf()
+            var lastDocument : DocumentSnapshot? = null
+
+            if(!querySnapshot.isEmpty) {
+                for (document in querySnapshot.documents) {
+                    transObjArr.add(convertDataToTransactionObj(document)!!)
+                }
+                lastDocument = querySnapshot.documents.last()
+            }
+
+            return Pair(transObjArr, lastDocument)
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getTransactions was called.")
+            return null
+        }
+    }
+
+    private suspend fun convertDataToTransactionObj(document : DocumentSnapshot) : TransactionModel? {
+        val data = document.data
+        val userRef = data?.get(USER_FIELD) as DocumentReference
+        val bookRef = data[BOOK_FIELD] as DocumentReference
+
+        val book = bookRef.get().await().toObject(BookModel::class.java)
+        val userDoc = userRef.get().await()
+        val userData = userDoc.data
+        val user = convertToUserModel(userData, userDoc)
+
+        if(book != null && user != null) {
+            val transactionObject = TransactionModel(
+                document.id,
+                book,
+                user,
+                data["transactionDate"] as Timestamp,
+                data["expectedPickupDate"] as Timestamp,
+                data["expectedReturnDate"] as Timestamp,
+                data["actualPickupDate"] as Timestamp?,
+                data["actualReturnDate"] as Timestamp?,
+                data["canceledDate"] as Timestamp?,
+                TransactionModel.Status.valueOf(data["status"].toString())
+            )
+
+            return transactionObject
+        }
+        return null
     }
 
     /*** Books Collection ***/
