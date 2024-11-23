@@ -51,4 +51,13 @@ class BookModel{
         this.hasTransaction = hasTransaction
     }
 
+    override fun equals(other: Any?): Boolean {
+        val otherBook = other as BookModel?
+        return this.id == otherBook?.id
+    }
+
+    override fun hashCode(): Int {
+        return 31 * this.id.hashCode()
+    }
+
 }
