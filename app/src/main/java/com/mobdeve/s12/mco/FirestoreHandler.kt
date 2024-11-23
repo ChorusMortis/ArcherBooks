@@ -197,7 +197,7 @@ class FirestoreHandler private constructor(context: Context) {
         return try {
             val currentUser = getCurrentUserModel()
             val book = getBook(bookId)
-            if(currentUser != null && book != null) {
+            if(currentUser != null) {
                 Log.d("FirestoreHandler", "Successfully found user when checking for isBookFavorited")
                 currentUser.favorites.contains(book)
             } else {
