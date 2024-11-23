@@ -9,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
-import com.mobdeve.s12.mco.UserModel.SignUpMethod
 import kotlinx.coroutines.tasks.await
 
 class FirestoreHandler private constructor(context: Context) {
@@ -153,35 +152,39 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getRecentlyViewedBookIds(): ArrayList<BookModel>? {
+    suspend fun getRecentlyViewedBooks(): ArrayList<BookModel>? {
         return getCurrentUserModel()?.recentlyViewed
     }
 
-    suspend fun writeRecentlyViewedBookId(bookId: String) {
+    suspend fun writeRecentlyViewedBook(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val uid = authHandler.getUserUid() ?: return
 
-        val rvBooks = getRecentlyViewedBookIds() as? MutableList<String> ?: mutableListOf()
+        createBook(bookId)
+
+        val rvBooks = getRecentlyViewedBooks() ?: arrayListOf()
+        val rvBooksIds = rvBooks.map { it.id } as MutableList
 
         Log.i("FirestoreHandler", "rvBooks size = ${rvBooks.size}")
-        if (rvBooks.contains(bookId)) {
-            rvBooks.remove(bookId)
+        if (rvBooksIds.contains(bookId)) {
+            rvBooksIds.remove(bookId)
         } else {
-            if (rvBooks.isNotEmpty() && rvBooks.size >= MAX_RV_BOOK_COUNT) {
-                rvBooks.removeLast()
+            if (rvBooksIds.isNotEmpty() && rvBooksIds.size >= MAX_RV_BOOK_COUNT) {
+                rvBooksIds.removeLast()
             }
         }
         // add book to start of list so it's always at the leftmost side of recycler view
-        rvBooks.add(0, bookId)
+        rvBooksIds.add(0, bookId)
 
         // remove extra books at end of list so it is only at most MAX_RV_BOOK_COUNT at all times
         // for future-proofing in case MAX_RV_BOOK_COUNT is modified
-        if (rvBooks.size > MAX_RV_BOOK_COUNT) {
-            rvBooks.subList(MAX_RV_BOOK_COUNT, rvBooks.size).clear()
+        if (rvBooksIds.size > MAX_RV_BOOK_COUNT) {
+            rvBooksIds.subList(MAX_RV_BOOK_COUNT, rvBooksIds.size).clear()
         }
 
+        val rvBookDocRefs = convertBookIdsToDocRefs(rvBooksIds)
         database.collection(usersCollection).document(uid)
-            .update(RECENTLY_VIEWED_FIELD, rvBooks)
+            .update(RECENTLY_VIEWED_FIELD, rvBookDocRefs)
             .addOnSuccessListener {
                 Log.d("FirestoreHandler", "Successfully updated recently viewed books list")
             }
@@ -405,5 +408,19 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error getting book $bookId from Firestore when getBook() was called", e)
             null
         }
+    }
+
+    // used for storing back book ids into user's arrays in database using references
+    // assumes book exists in database already
+    private fun convertBookIdToDocRef(bookId: String): DocumentReference {
+        return database.collection(booksCollection).document(bookId)
+    }
+
+    private fun convertBookIdsToDocRefs(bookIds: List<String>): ArrayList<DocumentReference> {
+        val results = arrayListOf<DocumentReference>()
+        bookIds.forEach { bookId ->
+            results.add(convertBookIdToDocRef(bookId))
+        }
+        return results
     }
 }

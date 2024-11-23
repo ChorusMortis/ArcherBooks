@@ -34,7 +34,7 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
             // put book in recently viewed after clicking on card
             CoroutineScope(Dispatchers.Main).launch {
                 val firestoreHandler = FirestoreHandler.getInstance(context)
-                firestoreHandler.writeRecentlyViewedBookId(data[holder.bindingAdapterPosition].id)
+                firestoreHandler.writeRecentlyViewedBook(data[holder.bindingAdapterPosition].id)
             }
 
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
