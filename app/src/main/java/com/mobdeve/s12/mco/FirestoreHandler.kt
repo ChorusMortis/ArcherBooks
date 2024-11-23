@@ -208,13 +208,15 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    fun addToFavorites(bookId: String) {
+    suspend fun addToFavorites(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getUserUid()
+        createBook(bookId)
+        val bookRef = database.collection(booksCollection).document(bookId)
 
         if(currentUserId != null) {
             database.collection(usersCollection).document(currentUserId)
-                .update(FAVORITES_FIELD, FieldValue.arrayUnion(bookId))
+                .update(FAVORITES_FIELD, FieldValue.arrayUnion(bookRef))
                 .addOnSuccessListener {
                     Log.d("FirestoreHandler", "Successfully added book $bookId to current user's favorites!")
                 }
