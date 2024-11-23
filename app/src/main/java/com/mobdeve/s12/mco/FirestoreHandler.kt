@@ -31,6 +31,8 @@ class FirestoreHandler private constructor(context: Context) {
 
     private val database = Firebase.firestore
 
+    private val MAX_RV_BOOK_COUNT = 5
+
     companion object {
         @Volatile
         private var instance : FirestoreHandler? = null
@@ -120,6 +122,39 @@ class FirestoreHandler private constructor(context: Context) {
         return getCurrentUserModel()?.recentlyViewed
     }
 
+    suspend fun writeRecentlyViewedBookId(bookId: String) {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val uid = authHandler.getUserUid() ?: return
+
+        val rvBooks = getRecentlyViewedBookIds() as? MutableList<String> ?: mutableListOf()
+
+        Log.i("FirestoreHandler", "rvBooks size = ${rvBooks.size}")
+        if (rvBooks.contains(bookId)) {
+            rvBooks.remove(bookId)
+        } else {
+            if (rvBooks.isNotEmpty() && rvBooks.size >= MAX_RV_BOOK_COUNT) {
+                rvBooks.removeFirst()
+            }
+        }
+        // add book to start of list so it's always at the leftmost side of recycler view
+        rvBooks.add(0, bookId)
+
+        // remove extra books at end of list so it is only at most MAX_RV_BOOK_COUNT at all times
+        // for future-proofing in case MAX_RV_BOOK_COUNT is modified
+        if (rvBooks.size > MAX_RV_BOOK_COUNT) {
+            rvBooks.subList(MAX_RV_BOOK_COUNT, rvBooks.size).clear()
+        }
+
+        database.collection(usersCollection).document(uid)
+            .update(RECENTLY_VIEWED_FIELD, rvBooks)
+            .addOnSuccessListener {
+                Log.d("FirestoreHandler", "Successfully updated recently viewed books list")
+            }
+            .addOnFailureListener {
+                Log.e("FirestoreHandler", "Error updating recently viewed books list")
+            }
+    }
+
     suspend fun isBookFavorited(bookId: String): Boolean? {
         return try {
             val currentUser = getCurrentUserModel()
@@ -189,6 +224,9 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error getting all favorited books from Firestore", e)
             null
         }
+
+
+
     }
 
     /* Transactions Collection */

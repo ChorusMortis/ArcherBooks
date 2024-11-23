@@ -60,8 +60,7 @@ class HomeFragment : Fragment() {
         // data is initially empty, get actual data later from db
         rvAdapter = HomeRVAdapter(rvBooks)
         rvRecyclerView.adapter = rvAdapter
-        // latest book (end of list) is at first, so reverseLayout = true
-        rvRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, true)
+        rvRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun updateRecentlyViewedRV() {
@@ -122,8 +121,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun addListenerBOTD(botd: BookModel) {
-        viewBinding.homeBotdClContainer.setOnClickListener(View.OnClickListener {
+        viewBinding.homeBotdClContainer.setOnClickListener {
+            // put book in recently viewed after clicking on card
+            CoroutineScope(Dispatchers.Main).launch {
+                val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
+                firestoreHandler.writeRecentlyViewedBookId(botd.id)
+            }
+
             val intent = Intent(activity, BookDetailsActivity::class.java)
+            intent.putExtra(BookDetailsActivity.ID_KEY, botd.id)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, botd.title)
             intent.putExtra(BookDetailsActivity.YEAR_PUBLISHED_KEY, botd.publishYear)
             intent.putExtra(BookDetailsActivity.AUTHORS_KEY, botd.authors.joinToString(", "))
@@ -134,7 +140,7 @@ class HomeFragment : Fragment() {
             intent.putExtra(BookDetailsActivity.DESCRIPTION_KEY, botd.description)
             intent.putExtra(BookDetailsActivity.PAGES_KEY, botd.pageCount)
             startActivity(intent)
-        })
+        }
     }
 
     private fun setNoRecentBooksMessageVisibility(rvBooks: List<BookModel>?) {
