@@ -168,7 +168,7 @@ class FirestoreHandler private constructor(context: Context) {
             rvBooks.remove(bookId)
         } else {
             if (rvBooks.isNotEmpty() && rvBooks.size >= MAX_RV_BOOK_COUNT) {
-                rvBooks.removeFirst()
+                rvBooks.removeLast()
             }
         }
         // add book to start of list so it's always at the leftmost side of recycler view
