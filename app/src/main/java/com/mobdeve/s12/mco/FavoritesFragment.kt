@@ -31,6 +31,7 @@ class FavoritesFragment : Fragment() {
     }
 
     enum class SortOption {
+        RECENT_FAV,
         NEWEST,
         TITLE,
         AUTHOR,
@@ -57,7 +58,7 @@ class FavoritesFragment : Fragment() {
 
     private var sortDialogBinding : ComponentDialogFavsBinding? = null
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
-    private var activeSortOption : SortOption = SortOption.NEWEST
+    private var activeSortOption : SortOption = SortOption.RECENT_FAV
     private var tempActiveSortOption : SortOption? = null
 
     private var filterButtons : List<Pair<FilterOption, Button>>? = null
@@ -232,6 +233,7 @@ class FavoritesFragment : Fragment() {
     private fun initSortOptionButtons() {
         sortDialogOptionButtons = sortDialogBinding?.let {
             listOf(
+                SortOption.RECENT_FAV to it.dialogFavsBtnSortRecentfav,
                 SortOption.NEWEST to it.dialogFavsBtnSortNewest,
                 SortOption.TITLE to it.dialogFavsBtnSortTitle,
                 SortOption.AUTHOR to it.dialogFavsBtnSortAuthorname,

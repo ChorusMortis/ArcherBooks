@@ -257,6 +257,10 @@ class FirestoreHandler private constructor(context: Context) {
             if(currentUser != null) {
                 Log.d("FirestoreHandler", "Successfully returning the favorites list (empty or not) from the backend!")
                 when (sortOption) {
+                    FavoritesFragment.SortOption.RECENT_FAV -> {
+                        // TODO: change placeholder logic
+                        ArrayList(currentUser.favorites.sortedBy { it.title })
+                    }
                     FavoritesFragment.SortOption.NEWEST -> {
                         ArrayList(currentUser.favorites.sortedByDescending { it.publishYear })
                     }
