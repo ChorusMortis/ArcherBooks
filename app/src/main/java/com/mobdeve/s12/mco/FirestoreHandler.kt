@@ -272,7 +272,7 @@ class FirestoreHandler private constructor(context: Context) {
         createBook(bookId) // should already handle if book already exists
 
         val newTransaction = hashMapOf(
-            "bookId" to database.collection(booksCollection).document(bookId),
+            "book" to database.collection(booksCollection).document(bookId),
             "user" to database.collection(usersCollection).document(currentUserId!!),
             "transactionDate" to transactionDate,
             "expectedPickupDate" to expectedPickupDate,
