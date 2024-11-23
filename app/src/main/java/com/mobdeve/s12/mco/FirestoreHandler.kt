@@ -420,4 +420,18 @@ class FirestoreHandler private constructor(context: Context) {
         }
         return results
     }
+
+    // used for storing back book models into user's arrays in database using references
+    // assumes book exists in database already
+    private fun convertBookModelToDocRef(book: BookModel): DocumentReference {
+        return database.collection(booksCollection).document(book.id)
+    }
+
+    private fun convertBookModelsToDocRefs(books: List<BookModel>): ArrayList<DocumentReference> {
+        val results = arrayListOf<DocumentReference>()
+        books.forEach { book ->
+           results.add(convertBookModelToDocRef(book))
+        }
+        return results
+    }
 }
