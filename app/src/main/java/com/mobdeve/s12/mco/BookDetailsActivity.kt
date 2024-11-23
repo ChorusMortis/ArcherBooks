@@ -56,6 +56,7 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding = ActivityBookDetailsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        addBookToRecentlyViewed()
         setDataOnViews()
         styleStatusAndBorrowBtn()
         setInitialFavButtonUI()
@@ -468,5 +469,12 @@ class BookDetailsActivity : AppCompatActivity() {
         tncPopupBinding.tncPopupBtn.setOnClickListener(View.OnClickListener {
             popupWindow.dismiss()
         })
+    }
+
+    private fun addBookToRecentlyViewed() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
+            intent.getStringExtra(ID_KEY)?.let { firestoreHandler.addBookToRecentlyViewed(it) }
+        }
     }
 }
