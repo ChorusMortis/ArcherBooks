@@ -1,11 +1,14 @@
 package com.mobdeve.s12.mco
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.mobdeve.s12.mco.databinding.ItemRvCardBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVViewHolder>() {
 
@@ -13,7 +16,7 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
         val itemRVViewBinding: ItemRvCardBinding = ItemRvCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val rvViewHolder = HomeRVViewHolder(itemRVViewBinding)
 
-        addListenerCard(rvViewHolder, itemRVViewBinding)
+        addListenerCard(parent.context, rvViewHolder)
 
         return rvViewHolder
     }
@@ -26,8 +29,14 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
         return data.size
     }
 
-    private fun addListenerCard(holder : HomeRVViewHolder, itemRVViewBinding: ItemRvCardBinding) {
-        holder.itemView.setOnClickListener(View.OnClickListener {
+    private fun addListenerCard(context: Context, holder : HomeRVViewHolder) {
+        holder.itemView.setOnClickListener {
+            // put book in recently viewed after clicking on card
+            CoroutineScope(Dispatchers.Main).launch {
+                val firestoreHandler = FirestoreHandler.getInstance(context)
+                firestoreHandler.writeRecentlyViewedBookId(data[holder.bindingAdapterPosition].id)
+            }
+
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.ID_KEY, data[holder.bindingAdapterPosition].id)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
@@ -40,6 +49,6 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
             intent.putExtra(BookDetailsActivity.DESCRIPTION_KEY, data[holder.bindingAdapterPosition].description)
             intent.putExtra(BookDetailsActivity.PAGES_KEY, data[holder.bindingAdapterPosition].pageCount)
             holder.itemView.context.startActivity(intent)
-        })
+        }
     }
 }

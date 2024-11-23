@@ -1,11 +1,9 @@
 package com.mobdeve.s12.mco
 
 import android.app.DatePickerDialog
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.mobdeve.s12.mco.databinding.ActivityBookDetailsBinding
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -16,18 +14,18 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
+import com.mobdeve.s12.mco.databinding.ActivityBookDetailsBinding
 import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmCancelBinding
-import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmlogoutBinding
 import com.mobdeve.s12.mco.databinding.ComponentPopupBorrowBinding
 import com.mobdeve.s12.mco.databinding.ComponentPopupTncBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
