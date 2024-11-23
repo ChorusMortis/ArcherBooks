@@ -82,9 +82,17 @@ class SearchResultsFragment : Fragment() {
         searchResultsBinding.searchRvResults.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
 
         addRVScrollListener()
-        searchResultsBinding.searchEtSearchBar.requestFocus()
 
         return searchResultsBinding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // request focus and show keyboard in onStart since layout might not be fully inflated when done in onCreate
+        searchResultsBinding.searchEtSearchBar.requestFocus()
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(searchResultsBinding.searchEtSearchBar, InputMethodManager.SHOW_IMPLICIT)
     }
 
     override fun onResume() {
