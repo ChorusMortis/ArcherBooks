@@ -65,30 +65,20 @@ class HomeFragment : Fragment() {
 
     private fun updateRecentlyViewedRV() {
         CoroutineScope(Dispatchers.Main).launch {
-            // get recently viewed book IDs from user via db
+            // get recently viewed books from user via db
             Log.d("updateRecentlyViewedRV", "Fetching user's recently viewed books array")
             val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
-            val rvBookIds = firestoreHandler.getRecentlyViewedBookIds()
-            if (rvBookIds == null) {
+            val rvBooksFromDb = firestoreHandler.getRecentlyViewedBooks()
+            if (rvBooksFromDb == null) {
                 Log.w("updateRecentlyViewedRV", "User has no recently viewed books array")
                 setNoRecentBooksMessageVisibility(emptyList())
                 return@launch
             }
 
-            // fetch book info from Google Books (each is separate API call because Google doesn't allow batch)
-            Log.i("updateRecentlyViewedRV", "Fetching book info from Google Books, expecting ${rvBookIds.size} books")
-            val gbAPIHandler = GoogleBooksAPIHandler()
-            val fetchedBooks = gbAPIHandler.getSpecificBooks(rvBookIds)
-            // update all books
-            Log.i("updateRecentlyViewedRV", "Updating recycler view, got ${fetchedBooks.size} books")
-            if (rvBookIds.size != fetchedBooks.size) {
-                Log.w("updateRecentlyViewedRV",
-                    "Old book list's size (${rvBookIds.size}) isn't the same as fetched books size (${fetchedBooks.size})")
-            }
             rvBooks.clear()
-            rvBooks.addAll(fetchedBooks)
+            rvBooks.addAll(rvBooksFromDb)
             rvAdapter.notifyItemRangeChanged(0, rvBooks.size)
-            setNoRecentBooksMessageVisibility(fetchedBooks)
+            setNoRecentBooksMessageVisibility(rvBooksFromDb)
         }
     }
 
@@ -125,7 +115,7 @@ class HomeFragment : Fragment() {
             // put book in recently viewed after clicking on card
             CoroutineScope(Dispatchers.Main).launch {
                 val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
-                firestoreHandler.writeRecentlyViewedBookId(botd.id)
+                firestoreHandler.writeRecentlyViewedBook(botd.id)
             }
 
             val intent = Intent(activity, BookDetailsActivity::class.java)
