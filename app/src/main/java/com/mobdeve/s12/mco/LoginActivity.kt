@@ -60,6 +60,9 @@ class LoginActivity : AppCompatActivity() {
                     return@launch
                 }
 
+                viewBinding.loginLoadingCover.visibility = View.VISIBLE
+                viewBinding.loginProgressBar.visibility = View.VISIBLE
+
                 authHandler = AuthHandler.getInstance(this@LoginActivity)
                 val loggingInStatus = authHandler.loginAccount(user["emailAddress"]!!, user["password"]!!)
                 if(loggingInStatus == "Success") {
@@ -81,6 +84,9 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     setWarningMessage(R.string.warning_generic_login_fail, View.VISIBLE)
                 }
+
+                viewBinding.loginLoadingCover.visibility = View.GONE
+                viewBinding.loginProgressBar.visibility = View.GONE
             }
         }
     }
@@ -102,6 +108,9 @@ class LoginActivity : AppCompatActivity() {
 
             val credentialManager = CredentialManager.create(this)
             CoroutineScope(Dispatchers.Main).launch {
+                viewBinding.loginLoadingCover.visibility = View.VISIBLE
+                viewBinding.loginProgressBar.visibility = View.VISIBLE
+
                 try {
                     val result = credentialManager.getCredential(
                         request = request,
@@ -110,13 +119,20 @@ class LoginActivity : AppCompatActivity() {
                     // Google credential obtained, handle it
                     Log.d("LoginActivity", "Getting credentials success")
                     handleGoogleSignin(result)
+                    // hide loading cover and progress bar in other function because it uses another thread later
                 } catch (e: GetCredentialCancellationException) {
                     Log.w("LoginActivity", "$e, doing nothing")
                     // do nothing since it's not really a bad thing to cancel
+                    viewBinding.loginLoadingCover.visibility = View.GONE
+                    viewBinding.loginProgressBar.visibility = View.GONE
                 } catch (e: GetCredentialException) {
                     Log.e("LoginActivity", e.toString())
                     setWarningMessage(R.string.warning_google_login_fail, View.VISIBLE)
+                    viewBinding.loginLoadingCover.visibility = View.GONE
+                    viewBinding.loginProgressBar.visibility = View.GONE
                 }
+                // loading cover and progress bar isn't all done here because handleGoogleSignin uses another thread
+                // if it's done here, hiding is too early once handleGoogleSignin finishes
             }
         }
     }
@@ -181,6 +197,9 @@ class LoginActivity : AppCompatActivity() {
                 val newUser = UserModel(user.uid, firstName, lastName, email, UserModel.SignUpMethod.GOOGLE)
                 firestoreHandler.createUser(newUser)
             }
+            // hide loading cover and progress bar here for proper timing
+            viewBinding.loginLoadingCover.visibility = View.GONE
+            viewBinding.loginProgressBar.visibility = View.GONE
             showLoginSuccessToast()
             // start activity regardless of whether user entry was written into db
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
