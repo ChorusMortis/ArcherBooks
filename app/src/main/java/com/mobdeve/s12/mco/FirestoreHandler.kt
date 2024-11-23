@@ -315,7 +315,9 @@ class FirestoreHandler private constructor(context: Context) {
                 val book = bookRef.get().await().toObject(BookModel::class.java)
                 val transaction = result.first().data
                 val userRef = transaction["user"] as DocumentReference
-                val user = userRef.get().await().toObject(UserModel::class.java)
+                val userDoc = userRef.get().await()
+                val userData = userDoc.data
+                val user = convertToUserModel(userData, userDoc)
 
                 if(book != null && user != null) {
                     val transactionObject = TransactionModel(
