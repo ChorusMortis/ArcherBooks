@@ -231,10 +231,11 @@ class FirestoreHandler private constructor(context: Context) {
     fun removeFromFavorites(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getUserUid()
+        val bookRef = database.collection(booksCollection).document(bookId)
 
         if(currentUserId != null) {
             database.collection(usersCollection).document(currentUserId)
-                .update(FAVORITES_FIELD, FieldValue.arrayRemove(bookId))
+                .update(FAVORITES_FIELD, FieldValue.arrayRemove(bookRef))
                 .addOnSuccessListener {
                     Log.d("FirestoreHandler", "Successfully removed book $bookId from current user's favorites!")
                 }
