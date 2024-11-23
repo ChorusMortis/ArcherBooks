@@ -95,6 +95,7 @@
         android:text="Filter By"
         android:textColor="@color/main_green"
         android:textSize="16sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_heavy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_favs_btn_sort_authorname" />
@@ -107,6 +108,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="@color/gray_bg"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_favs_tv_header_filter" />
@@ -126,6 +128,7 @@
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_medium"
         app:layout_constraintStart_toStartOf="@+id/dialog_favs_div_filterdivider"
         app:layout_constraintTop_toBottomOf="@+id/dialog_favs_div_filterdivider" />
@@ -145,6 +148,7 @@
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_medium"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_favs_btn_filter_all"
         app:layout_constraintStart_toEndOf="@+id/dialog_favs_btn_filter_all"
@@ -165,6 +169,7 @@
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_medium"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_favs_btn_filter_topickup"
         app:layout_constraintStart_toEndOf="@+id/dialog_favs_btn_filter_topickup"
@@ -185,6 +190,7 @@
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_medium"
         app:layout_constraintStart_toStartOf="@+id/dialog_favs_btn_filter_all"
         app:layout_constraintTop_toBottomOf="@+id/dialog_favs_btn_filter_all" />
@@ -204,6 +210,7 @@
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_medium"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_favs_btn_filter_overdue"
         app:layout_constraintStart_toEndOf="@+id/dialog_favs_btn_filter_overdue"
@@ -224,6 +231,7 @@
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
+        android:visibility="gone"
         app:fontFamily="@font/sf_ui_text_medium"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_favs_btn_filter_returned"
         app:layout_constraintStart_toEndOf="@+id/dialog_favs_btn_filter_returned"
@@ -244,8 +252,8 @@
         android:textColor="@color/white"
         app:fontFamily="@font/sf_ui_text_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_favs_div_filterdivider"
-        app:layout_constraintStart_toStartOf="@+id/dialog_favs_btn_filter_overdue"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_favs_div_sortdivider"
+        app:layout_constraintStart_toStartOf="@+id/dialog_favs_div_sortdivider"
         app:layout_constraintTop_toBottomOf="@+id/dialog_favs_btn_filter_overdue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
