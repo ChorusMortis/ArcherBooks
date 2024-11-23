@@ -156,7 +156,7 @@ class FirestoreHandler private constructor(context: Context) {
         return getCurrentUserModel()?.recentlyViewed
     }
 
-    suspend fun writeRecentlyViewedBook(bookId: String) {
+    suspend fun addBookToRecentlyViewed(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val uid = authHandler.getUserUid() ?: return
 
