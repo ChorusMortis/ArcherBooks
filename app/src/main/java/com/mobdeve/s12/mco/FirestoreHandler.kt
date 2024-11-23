@@ -189,9 +189,6 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error getting all favorited books from Firestore", e)
             null
         }
-
-
-
     }
 
     /* Transactions Collection */
@@ -306,6 +303,25 @@ class FirestoreHandler private constructor(context: Context) {
             Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
         } else {
             Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
+        }
+    }
+
+    suspend fun getBook(bookId: String) : BookModel? {
+        return try {
+            val bookSnapshot = database.collection(booksCollection)
+                .document(bookId)
+                .get()
+                .await()
+
+            if (bookSnapshot.exists()) {
+                bookSnapshot.toObject(BookModel::class.java)
+            } else {
+                Log.w("FirestoreHandler", "No book found in Firestore with id $bookId")
+                null
+            }
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error getting book $bookId from Firestore when getBook() was called", e)
+            null
         }
     }
 }
