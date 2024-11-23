@@ -1,11 +1,15 @@
 package com.mobdeve.s12.mco
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s12.mco.databinding.ItemFCardBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView.Adapter<FavoritesFavsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesFavsViewHolder {
@@ -14,6 +18,7 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView
         val itemFavsViewBinding = ItemFCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val favsViewHolder = FavoritesFavsViewHolder(itemFavsViewBinding)
         addListenerCard(favsViewHolder, itemFavsViewBinding)
+        addListenerFavoriteBtn(favsViewHolder, itemFavsViewBinding)
 
         return favsViewHolder
     }
@@ -51,5 +56,34 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView
     fun removeAllBooks() {
         data.clear()
         this.notifyDataSetChanged()
+    }
+
+    private fun addListenerFavoriteBtn(holder : FavoritesFavsViewHolder, itemFavsViewBinding: ItemFCardBinding) {
+        itemFavsViewBinding.itemFvIbFavbtn.setOnClickListener(View.OnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                val bookId = data[holder.bindingAdapterPosition].id
+                val firestoreHandler = FirestoreHandler.getInstance(itemFavsViewBinding.root.context)
+
+                val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
+                if(isBookFavorited != null) {
+                    if(isBookFavorited == true) {
+                        firestoreHandler.removeFromFavorites(bookId)
+                    } else if(isBookFavorited == false) {
+                        firestoreHandler.addToFavorites(bookId)
+                    }
+                    if (itemFavsViewBinding.itemFvIbFavbtn.tag == bookId) {
+                        holder.updateFavButton(!isBookFavorited)
+                        if(isBookFavorited) { // if previously favorited
+                            data.removeAt(holder.bindingAdapterPosition)
+                            this@FavoritesFavsAdapter.notifyItemRemoved(holder.bindingAdapterPosition)
+                        }
+
+                    }
+                }
+                else {
+                    Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
+                }
+            }
+        })
     }
 }

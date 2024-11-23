@@ -88,7 +88,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        fAdapter.notifyDataSetChanged()
+        fAdapter.notifyDataSetChanged()
     }
 
     private fun passInitialData() {
@@ -100,7 +100,6 @@ class FavoritesFragment : Fragment() {
             val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
 
             val returnedObjList = firestoreHandler.getAllFavorites(activeSortOption)
-            Log.d("FavoritesFragment", "Returned object from getAllFavorites ${returnedObjList?.get(0)?.title}")
             if(returnedObjList != null) {
                 favoritesObjList = returnedObjList
                 val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
