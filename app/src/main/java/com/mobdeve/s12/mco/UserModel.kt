@@ -10,9 +10,9 @@ class UserModel {
         private set
     var signUpMethod: SignUpMethod = SignUpMethod.EMAIL
         private set
-    var recentlyViewed: List<String> = emptyList()
+    var recentlyViewed: ArrayList<BookModel> = arrayListOf()
         private set
-    var favorites: ArrayList<String> = arrayListOf()
+    var favorites: ArrayList<BookModel> = arrayListOf()
         private set
 
     enum class SignUpMethod {
@@ -23,20 +23,22 @@ class UserModel {
     // don't delete; used for Firebase toObject method which requires empty constructor
     constructor()
 
-    constructor(userId: String, firstName: String, lastName: String, emailAddress: String, signUpMethod: SignUpMethod, recentlyViewed: List<String> = emptyList()) {
+    constructor(userId: String, firstName: String, lastName: String, emailAddress: String, signUpMethod: SignUpMethod, recentlyViewed: ArrayList<BookModel> = arrayListOf(), favorites: ArrayList<BookModel> = arrayListOf()) {
         this.userId = userId
         this.firstName = firstName
         this.lastName = lastName
         this.emailAddress = emailAddress
         this.signUpMethod = signUpMethod
         this.recentlyViewed = recentlyViewed
+        this.favorites = favorites
     }
 
-    constructor(firstName: String, lastName: String, emailAddress: String, signUpMethod: SignUpMethod, recentlyViewed: List<String> = emptyList()) {
+    constructor(firstName: String, lastName: String, emailAddress: String, signUpMethod: SignUpMethod, recentlyViewed: ArrayList<BookModel> = arrayListOf(), favorites: ArrayList<BookModel> = arrayListOf()) {
         this.firstName = firstName
         this.lastName = lastName
         this.emailAddress = emailAddress
         this.signUpMethod = signUpMethod
         this.recentlyViewed = recentlyViewed
+        this.favorites = favorites
     }
 }

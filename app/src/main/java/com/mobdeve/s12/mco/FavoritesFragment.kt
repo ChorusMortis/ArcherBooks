@@ -50,7 +50,7 @@ class FavoritesFragment : Fragment() {
     private lateinit var layoutManager: LinearLayoutManager
 
     private var dataStartingIndex = 0
-    private var favoritesStringList : ArrayList<String> = arrayListOf()
+    private var favoritesObjList : ArrayList<BookModel> = arrayListOf()
     private var displayIncrement = 10
     private var isLoading = false
     private var hasMoreData = true
@@ -100,15 +100,15 @@ class FavoritesFragment : Fragment() {
             val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
             val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
-            val returnedStringList = firestoreHandler.getAllFavorites()
-            if(returnedStringList != null) {
-                favoritesStringList = returnedStringList
-                val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesStringList.size)
+            val returnedObjList = firestoreHandler.getAllFavorites()
+            if(returnedObjList != null) {
+                favoritesObjList = returnedObjList
+                val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
                 Log.d("FavoritesFragment", "End index at initial data is $endIndex")
-                val favoritesBookList = googleBooksAPIHandler.getSpecificBooks(favoritesStringList.subList(dataStartingIndex, endIndex))
+                val favoritesBookList = ArrayList(favoritesObjList.subList(dataStartingIndex, endIndex))
                 dataStartingIndex = endIndex
 
-                if(dataStartingIndex == favoritesStringList.size) {
+                if(dataStartingIndex == favoritesObjList.size) {
                     hasMoreData = false
                 }
 
@@ -147,17 +147,16 @@ class FavoritesFragment : Fragment() {
         val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
         CoroutineScope(Dispatchers.Main).launch {
-            val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesStringList.size)
-            val newDataIds = favoritesStringList.subList(dataStartingIndex, endIndex)
-            Log.d("FavoritesFragment", "Incrementing data with these new book IDs: $newDataIds")
-            val newData = googleBooksAPIHandler.getSpecificBooks(newDataIds)
+            val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
+            val newDataObjs = ArrayList(favoritesObjList.subList(dataStartingIndex, endIndex))
+            Log.d("FavoritesFragment", "Incrementing data with these new book IDs: $newDataObjs")
             dataStartingIndex = endIndex
 
-            if(dataStartingIndex == favoritesStringList.size) {
+            if(dataStartingIndex == favoritesObjList.size) {
                 hasMoreData = false
             }
 
-            fAdapter.addBooks(newData)
+            fAdapter.addBooks(newDataObjs)
             transactionsFragBinding.favoritesScrollProgressBar.visibility = View.GONE
             layoutParams.bottomMargin = 0
             isLoading = false

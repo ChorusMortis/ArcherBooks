@@ -5,9 +5,11 @@ import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
+import com.mobdeve.s12.mco.UserModel.SignUpMethod
 import kotlinx.coroutines.tasks.await
 
 class FirestoreHandler private constructor(context: Context) {
@@ -25,7 +27,7 @@ class FirestoreHandler private constructor(context: Context) {
     private val USER_ID_FIELD = "userId"
     private val FAVORITES_FIELD = "favorites"
 
-    private val BOOK_ID_FIELD = "bookId"
+    private val BOOK_FIELD = "book"
     private val TRANSACTION_DATE_FIELD = "transactionDate"
     private val USER_FIELD = "user"
 
@@ -78,22 +80,52 @@ class FirestoreHandler private constructor(context: Context) {
         val authHandler = AuthHandler.getInstance(appContext)
         val uid = authHandler.getUserUid() ?: return null
         return try {
-            val documentSnapshot = database.collection(usersCollection)
-                .document(uid)
-                .get()
-                .await()
+            val userRef = database.collection(usersCollection).document(uid).get().await()
+            val userData = userRef.data
 
-            if (documentSnapshot.exists()) {
-                documentSnapshot.toObject(UserModel::class.java)
-            } else {
-                Log.w("FirestoreHandler", "No user found with uid $uid")
-                null
-            }
+            convertToUserModel(userData, userRef)
         } catch (e: Exception) {
-            Log.e("FirestoreHandler", e.toString())
+            Log.e("FirestoreHandler", "Error getting current user model", e)
             null
         }
     }
+
+    private suspend fun convertToUserModel(userData: Map<String, Any>?, userRef: DocumentSnapshot) : UserModel {
+        // handle recently viewed book models
+        val recentlyViewedRefs = userData?.get("recentlyViewed") as List<DocumentReference>
+        val recentlyViewedObjs : ArrayList<BookModel> = arrayListOf()
+        if(recentlyViewedRefs.isNotEmpty()) {
+            recentlyViewedRefs.map { recentlyViewedRef ->
+                val recentlyViewedObj = recentlyViewedRef.get().await().toObject(BookModel::class.java)
+                if(recentlyViewedObj != null) {
+                    recentlyViewedObjs += recentlyViewedObj
+                }
+            }
+        }
+
+        // handle favorite book models
+        val favoritesRefs = userData["favorites"] as List<DocumentReference>
+        val favoritesObjs : ArrayList<BookModel> = arrayListOf()
+        if(favoritesRefs.isNotEmpty()) {
+            favoritesRefs.map { favoritesRef ->
+                val favoritesObj = favoritesRef.get().await().toObject(BookModel::class.java)
+                if(favoritesObj != null) {
+                    favoritesObjs += favoritesObj
+                }
+            }
+        }
+
+        return UserModel(
+            userRef.id,
+            userData["firstName"] as String,
+            userData["lastName"] as String,
+            userData["emailAddress"] as String,
+            UserModel.SignUpMethod.valueOf(userData["signUpMethod"].toString()),
+            recentlyViewedObjs,
+            favoritesObjs
+        )
+    }
+
 
     // Use this function when the user is not logged in or
     // if it is unclear whether they are authenticated or not.
@@ -106,7 +138,10 @@ class FirestoreHandler private constructor(context: Context) {
                 .await()
 
             if (!result.isEmpty) {
-                result.documents.first().toObject(UserModel::class.java)
+//                result.documents.first().toObject(UserModel::class.java)
+                val userRef = result.documents.first()
+                val userData = userRef.data
+                convertToUserModel(userData, userRef)
             } else {
                 // none found
                 Log.w("getUserFromEmail", "No user found with email $email")
@@ -118,7 +153,7 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getRecentlyViewedBookIds(): List<String>? {
+    suspend fun getRecentlyViewedBookIds(): ArrayList<BookModel>? {
         return getCurrentUserModel()?.recentlyViewed
     }
 
@@ -158,9 +193,10 @@ class FirestoreHandler private constructor(context: Context) {
     suspend fun isBookFavorited(bookId: String): Boolean? {
         return try {
             val currentUser = getCurrentUserModel()
-            if(currentUser != null) {
+            val book = getBook(bookId)
+            if(currentUser != null && book != null) {
                 Log.d("FirestoreHandler", "Successfully found user when checking for isBookFavorited")
-                currentUser.favorites.contains(bookId)
+                currentUser.favorites.contains(book)
             } else {
                 Log.w("FirestoreHandler", "Obtained current user is null when checking for isBookFavorited")
                 null
@@ -208,7 +244,7 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getAllFavorites() : ArrayList<String>? {
+    suspend fun getAllFavorites() : ArrayList<BookModel>? {
         return try {
             val currentUser = getCurrentUserModel()
 
@@ -224,20 +260,19 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("FirestoreHandler", "Error getting all favorited books from Firestore", e)
             null
         }
-
-
-
     }
 
     /* Transactions Collection */
 
-    fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
+    suspend fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getCurrentUser()?.uid
+
         Log.d("FirestoreHandler", "User $currentUserId is trying to create a new transaction.")
+        createBook(bookId) // should already handle if book already exists
 
         val newTransaction = hashMapOf(
-            "bookId" to bookId,
+            "bookId" to database.collection(booksCollection).document(bookId),
             "user" to database.collection(usersCollection).document(currentUserId!!),
             "transactionDate" to transactionDate,
             "expectedPickupDate" to expectedPickupDate,
@@ -253,24 +288,22 @@ class FirestoreHandler private constructor(context: Context) {
 
     suspend fun getLatestTransaction(bookId: String): TransactionModel? {
         return try {
+            val bookRef = database.collection(booksCollection).document(bookId)
             val result = database.collection(transactionsCollection)
-                .whereEqualTo(BOOK_ID_FIELD, bookId)
+                .whereEqualTo(BOOK_FIELD, bookRef)
                 .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
                 .get()
                 .await()
 
             if (!result.isEmpty) {
-                Log.d("FirestoreHandler", "Successfully returned the latest transaction of the book!")
-                val googleBooksAPIHandler = GoogleBooksAPIHandler()
-                val book = googleBooksAPIHandler.getBook(bookId)
-
+                val book = bookRef.get().await().toObject(BookModel::class.java)
                 val transaction = result.first().data
                 val userRef = transaction["user"] as DocumentReference
                 val user = userRef.get().await().toObject(UserModel::class.java)
 
                 if(book != null && user != null) {
                     val transactionObject = TransactionModel(
-                        transaction["id"].toString(),
+                        result.first().id,
                         book,
                         user,
                         transaction["transactionDate"] as Timestamp,
@@ -281,6 +314,7 @@ class FirestoreHandler private constructor(context: Context) {
                         transaction["canceledDate"] as Timestamp?,
                         TransactionModel.Status.valueOf(transaction["status"].toString())
                     )
+                    Log.d("FirestoreHandler", "Successfully returned the latest transaction of the book!")
                     transactionObject
                 } else {
                     null
@@ -299,10 +333,11 @@ class FirestoreHandler private constructor(context: Context) {
     suspend fun getLatestTransactionId(userId: String, bookId: String): String? {
         return try {
             val userRef = database.collection(usersCollection).document(userId)
+            val bookRef = database.collection(booksCollection).document(bookId)
 
             val transactions = database.collection(transactionsCollection)
                 .whereEqualTo(USER_FIELD, userRef)
-                .whereEqualTo(BOOK_ID_FIELD, bookId)
+                .whereEqualTo(BOOK_FIELD, bookRef)
                 .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
                 .get()
                 .await()
@@ -334,13 +369,19 @@ class FirestoreHandler private constructor(context: Context) {
 
     /*** Books Collection ***/
     suspend fun createBook(bookId: String) {
-        val googleBooksAPIHandler = GoogleBooksAPIHandler()
-        val bookObject = googleBooksAPIHandler.getBook(bookId)
-        if(bookObject != null) {
-            database.collection(booksCollection).document(bookId).set(bookObject)
-            Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
+        val bookRef = database.collection(booksCollection).document(bookId)
+        val bookSnapshot = bookRef.get().await()
+        if(bookSnapshot.exists()) {
+            Log.d("FirestoreHandler", "Book $bookId already exists in Firestore")
         } else {
-            Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
+            val googleBooksAPIHandler = GoogleBooksAPIHandler()
+            val bookObject = googleBooksAPIHandler.getBook(bookId)
+            if(bookObject != null) {
+                database.collection(booksCollection).document(bookId).set(bookObject)
+                Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
+            } else {
+                Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
+            }
         }
     }
 
