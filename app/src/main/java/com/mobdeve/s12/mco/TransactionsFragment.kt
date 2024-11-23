@@ -23,13 +23,13 @@ class TransactionsFragment : Fragment() {
         const val TRANSACTIONS_FILTER_PREF = "TRANSACTIONS_FILTER_PREF"
     }
 
-    private enum class SortOption {
+    enum class SortOption {
         NEWEST,
         TITLE,
         AUTHOR,
     }
 
-    private enum class FilterOption {
+    enum class FilterOption {
         ALL,
         TO_PICKUP,
         TO_RETURN,
