@@ -112,12 +112,6 @@ class HomeFragment : Fragment() {
 
     private fun addListenerBOTD(botd: BookModel) {
         viewBinding.homeBotdClContainer.setOnClickListener {
-            // put book in recently viewed after clicking on card
-            CoroutineScope(Dispatchers.Main).launch {
-                val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
-                firestoreHandler.addBookToRecentlyViewed(botd.id)
-            }
-
             val intent = Intent(activity, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.ID_KEY, botd.id)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, botd.title)

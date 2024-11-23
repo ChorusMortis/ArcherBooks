@@ -16,7 +16,7 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
         val itemRVViewBinding: ItemRvCardBinding = ItemRvCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val rvViewHolder = HomeRVViewHolder(itemRVViewBinding)
 
-        addListenerCard(parent.context, rvViewHolder)
+        addListenerCard(rvViewHolder)
 
         return rvViewHolder
     }
@@ -29,14 +29,8 @@ class HomeRVAdapter(private val data: ArrayList<BookModel>) : Adapter<HomeRVView
         return data.size
     }
 
-    private fun addListenerCard(context: Context, holder : HomeRVViewHolder) {
+    private fun addListenerCard(holder : HomeRVViewHolder) {
         holder.itemView.setOnClickListener {
-            // put book in recently viewed after clicking on card
-            CoroutineScope(Dispatchers.Main).launch {
-                val firestoreHandler = FirestoreHandler.getInstance(context)
-                firestoreHandler.addBookToRecentlyViewed(data[holder.bindingAdapterPosition].id)
-            }
-
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
             intent.putExtra(BookDetailsActivity.ID_KEY, data[holder.bindingAdapterPosition].id)
             intent.putExtra(BookDetailsActivity.TITLE_KEY, data[holder.bindingAdapterPosition].title)
