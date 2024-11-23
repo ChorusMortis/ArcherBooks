@@ -120,17 +120,6 @@ class FirestoreHandler private constructor(context: Context) {
         return getCurrentUserModel()?.recentlyViewed
     }
 
-    suspend fun createBook(bookId: String) {
-        val googleBooksAPIHandler = GoogleBooksAPIHandler()
-        val bookObject = googleBooksAPIHandler.getBook(bookId)
-        if(bookObject != null) {
-            database.collection(booksCollection).document(bookId).set(bookObject)
-            Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
-        } else {
-            Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
-        }
-    }
-
     suspend fun isBookFavorited(bookId: String): Boolean? {
         return try {
             val currentUser = getCurrentUserModel()
@@ -306,5 +295,17 @@ class FirestoreHandler private constructor(context: Context) {
             .addOnFailureListener{
                 Log.e("FirestoreHandler", "Error updating $fieldName of transaction $transactionId")
             }
+    }
+
+    /*** Books Collection ***/
+    suspend fun createBook(bookId: String) {
+        val googleBooksAPIHandler = GoogleBooksAPIHandler()
+        val bookObject = googleBooksAPIHandler.getBook(bookId)
+        if(bookObject != null) {
+            database.collection(booksCollection).document(bookId).set(bookObject)
+            Log.d("FirestoreHandler", "Book $bookId successfully saved to the Firestore database")
+        } else {
+            Log.e("FirestoreHandler", "Error saving book $bookId to the Firestore database")
+        }
     }
 }
