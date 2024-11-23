@@ -286,10 +286,13 @@ class FirestoreHandler private constructor(context: Context) {
 
         Log.d("FirestoreHandler", "User $currentUserId is trying to create a new transaction.")
         createBook(bookId) // should already handle if book already exists
+        val book = getBook(bookId)
 
         val newTransaction = hashMapOf(
             "book" to database.collection(booksCollection).document(bookId),
             "user" to database.collection(usersCollection).document(currentUserId!!),
+            "firstAuthorIndex" to book?.authors?.get(0), // used for sorting later
+            "bookTitleIndex" to book?.title, // used for sorting later
             "transactionDate" to transactionDate,
             "expectedPickupDate" to expectedPickupDate,
             "expectedReturnDate" to expectedReturnDate,
