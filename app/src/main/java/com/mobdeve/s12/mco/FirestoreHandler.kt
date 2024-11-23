@@ -211,13 +211,15 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    fun addToFavorites(bookId: String) {
+    suspend fun addToFavorites(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getUserUid()
+        createBook(bookId)
+        val bookRef = database.collection(booksCollection).document(bookId)
 
         if(currentUserId != null) {
             database.collection(usersCollection).document(currentUserId)
-                .update(FAVORITES_FIELD, FieldValue.arrayUnion(bookId))
+                .update(FAVORITES_FIELD, FieldValue.arrayUnion(bookRef))
                 .addOnSuccessListener {
                     Log.d("FirestoreHandler", "Successfully added book $bookId to current user's favorites!")
                 }
@@ -232,10 +234,11 @@ class FirestoreHandler private constructor(context: Context) {
     fun removeFromFavorites(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getUserUid()
+        val bookRef = database.collection(booksCollection).document(bookId)
 
         if(currentUserId != null) {
             database.collection(usersCollection).document(currentUserId)
-                .update(FAVORITES_FIELD, FieldValue.arrayRemove(bookId))
+                .update(FAVORITES_FIELD, FieldValue.arrayRemove(bookRef))
                 .addOnSuccessListener {
                     Log.d("FirestoreHandler", "Successfully removed book $bookId from current user's favorites!")
                 }
@@ -275,7 +278,7 @@ class FirestoreHandler private constructor(context: Context) {
         createBook(bookId) // should already handle if book already exists
 
         val newTransaction = hashMapOf(
-            "bookId" to database.collection(booksCollection).document(bookId),
+            "book" to database.collection(booksCollection).document(bookId),
             "user" to database.collection(usersCollection).document(currentUserId!!),
             "transactionDate" to transactionDate,
             "expectedPickupDate" to expectedPickupDate,
