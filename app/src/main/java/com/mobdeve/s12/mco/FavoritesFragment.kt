@@ -30,7 +30,7 @@ class FavoritesFragment : Fragment() {
         const val FAVORITES_FILTER_PREF = "FAVORITES_FILTER_PREF"
     }
 
-    private enum class SortOption {
+    enum class SortOption {
         NEWEST,
         TITLE,
         AUTHOR,
@@ -56,7 +56,6 @@ class FavoritesFragment : Fragment() {
     private var hasMoreData = true
 
     private var sortDialogBinding : ComponentDialogFavsBinding? = null
-
     private var sortDialogOptionButtons : List<Pair<SortOption, Button>>? = null
     private var activeSortOption : SortOption = SortOption.NEWEST
     private var tempActiveSortOption : SortOption? = null
@@ -96,11 +95,12 @@ class FavoritesFragment : Fragment() {
         dataStartingIndex = 0
         CoroutineScope(Dispatchers.Main).launch {
             isLoading = true
+            fAdapter.removeAllBooks()
             transactionsFragBinding.favoritesInitialProgressBar.visibility = View.VISIBLE
             val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
-            val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
-            val returnedObjList = firestoreHandler.getAllFavorites()
+            val returnedObjList = firestoreHandler.getAllFavorites(activeSortOption)
+            Log.d("FavoritesFragment", "Returned object from getAllFavorites ${returnedObjList?.get(0)?.title}")
             if(returnedObjList != null) {
                 favoritesObjList = returnedObjList
                 val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
@@ -217,6 +217,7 @@ class FavoritesFragment : Fragment() {
                 editor.apply()
             }
 
+            passInitialData()
             bottomSheetDialog.dismiss()
         }
 

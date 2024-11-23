@@ -250,13 +250,23 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getAllFavorites() : ArrayList<BookModel>? {
+    suspend fun getAllFavorites(sortOption: FavoritesFragment.SortOption) : ArrayList<BookModel>? {
         return try {
             val currentUser = getCurrentUserModel()
 
             if(currentUser != null) {
                 Log.d("FirestoreHandler", "Successfully returning the favorites list (empty or not) from the backend!")
-                currentUser.favorites
+                when (sortOption) {
+                    FavoritesFragment.SortOption.NEWEST -> {
+                        ArrayList(currentUser.favorites.sortedByDescending { it.publishYear })
+                    }
+                    FavoritesFragment.SortOption.TITLE -> {
+                        ArrayList(currentUser.favorites.sortedBy { it.title })
+                    }
+                    FavoritesFragment.SortOption.AUTHOR -> {
+                        ArrayList(currentUser.favorites.sortedBy { it.authors[0] })
+                    }
+                }
             } else {
                 Log.e("FirestoreHandler", "Obtained user from AuthHandler was null when called from getAllFavorites()")
                 null
