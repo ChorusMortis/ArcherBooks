@@ -11,7 +11,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView.Adapter<FavoritesFavsViewHolder>() {
+class FavoritesFavsAdapter(private val data: ArrayList<BookModel>,
+                           private val onBookRemoved: () -> Unit ): RecyclerView.Adapter<FavoritesFavsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesFavsViewHolder {
         // TODO MCO3: Add on-click listener for Favorite button that will add the book to the user's favorites list
 
@@ -76,6 +77,8 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>): RecyclerView
                         if(isBookFavorited) { // if previously favorited
                             data.removeAt(holder.bindingAdapterPosition)
                             this@FavoritesFavsAdapter.notifyItemRemoved(holder.bindingAdapterPosition)
+                            this@FavoritesFavsAdapter.notifyItemRangeChanged(holder.bindingAdapterPosition, data.size)
+                            onBookRemoved()
                         }
 
                     }
