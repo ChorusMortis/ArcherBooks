@@ -156,33 +156,33 @@ class FirestoreHandler private constructor(context: Context) {
         return getCurrentUserModel()?.recentlyViewed
     }
 
-    suspend fun writeRecentlyViewedBook(bookId: String) {
+    suspend fun addBookToRecentlyViewed(bookId: String) {
         val authHandler = AuthHandler.getInstance(appContext)
         val uid = authHandler.getUserUid() ?: return
 
         createBook(bookId)
+        val book = getBook(bookId) ?: return
 
         val rvBooks = getRecentlyViewedBooks() ?: arrayListOf()
-        val rvBooksIds = rvBooks.map { it.id } as MutableList
 
         Log.i("FirestoreHandler", "rvBooks size = ${rvBooks.size}")
-        if (rvBooksIds.contains(bookId)) {
-            rvBooksIds.remove(bookId)
+        if (rvBooks.contains(book)) {
+            rvBooks.remove(book)
         } else {
-            if (rvBooksIds.isNotEmpty() && rvBooksIds.size >= MAX_RV_BOOK_COUNT) {
-                rvBooksIds.removeLast()
+            if (rvBooks.isNotEmpty() && rvBooks.size >= MAX_RV_BOOK_COUNT) {
+                rvBooks.removeLast()
             }
         }
         // add book to start of list so it's always at the leftmost side of recycler view
-        rvBooksIds.add(0, bookId)
+        rvBooks.add(0, book)
 
         // remove extra books at end of list so it is only at most MAX_RV_BOOK_COUNT at all times
         // for future-proofing in case MAX_RV_BOOK_COUNT is modified
-        if (rvBooksIds.size > MAX_RV_BOOK_COUNT) {
-            rvBooksIds.subList(MAX_RV_BOOK_COUNT, rvBooksIds.size).clear()
+        if (rvBooks.size > MAX_RV_BOOK_COUNT) {
+            rvBooks.subList(MAX_RV_BOOK_COUNT, rvBooks.size).clear()
         }
 
-        val rvBookDocRefs = convertBookIdsToDocRefs(rvBooksIds)
+        val rvBookDocRefs = convertBookModelsToDocRefs(rvBooks)
         database.collection(usersCollection).document(uid)
             .update(RECENTLY_VIEWED_FIELD, rvBookDocRefs)
             .addOnSuccessListener {

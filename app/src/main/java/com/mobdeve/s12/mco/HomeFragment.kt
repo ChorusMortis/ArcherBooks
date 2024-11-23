@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
             // put book in recently viewed after clicking on card
             CoroutineScope(Dispatchers.Main).launch {
                 val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
-                firestoreHandler.writeRecentlyViewedBook(botd.id)
+                firestoreHandler.addBookToRecentlyViewed(botd.id)
             }
 
             val intent = Intent(activity, BookDetailsActivity::class.java)
