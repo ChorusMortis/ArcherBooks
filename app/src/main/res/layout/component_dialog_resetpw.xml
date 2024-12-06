@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/style_dialog_radius"
+    android:backgroundTint="@color/gray_bg"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_resetpw_tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center_horizontal"
+        android:text="Reset Password"
+        android:textColor="@color/main_green"
+        android:textSize="22sp"
+        app:fontFamily="@font/sf_ui_text_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_resetpw_tv_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center_horizontal"
+        android:text="Please enter the email address associated with your account. We’ll send you a link to reset your password."
+        android:textColor="@color/text_over_gray_bg"
+        android:textSize="14sp"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_resetpw_tv_label" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/dialog_resetpw_et_email"
+        android:layout_width="275dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/style_rounded_button_transparent"
+        android:backgroundTint="#61AA63"
+        android:ems="10"
+        android:hint="Email address"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:singleLine="true"
+        android:textColorHint="#888888"
+        android:textSize="14sp"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_resetpw_btn_confirm"
+        app:layout_constraintStart_toStartOf="@+id/dialog_resetpw_btn_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_resetpw_tv_message" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_resetpw_tv_warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/sf_ui_text_regular"
+        android:text="Please enter a valid email address."
+        android:textColor="@color/book_borrowed"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_resetpw_et_email"
+        app:layout_constraintStart_toStartOf="@+id/dialog_resetpw_et_email"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_resetpw_et_email" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_resetpw_btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/style_rounded_button_on_colored"
+        android:backgroundTint="@color/text_over_gray_bg"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/maintext"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_resetpw_gl_midwayvert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_resetpw_et_email" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_resetpw_btn_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/style_rounded_button_on_colored"
+        android:backgroundTint="@color/main_green"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/maintext"
+        app:fontFamily="@font/sf_ui_text_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_resetpw_btn_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/dialog_resetpw_gl_midwayvert"
+        app:layout_constraintTop_toTopOf="@+id/dialog_resetpw_btn_cancel" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/dialog_resetpw_gl_midwayvert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

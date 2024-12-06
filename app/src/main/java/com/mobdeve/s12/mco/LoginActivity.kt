@@ -3,8 +3,10 @@ package com.mobdeve.s12.mco
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
@@ -18,6 +20,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.mobdeve.s12.mco.databinding.ActivityLoginBinding
+import com.mobdeve.s12.mco.databinding.ComponentDialogResetpwBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
         addListenerRegisterHyperLink()
         addListenerSignInBtn()
         addListenerSignInWithGoogleBtn()
+        addListenerForgotPw()
     }
 
     private fun addListenerRegisterHyperLink() {
@@ -206,6 +210,59 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun addListenerForgotPw() {
+        viewBinding.loginTvForgotpassword.setOnClickListener {
+            showResetPasswordDialog()
+        }
+    }
+
+    private fun showResetPasswordDialog() {
+        val resetPwDialogBinding = ComponentDialogResetpwBinding.inflate(LayoutInflater.from(this))
+        // use custom style to force dialog to wrap content and not take up entire screen's width
+        val dialog = AlertDialog.Builder(this, R.style.WrapContentDialog)
+            .setView(resetPwDialogBinding.root)
+            .setCancelable(true)
+            .create()
+
+        // make background transparent so dialog floats
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        resetPwDialogBinding.dialogResetpwBtnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        resetPwDialogBinding.dialogResetpwBtnConfirm.setOnClickListener {
+            val resetEmailAdd = resetPwDialogBinding.dialogResetpwEtEmail.text.toString()
+            CoroutineScope(Dispatchers.Main).launch {
+                // if email is empty or unique/doesn't exist, warn user of invalid email and don't proceed
+                if (isEmailUnique(resetEmailAdd)) {
+                    resetPwDialogBinding.dialogResetpwTvWarning.visibility = View.VISIBLE
+                    return@launch
+                }
+
+                // if email exists, send password reset link to email and notify user
+                authHandler = AuthHandler.getInstance(this@LoginActivity)
+                authHandler.sendPwResetEmail(resetEmailAdd).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this@LoginActivity, "Password reset email sent!", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@LoginActivity, "Error sending email! Please try again.", Toast.LENGTH_LONG).show()
+                    }
+                    dialog.dismiss()
+                }
+            }
+        }
+
+        dialog.show()
+    }
+
+    private suspend fun isEmailUnique(emailAdd: String) : Boolean {
+        firestoreHandler = FirestoreHandler.getInstance(this)
+        val isUnique = !(firestoreHandler.doesUserExist(emailAdd))
+        Log.d("LoginActivity", "Returned isEmailUnique() = $isUnique")
+        return isUnique
     }
 
     private fun areAllFieldsValid(user: HashMap<String, String>) : Boolean {

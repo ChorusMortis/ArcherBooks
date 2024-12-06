@@ -72,6 +72,10 @@ class AuthHandler(context: Context) {
         }
     }
 
+    fun sendPwResetEmail(email: String): Task<Void> {
+        return auth.sendPasswordResetEmail(email)
+    }
+
     fun authSignInWithCredential(authCredential: AuthCredential): Task<AuthResult> {
         return auth.signInWithCredential(authCredential)
     }
