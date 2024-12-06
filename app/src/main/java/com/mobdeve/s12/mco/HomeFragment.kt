@@ -49,9 +49,19 @@ class HomeFragment : Fragment() {
 
     private fun setDisplayName() {
         val authHandler = AuthHandler.getInstance(requireActivity())
-        val userFullName = authHandler.getUserFullName()
-        userFullName?.let {
-            viewBinding.homeTvUserName.text = userFullName
+        val authFullName = authHandler.getUserFullName()
+        // get full name from Firebase Auth (only works if user has logged into Google before)
+        authFullName?.let {
+            viewBinding.homeTvUserName.text = authFullName
+            return
+        }
+
+        // otherwise, get full name from database (what user entered in registration form)
+        CoroutineScope(Dispatchers.Main).launch {
+            val firestoreHandler = FirestoreHandler.getInstance(requireActivity())
+            val userModel = firestoreHandler.getCurrentUserModel() ?: return@launch
+            val userDbFullName = "${userModel.firstName} ${userModel.lastName}"
+            viewBinding.homeTvUserName.text = userDbFullName
         }
     }
 
