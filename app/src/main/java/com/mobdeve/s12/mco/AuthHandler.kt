@@ -76,6 +76,12 @@ class AuthHandler(context: Context) {
         return auth.sendPasswordResetEmail(email)
     }
 
+    fun sendVerificationEmail(): Task<Void>? {
+        val currentUser = auth.currentUser ?: return null
+        if (currentUser.isEmailVerified) return null
+        return currentUser.sendEmailVerification()
+    }
+
     fun authSignInWithCredential(authCredential: AuthCredential): Task<AuthResult> {
         return auth.signInWithCredential(authCredential)
     }

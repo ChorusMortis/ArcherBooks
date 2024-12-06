@@ -75,6 +75,14 @@ class RegisterActivity : AppCompatActivity() {
                 firestoreHandler.createUser(newUser)
 
                 showRegistrationSuccessToast()
+                // if user already has a verified email, no email is sent
+                authHandler.sendVerificationEmail()?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this@RegisterActivity, "Please check your inbox to verify your email.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@RegisterActivity, "Error sending verification email! Please contact an admin.", Toast.LENGTH_LONG).show()
+                    }
+                }
 
                 val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                 startActivity(intent)
