@@ -403,7 +403,6 @@ class FirestoreHandler private constructor(context: Context) {
             val authHandler = AuthHandler.getInstance(appContext)
             val currentUserId = authHandler.getUserUid()
             val currentUserRef = database.collection(usersCollection).document(currentUserId!!)
-            Log.d("FirestoreHandler", "currentUserRef is  ${currentUserRef.id}")
 
             val sortingField = when(sortOption) {
                 TransactionsFragment.SortOption.NEWEST -> TRANSACTION_DATE_FIELD
@@ -456,7 +455,7 @@ class FirestoreHandler private constructor(context: Context) {
                 }
             }
 
-            Log.d("FirestoreHandler", "Got ${querySnapshot.size()} elements from Firestore !")
+            Log.d("FirestoreHandler", "Got ${querySnapshot.size()} transactions when getTransactions() was called")
             val transObjArr : ArrayList<TransactionModel> = arrayListOf()
             var lastDocument : DocumentSnapshot? = null
 
