@@ -662,11 +662,6 @@ class FirestoreHandler private constructor(context: Context) {
                 .whereEqualTo(USER_FIELD, currentUserRef)
                 .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.RETURNED)
                 .count().get(AggregateSource.SERVER).await().count,
-
-            "cancelled" to database.collection(transactionsCollection)
-                .whereEqualTo(USER_FIELD, currentUserRef)
-                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.CANCELLED)
-                .count().get(AggregateSource.SERVER).await().count,
         )
 
         return transactionsDetails
