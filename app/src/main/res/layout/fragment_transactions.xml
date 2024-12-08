@@ -298,7 +298,7 @@
         android:text="No transactions found."
         android:textColor="@color/text_over_white_bg"
         android:textSize="16sp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/history_rv"
         app:layout_constraintStart_toStartOf="@+id/history_rv"
         app:layout_constraintTop_toTopOf="@+id/history_rv" />
