@@ -116,7 +116,12 @@ class TransactionsFragment : Fragment() {
             val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
 
             val returnedObjList = firestoreHandler.getInitialTransactions(this@TransactionsFragment.displayIncrement)
-           addDataToAdapter(returnedObjList)
+            addDataToAdapter(returnedObjList)
+
+            if(returnedObjList?.first?.size == 0) {
+                transactionsFragBinding.historyTvEmptyList.visibility = View.VISIBLE
+            }
+
             transactionsFragBinding.transactionsInitialProgressBar.visibility = View.GONE
             isLoading = false
         }
@@ -124,8 +129,9 @@ class TransactionsFragment : Fragment() {
 
     private fun refreshData() {
         transactionsFragBinding.historyTvEmptyList.visibility = View.GONE
+        lastTransactionRetrieved = null
+        hasMoreData = true
         CoroutineScope(Dispatchers.Main).launch {
-            lastTransactionRetrieved = null
             isLoading = true
             tsAdapter.removeAllTransactions()
             transactionsFragBinding.transactionsInitialProgressBar.visibility = View.VISIBLE
@@ -133,6 +139,11 @@ class TransactionsFragment : Fragment() {
 
             val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved)
             addDataToAdapter(returnedObjList)
+
+            if(returnedObjList?.first?.size == 0) {
+                transactionsFragBinding.historyTvEmptyList.visibility = View.VISIBLE
+            }
+
             transactionsFragBinding.transactionsInitialProgressBar.visibility = View.GONE
             isLoading = false
         }
@@ -188,10 +199,6 @@ class TransactionsFragment : Fragment() {
             }
 
             tsAdapter.addTransactions(transactionsObjList)
-
-            if(transactionsObjList.size == 0) {
-                transactionsFragBinding.historyTvEmptyList.visibility = View.VISIBLE
-            }
         }
     }
 
