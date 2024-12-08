@@ -207,8 +207,16 @@ class LoginActivity : AppCompatActivity() {
             viewBinding.loginLoadingCover.visibility = View.GONE
             viewBinding.loginProgressBar.visibility = View.GONE
             showLoginSuccessToast()
+
             // start activity regardless of whether user entry was written into db
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            firestoreHandler = FirestoreHandler.getInstance(this@LoginActivity)
+            val isUserAnAdmin = firestoreHandler.isUserAnAdmin(email)
+
+            val intent : Intent = if(isUserAnAdmin) {
+                Intent(this@LoginActivity, AdminTransactionsActivity::class.java)
+            } else {
+                Intent(this@LoginActivity, MainActivity::class.java)
+            }
             startActivity(intent)
             finish()
         }
