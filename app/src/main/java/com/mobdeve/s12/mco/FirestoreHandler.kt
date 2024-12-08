@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
@@ -537,6 +538,41 @@ class FirestoreHandler private constructor(context: Context) {
             return transactionObject
         }
         return null
+    }
+
+    suspend fun getTransactionsDetails() : HashMap<String, Long> {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val currentUserId = authHandler.getUserUid()
+        val currentUserRef = database.collection(usersCollection).document(currentUserId!!)
+
+        val transactionsDetails = hashMapOf(
+            "forPickup" to database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.FOR_PICKUP)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "toReturn" to database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.TO_RETURN)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "overdue" to database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.OVERDUE)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "returned" to database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.RETURNED)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "cancelled" to database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.CANCELLED)
+                .count().get(AggregateSource.SERVER).await().count,
+        )
+
+        return transactionsDetails
     }
 
     /*** Books Collection ***/
