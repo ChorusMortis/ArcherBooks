@@ -141,7 +141,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:stateListAnimator="@null"
-        android:text="To Pick Up"
+        android:text="For Pick Up"
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
