@@ -205,14 +205,14 @@ class TransactionsFragment : Fragment() {
     private fun setTransactionsCount() {
         val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
         transactionsFragBinding.historyPbTotalCount.visibility = View.VISIBLE
-        transactionsFragBinding.historyPbCurrentCount.visibility = View.VISIBLE
+        transactionsFragBinding.historyPbForpickupCount.visibility = View.VISIBLE
+        transactionsFragBinding.historyPbToreturnCount.visibility = View.VISIBLE
         transactionsFragBinding.historyPbOverdueCount.visibility = View.VISIBLE
         transactionsFragBinding.historyPbReturnedCount.visibility = View.VISIBLE
-        transactionsFragBinding.historyPbCancelledCount.visibility = View.VISIBLE
 
         CoroutineScope(Dispatchers.Main).launch {
             val details = firestoreHandler.getTransactionsDetails()
-            val totalCount = details["forPickup"]!! + details["toReturn"]!! + details["overdue"]!! + details["returned"]!! + details["cancelled"]!!
+            val totalCount = details["forPickup"]!! + details["toReturn"]!! + details["overdue"]!!
             var label = " Transactions"
             if(totalCount == 1L) {
                 label = " Transaction"
@@ -220,14 +220,14 @@ class TransactionsFragment : Fragment() {
 
             transactionsFragBinding.historyTvOverviewTotalValue.text = totalCount.toString() + label
             transactionsFragBinding.historyPbTotalCount.visibility = View.GONE
-            transactionsFragBinding.historyTvOverviewCurrentValue.text = (details["forPickup"]!! + details["toReturn"]!!).toString()
-            transactionsFragBinding.historyPbCurrentCount.visibility = View.GONE
+            transactionsFragBinding.historyTvOverviewForpickupValue.text = details["forPickup"]!!.toString()
+            transactionsFragBinding.historyPbForpickupCount.visibility = View.GONE
+            transactionsFragBinding.historyTvOverviewToreturnValue.text = details["toReturn"]!!.toString()
+            transactionsFragBinding.historyPbToreturnCount.visibility = View.GONE
             transactionsFragBinding.historyTvOverviewOverdueValue.text = details["overdue"]!!.toString()
             transactionsFragBinding.historyPbOverdueCount.visibility = View.GONE
             transactionsFragBinding.historyTvOverviewReturnedValue.text = details["returned"]!!.toString()
             transactionsFragBinding.historyPbReturnedCount.visibility = View.GONE
-            transactionsFragBinding.historyTvOverviewCancelledValue.text = details["cancelled"]!!.toString()
-            transactionsFragBinding.historyPbCancelledCount.visibility = View.GONE
         }
     }
 

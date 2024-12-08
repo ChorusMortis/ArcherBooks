@@ -38,21 +38,21 @@
             android:backgroundTint="#8061AA63">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/history_tv_current_label"
+                android:id="@+id/history_tv_forpickup_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="-4dp"
                 android:fontFamily="@font/sf_ui_text_regular"
-                android:text="Current"
+                android:text="For Pickup"
                 android:textColor="@color/text_over_gray_bg"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_current_value"
-                app:layout_constraintEnd_toStartOf="@+id/history_tv_overdue_label"
+                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_forpickup_value"
+                app:layout_constraintEnd_toStartOf="@+id/history_tv_toreturn_label"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/history_tv_overview_current_value"
+                android:id="@+id/history_tv_overview_forpickup_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -60,11 +60,11 @@
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/history_tv_current_label"
-                app:layout_constraintStart_toStartOf="@+id/history_tv_current_label" />
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_forpickup_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_forpickup_label" />
 
             <ProgressBar
-                android:id="@+id/history_pb_current_count"
+                android:id="@+id/history_pb_forpickup_count"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -72,8 +72,45 @@
                 android:indeterminateTint="@color/white"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/history_tv_current_label"
-                app:layout_constraintStart_toStartOf="@+id/history_tv_current_label" />
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_forpickup_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_forpickup_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_toreturn_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-4dp"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="To Return"
+                android:textColor="@color/text_over_gray_bg"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_toreturn_value"
+                app:layout_constraintEnd_toStartOf="@+id/history_tv_overdue_label"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/history_tv_forpickup_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/history_tv_overview_toreturn_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_ui_text_bold"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_forpickup_value"
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_toreturn_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_toreturn_label" />
+
+            <ProgressBar
+                android:id="@+id/history_pb_toreturn_count"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginBottom="12dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/history_tv_toreturn_label"
+                app:layout_constraintStart_toStartOf="@+id/history_tv_toreturn_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/history_tv_overdue_label"
@@ -87,7 +124,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_overdue_value"
                 app:layout_constraintEnd_toStartOf="@+id/history_tv_returned_label"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/history_tv_current_label" />
+                app:layout_constraintStart_toEndOf="@+id/history_tv_toreturn_label" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/history_tv_overview_overdue_value"
@@ -96,7 +133,7 @@
                 android:fontFamily="@font/sf_ui_text_bold"
                 android:textColor="@color/white"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_current_value"
+                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_toreturn_value"
                 app:layout_constraintEnd_toEndOf="@+id/history_tv_overdue_label"
                 app:layout_constraintStart_toStartOf="@+id/history_tv_overdue_label" />
 
@@ -122,7 +159,7 @@
                 android:textColor="@color/text_over_gray_bg"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_returned_value"
-                app:layout_constraintEnd_toStartOf="@+id/history_tv_cancelled_label"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/history_tv_overdue_label" />
 
@@ -149,43 +186,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/history_tv_returned_label"
                 app:layout_constraintStart_toStartOf="@+id/history_tv_returned_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/history_tv_cancelled_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="-4dp"
-                android:fontFamily="@font/sf_ui_text_regular"
-                android:text="Cancelled"
-                android:textColor="@color/text_over_gray_bg"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/history_tv_overview_cancelled_value"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/history_tv_returned_label" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/history_tv_overview_cancelled_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/sf_ui_text_bold"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/history_tv_overview_returned_value"
-                app:layout_constraintEnd_toEndOf="@+id/history_tv_cancelled_label"
-                app:layout_constraintStart_toStartOf="@+id/history_tv_cancelled_label" />
-
-            <ProgressBar
-                android:id="@+id/history_pb_cancelled_count"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginBottom="12dp"
-                android:indeterminateTint="@color/white"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/history_tv_cancelled_label"
-                app:layout_constraintStart_toStartOf="@+id/history_tv_cancelled_label" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -202,7 +202,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/sf_ui_text_regular"
-                android:text="Total Borrow Transactions"
+                android:text="Total Active Transactions"
                 android:textColor="@color/gray_bg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
