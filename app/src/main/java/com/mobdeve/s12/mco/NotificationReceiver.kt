@@ -19,14 +19,16 @@ class NotificationReceiver : BroadcastReceiver() {
     companion object {
         const val CHANNEL_ID = "notification_channel"
         const val CHANNEL_NAME = "Notifications"
+        const val NOTIF_TITLE = "NOTIFICATION_TITLE"
         const val NOTIF_MESSAGE = "NOTIFICATION_MESSAGE"
         const val NOTIF_ID = "NOTIFICATION_ID"
 
         // requestCode: unique ID of PendingIntent
         // notificationId: unique ID of notification
         // they can be the same
-        fun sendNotification(activity: Activity, message: String, requestCode: String, notificationId: String, millisFromNow: Long) {
+        fun sendNotification(activity: Activity, title: String = "Archer Books", message: String, requestCode: String, notificationId: String, millisFromNow: Long) {
             val intent = Intent(activity, NotificationReceiver::class.java)
+            intent.putExtra(NOTIF_TITLE, title)
             intent.putExtra(NOTIF_MESSAGE, message)
             intent.putExtra(NOTIF_ID, notificationId.hashCode())
             val pendingIntent = PendingIntent.getBroadcast(activity, requestCode.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -40,8 +42,9 @@ class NotificationReceiver : BroadcastReceiver() {
         // requestCode: unique ID of PendingIntent
         // notificationId: unique ID of notification
         // they can be the same
-        fun cancelNotification(activity: Activity, message: String, requestCode: String, notificationId: String) {
+        fun cancelNotification(activity: Activity, title: String = "Archer Books", message: String, requestCode: String, notificationId: String) {
             val intent = Intent(activity, NotificationReceiver::class.java)
+            intent.putExtra(NOTIF_TITLE, title)
             intent.putExtra(NOTIF_MESSAGE, message)
             intent.putExtra(NOTIF_ID, notificationId.hashCode())
             val pendingIntent = PendingIntent.getBroadcast(activity, requestCode.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -53,10 +56,11 @@ class NotificationReceiver : BroadcastReceiver() {
 
     // called when intent is passed
     override fun onReceive(context: Context, intent: Intent) {
+        val customTitle = intent.getStringExtra(NOTIF_TITLE) ?: "Archer Books"
         val customMessage = intent.getStringExtra(NOTIF_MESSAGE) ?: return
         val notificationId = intent.getStringExtra(NOTIF_MESSAGE).hashCode()
         if (notificationId == 0) return // string hashcode is 0 if string is null
-        createNotification(context,"Archer Books", customMessage, notificationId)
+        createNotification(context,customTitle, customMessage, notificationId)
     }
 
     private fun createNotification(context: Context, title: String, message: String, notificationId: Int) {
