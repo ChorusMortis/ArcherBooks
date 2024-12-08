@@ -13,9 +13,6 @@ import java.util.Locale
 
 class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBinding): RecyclerView.ViewHolder(viewBinding.root) {
     fun bindData(transaction: TransactionModel) {
-        // TODO MCO3: Get from transactions collection
-
-//        viewBinding.itemAdminTsTvCover.setImageResource(transaction.book.coverResource)
         Glide.with(viewBinding.root.context)
             .load(transaction.book.coverResource)
             .into(viewBinding.itemAdminTsTvCover)
@@ -84,7 +81,7 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
             TransactionModel.Status.CANCELLED -> {
                 viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_cancel_transaction)
                 viewBinding.itemAdminEditBtn.isEnabled = false
-                viewBinding.itemAdminEditBtn.alpha = 1F
+                viewBinding.itemAdminEditBtn.alpha = 0.3F
             }
             TransactionModel.Status.OVERDUE -> {
                 viewBinding.itemAdminEditBtn.setImageResource(R.drawable.icon_to_return_edit)
