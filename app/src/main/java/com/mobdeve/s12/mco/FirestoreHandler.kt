@@ -483,7 +483,7 @@ class FirestoreHandler private constructor(context: Context) {
 
             if(!querySnapshot.isEmpty) {
                 for (document in querySnapshot.documents) {
-                    transObjArr.add(convertDataToTransactionObj(document)!!)
+                    transObjArr.add(convertDataToTransactionObjSimplified(document)!!)
                 }
                 lastDocument = querySnapshot.documents.last()
             }
@@ -514,7 +514,7 @@ class FirestoreHandler private constructor(context: Context) {
 
             if(!querySnapshot.isEmpty) {
                 for (document in querySnapshot.documents) {
-                    transObjArr.add(convertDataToTransactionObj(document)!!)
+                    transObjArr.add(convertDataToTransactionObjSimplified(document)!!)
                 }
                 lastDocument = querySnapshot.documents.last()
             }
@@ -526,22 +526,103 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun getTransactionsForAdmin(increment: Long,
+                                filterOption: AdminTransactionsActivity.FilterOption,
+                                startAfterDoc: DocumentSnapshot?) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
+        try {
+            val querySnapshot : QuerySnapshot
+            if(startAfterDoc != null) {
+                if(filterOption == AdminTransactionsActivity.FilterOption.ALL) {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
+                        .startAfter(startAfterDoc)
+                        .limit(increment)
+                        .get()
+                        .await()
+                } else {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .whereEqualTo(STATUS_FIELD, filterOption.toString())
+                        .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
+                        .startAfter(startAfterDoc)
+                        .limit(increment)
+                        .get()
+                        .await()
+                }
+            } else {
+                if(filterOption == AdminTransactionsActivity.FilterOption.ALL) {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
+                        .limit(increment)
+                        .get()
+                        .await()
+                } else {
+                    querySnapshot = database.collection(transactionsCollection)
+                        .whereEqualTo(STATUS_FIELD, filterOption.toString())
+                        .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
+                        .limit(increment)
+                        .get()
+                        .await()
+                }
+            }
 
-    private suspend fun convertDataToTransactionObj(document : DocumentSnapshot) : TransactionModel? {
+            Log.d("FirestoreHandler", "Got ${querySnapshot.size()} transactions when getTransactionsForAdmin() was called")
+            val transObjArr : ArrayList<TransactionModel> = arrayListOf()
+            var lastDocument : DocumentSnapshot? = null
+
+            if(!querySnapshot.isEmpty) {
+                for (document in querySnapshot.documents) {
+                    transObjArr.add(convertDataToTransactionObj(document)!!)
+                }
+                lastDocument = querySnapshot.documents.last()
+            }
+
+            return Pair(transObjArr, lastDocument)
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getTransactionsForAdmin() was called.")
+            return null
+        }
+    }
+
+
+    private suspend fun convertDataToTransactionObjSimplified(document : DocumentSnapshot) : TransactionModel? {
         val data = document.data
-//        val userRef = data?.get(USER_FIELD) as DocumentReference
         val bookRef = data?.get(BOOK_FIELD) as DocumentReference
 
         val book = bookRef.get().await().toObject(BookModel::class.java)
-//        val userDoc = userRef.get().await()
-//        val userData = userDoc.data
-//        val user = convertToUserModel(userData, userDoc)
 
         if(book != null) {
             val transactionObject = TransactionModel(
                 document.id,
                 book,
-                UserModel(), // we don't really need the user to display the transactions
+                UserModel(), // simplify the model
+                data[TRANSACTION_DATE_FIELD] as Timestamp,
+                data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp,
+                data[EXPECTED_RETURN_DATE_FIELD] as Timestamp,
+                data[ACTUAL_PICKUP_DATE_FIELD] as Timestamp?,
+                data[ACTUAL_RETURN_DATE_FIELD] as Timestamp?,
+                data[CANCELED_DATE_FIELD] as Timestamp?,
+                TransactionModel.Status.valueOf(data[STATUS_FIELD].toString())
+            )
+
+            return transactionObject
+        }
+        return null
+    }
+
+    private suspend fun convertDataToTransactionObj(document : DocumentSnapshot) : TransactionModel? {
+        val data = document.data
+        val userRef = data?.get(USER_FIELD) as DocumentReference
+        val bookRef = data[BOOK_FIELD] as DocumentReference
+
+        val book = bookRef.get().await().toObject(BookModel::class.java)
+        val userDoc = userRef.get().await()
+        val userData = userDoc.data
+
+        if(book != null) {
+            val transactionObject = TransactionModel(
+                document.id,
+                book,
+                UserModel(userData?.get(USER_ID_FIELD)!!.toString(), userData[FIRST_NAME_FIELD]!!.toString(), userData[LAST_NAME_FIELD]!!.toString()),
                 data[TRANSACTION_DATE_FIELD] as Timestamp,
                 data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp,
                 data[EXPECTED_RETURN_DATE_FIELD] as Timestamp,
@@ -585,6 +666,28 @@ class FirestoreHandler private constructor(context: Context) {
             "cancelled" to database.collection(transactionsCollection)
                 .whereEqualTo(USER_FIELD, currentUserRef)
                 .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.CANCELLED)
+                .count().get(AggregateSource.SERVER).await().count,
+        )
+
+        return transactionsDetails
+    }
+
+    suspend fun getAdminTransactionsDetails() : HashMap<String, Long> {
+        val transactionsDetails = hashMapOf(
+            "forPickup" to database.collection(transactionsCollection)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.FOR_PICKUP)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "toReturn" to database.collection(transactionsCollection)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.TO_RETURN)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "overdue" to database.collection(transactionsCollection)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.OVERDUE)
+                .count().get(AggregateSource.SERVER).await().count,
+
+            "returned" to database.collection(transactionsCollection)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.RETURNED)
                 .count().get(AggregateSource.SERVER).await().count,
         )
 

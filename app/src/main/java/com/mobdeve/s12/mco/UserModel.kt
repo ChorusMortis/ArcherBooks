@@ -25,6 +25,12 @@ class UserModel {
     // don't delete; used for Firebase toObject method which requires empty constructor
     constructor()
 
+    constructor(userId: String, firstName: String, lastName: String) {
+        this.userId = userId
+        this.firstName = firstName
+        this.lastName = lastName
+    }
+
     constructor(userId: String, firstName: String, lastName: String, emailAddress: String, signUpMethod: SignUpMethod, recentlyViewed: ArrayList<BookModel> = arrayListOf(), favorites: ArrayList<BookModel> = arrayListOf()) {
         this.userId = userId
         this.firstName = firstName
