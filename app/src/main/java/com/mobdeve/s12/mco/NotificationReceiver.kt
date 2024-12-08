@@ -22,17 +22,32 @@ class NotificationReceiver : BroadcastReceiver() {
         const val NOTIF_MESSAGE = "NOTIFICATION_MESSAGE"
         const val NOTIF_ID = "NOTIFICATION_ID"
 
-        // static function
-        fun sendNotification(activity: Activity, message: String, notificationId: String) {
+        // requestCode: unique ID of PendingIntent
+        // notificationId: unique ID of notification
+        // they can be the same
+        fun sendNotification(activity: Activity, message: String, requestCode: String, notificationId: String, millisFromNow: Long) {
             val intent = Intent(activity, NotificationReceiver::class.java)
             intent.putExtra(NOTIF_MESSAGE, message)
             intent.putExtra(NOTIF_ID, notificationId.hashCode())
-            val pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(activity, requestCode.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
             val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val triggerAtMillis = System.currentTimeMillis() + 3 * 1000
+            val triggerAtMillis = System.currentTimeMillis() + millisFromNow
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+        }
+
+        // requestCode: unique ID of PendingIntent
+        // notificationId: unique ID of notification
+        // they can be the same
+        fun cancelNotification(activity: Activity, message: String, requestCode: String, notificationId: String) {
+            val intent = Intent(activity, NotificationReceiver::class.java)
+            intent.putExtra(NOTIF_MESSAGE, message)
+            intent.putExtra(NOTIF_ID, notificationId.hashCode())
+            val pendingIntent = PendingIntent.getBroadcast(activity, requestCode.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+            val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.cancel(pendingIntent)
         }
     }
 
