@@ -28,11 +28,17 @@ class FirestoreHandler private constructor(context: Context) {
     private val FAVORITES_FIELD = "favorites"
 
     private val BOOK_FIELD = "book"
-    private val TRANSACTION_DATE_FIELD = "transactionDate"
     private val USER_FIELD = "user"
+    private val ACTUAL_PICKUP_DATE_FIELD = "actualPickupDate"
+    private val ACTUAL_RETURN_DATE_FIELD = "actualReturnDate"
+    private val CANCELED_DATE_FIELD = "canceledDate"
+    private val EXPECTED_PICKUP_DATE_FIELD = "expectedPickupDate"
+    private val EXPECTED_RETURN_DATE_FIELD = "expectedReturnDate"
+    private val STATUS_FIELD = "status"
+    private val TRANSACTION_DATE_FIELD = "transactionDate"
     private val FIRST_AUTHOR_INDEX_FIELD = "firstAuthorIndex"
     private val BOOK_TITLE_INDEX_FIELD = "bookTitleIndex"
-    private val STATUS_FIELD = "status"
+
 
     private val database = Firebase.firestore
 
@@ -325,7 +331,7 @@ class FirestoreHandler private constructor(context: Context) {
             if (!result.isEmpty) {
                 val book = bookRef.get().await().toObject(BookModel::class.java)
                 val transaction = result.first().data
-                val userRef = transaction["user"] as DocumentReference
+                val userRef = transaction[USER_FIELD] as DocumentReference
                 val userDoc = userRef.get().await()
                 val userData = userDoc.data
                 val user = convertToUserModel(userData, userDoc)
@@ -335,13 +341,13 @@ class FirestoreHandler private constructor(context: Context) {
                         result.first().id,
                         book,
                         user,
-                        transaction["transactionDate"] as Timestamp,
-                        transaction["expectedPickupDate"] as Timestamp,
-                        transaction["expectedReturnDate"] as Timestamp,
-                        transaction["actualPickupDate"] as Timestamp?,
-                        transaction["actualReturnDate"] as Timestamp?,
-                        transaction["canceledDate"] as Timestamp?,
-                        TransactionModel.Status.valueOf(transaction["status"].toString())
+                        transaction[TRANSACTION_DATE_FIELD] as Timestamp,
+                        transaction[EXPECTED_PICKUP_DATE_FIELD] as Timestamp,
+                        transaction[EXPECTED_RETURN_DATE_FIELD] as Timestamp,
+                        transaction[ACTUAL_PICKUP_DATE_FIELD] as Timestamp?,
+                        transaction[ACTUAL_RETURN_DATE_FIELD] as Timestamp?,
+                        transaction[CANCELED_DATE_FIELD] as Timestamp?,
+                        TransactionModel.Status.valueOf(transaction[STATUS_FIELD].toString())
                     )
                     Log.d("FirestoreHandler", "Successfully returned the latest transaction of the book!")
                     transactionObject
@@ -473,28 +479,59 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun getInitialTransactions(increment: Long) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
+        try {
+            val authHandler = AuthHandler.getInstance(appContext)
+            val currentUserId = authHandler.getUserUid()
+            val currentUserRef = database.collection(usersCollection).document(currentUserId!!)
+
+            val querySnapshot = database.collection(transactionsCollection)
+                    .whereEqualTo(USER_FIELD, currentUserRef)
+                    .limit(increment)
+                    .get()
+                    .await()
+
+            Log.d("FirestoreHandler", "Got ${querySnapshot.size()} transactions when getTransactions() was called")
+            val transObjArr : ArrayList<TransactionModel> = arrayListOf()
+            var lastDocument : DocumentSnapshot? = null
+
+            if(!querySnapshot.isEmpty) {
+                for (document in querySnapshot.documents) {
+                    transObjArr.add(convertDataToTransactionObj(document)!!)
+                }
+                lastDocument = querySnapshot.documents.last()
+            }
+
+            return Pair(transObjArr, lastDocument)
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getTransactions was called.")
+            return null
+        }
+    }
+
+
     private suspend fun convertDataToTransactionObj(document : DocumentSnapshot) : TransactionModel? {
         val data = document.data
-        val userRef = data?.get(USER_FIELD) as DocumentReference
-        val bookRef = data[BOOK_FIELD] as DocumentReference
+//        val userRef = data?.get(USER_FIELD) as DocumentReference
+        val bookRef = data?.get(BOOK_FIELD) as DocumentReference
 
         val book = bookRef.get().await().toObject(BookModel::class.java)
-        val userDoc = userRef.get().await()
-        val userData = userDoc.data
-        val user = convertToUserModel(userData, userDoc)
+//        val userDoc = userRef.get().await()
+//        val userData = userDoc.data
+//        val user = convertToUserModel(userData, userDoc)
 
-        if(book != null && user != null) {
+        if(book != null) {
             val transactionObject = TransactionModel(
                 document.id,
                 book,
-                user,
-                data["transactionDate"] as Timestamp,
-                data["expectedPickupDate"] as Timestamp,
-                data["expectedReturnDate"] as Timestamp,
-                data["actualPickupDate"] as Timestamp?,
-                data["actualReturnDate"] as Timestamp?,
-                data["canceledDate"] as Timestamp?,
-                TransactionModel.Status.valueOf(data["status"].toString())
+                UserModel(), // we don't really need the user to display the transactions
+                data[TRANSACTION_DATE_FIELD] as Timestamp,
+                data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp,
+                data[EXPECTED_RETURN_DATE_FIELD] as Timestamp,
+                data[ACTUAL_PICKUP_DATE_FIELD] as Timestamp?,
+                data[ACTUAL_RETURN_DATE_FIELD] as Timestamp?,
+                data[CANCELED_DATE_FIELD] as Timestamp?,
+                TransactionModel.Status.valueOf(data[STATUS_FIELD].toString())
             )
 
             return transactionObject

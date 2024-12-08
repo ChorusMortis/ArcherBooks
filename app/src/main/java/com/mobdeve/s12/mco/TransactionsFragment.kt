@@ -45,7 +45,7 @@ class TransactionsFragment : Fragment() {
     }
 
     private var transactionsObjList : ArrayList<TransactionModel> = arrayListOf()
-    private var displayIncrement = 10L
+    private var displayIncrement = 8L
     private var isLoading = false
     private var hasMoreData = true
     private var lastTransactionRetrieved : DocumentSnapshot? = null
@@ -107,6 +107,22 @@ class TransactionsFragment : Fragment() {
 
     private fun passInitialData() {
         CoroutineScope(Dispatchers.Main).launch {
+            lastTransactionRetrieved = null
+            isLoading = true
+            tsAdapter.removeAllTransactions()
+            transactionsFragBinding.transactionsInitialProgressBar.visibility = View.VISIBLE
+            val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+
+            val returnedObjList = firestoreHandler.getInitialTransactions(this@TransactionsFragment.displayIncrement)
+           addDataToAdapter(returnedObjList)
+            transactionsFragBinding.transactionsInitialProgressBar.visibility = View.GONE
+            isLoading = false
+        }
+    }
+
+    private fun refreshData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            lastTransactionRetrieved = null
             isLoading = true
             tsAdapter.removeAllTransactions()
             transactionsFragBinding.transactionsInitialProgressBar.visibility = View.VISIBLE
@@ -131,7 +147,7 @@ class TransactionsFragment : Fragment() {
                 if(!isLoading && hasMoreData) {
                     if(visibleItemCount + firstVisibleItemPosition >= totalItemCount
                         && firstVisibleItemPosition >= 0
-                        && totalItemCount >= 10) {
+                        && totalItemCount >= displayIncrement) {
                         incrementData()
                     }
                 }
@@ -215,6 +231,8 @@ class TransactionsFragment : Fragment() {
                 editor.putString(TRANSACTIONS_FILTER_PREF, it.name)
                 editor.apply()
             }
+
+            refreshData()
 
             bottomSheetDialog.dismiss()
         }
