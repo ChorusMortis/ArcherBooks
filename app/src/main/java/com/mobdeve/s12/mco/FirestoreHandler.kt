@@ -136,6 +136,21 @@ class FirestoreHandler private constructor(context: Context) {
         )
     }
 
+    suspend fun isUserAnAdmin(emailAdd: String) : Boolean {
+        val result = database.collection(usersCollection)
+            .whereEqualTo(EMAIL_FIELD, emailAdd)
+            .limit(1)
+            .get()
+            .await()
+
+        if(!result.isEmpty) {
+            val userData = result.documents.first().data
+            return userData?.get("admin") as Boolean
+        }
+
+        return false
+    }
+
 
     // Use this function when the user is not logged in or
     // if it is unclear whether they are authenticated or not.

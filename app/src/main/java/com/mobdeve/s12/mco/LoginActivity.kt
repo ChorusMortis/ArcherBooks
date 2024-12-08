@@ -73,8 +73,10 @@ class LoginActivity : AppCompatActivity() {
                     setWarningMessage(R.string.warning_user_not_found, View.GONE)
 
                     showLoginSuccessToast()
+                    firestoreHandler = FirestoreHandler.getInstance(this@LoginActivity)
+                    val isUserAnAdmin = firestoreHandler.isUserAnAdmin(user["emailAddress"]!!)
 
-                    val intent : Intent = if(user["emailAddress"] == "Admin") { // TODO MCO3: Change this based on your designated admin email
+                    val intent : Intent = if(isUserAnAdmin) {
                         Intent(this@LoginActivity, AdminTransactionsActivity::class.java)
                     } else {
                         Intent(this@LoginActivity, MainActivity::class.java)

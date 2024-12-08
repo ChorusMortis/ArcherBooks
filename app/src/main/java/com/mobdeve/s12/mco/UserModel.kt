@@ -14,6 +14,8 @@ class UserModel {
         private set
     var favorites: ArrayList<BookModel> = arrayListOf()
         private set
+    var admin: Boolean = false
+        private set
 
     enum class SignUpMethod {
         EMAIL,
