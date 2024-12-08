@@ -1,11 +1,16 @@
 package com.mobdeve.s12.mco
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +39,7 @@ class HomeFragment : Fragment() {
         setRVRecyclerView()
         addListenerSearchBtn()
         scrollToTop()
+        requestNotifPerms()
 
         val botd = books.random() // TODO MCO3: Allow it to randomly query a book from the API
         setContentBOTD(botd)
@@ -45,6 +51,18 @@ class HomeFragment : Fragment() {
         super.onResume()
 
         updateRecentlyViewedRV()
+    }
+
+    private fun requestNotifPerms() {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // only request notification permissions for Android 13+ (SDK 33 and above)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001)
+            }
+        }
     }
 
     private fun setDisplayName() {
