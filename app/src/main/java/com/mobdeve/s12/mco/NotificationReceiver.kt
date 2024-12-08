@@ -89,12 +89,7 @@ class NotificationReceiver : BroadcastReceiver() {
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Request the permission at beginning of app
-//            ActivityCompat.requestPermissions(
-//                applicationContext,
-//                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-//                1001
-//            )
+            // Request permission in Home instead
         } else {
             // Permission already granted; proceed with the notification
             manager.notify(notificationId, notification)
