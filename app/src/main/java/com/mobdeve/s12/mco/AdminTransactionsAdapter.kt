@@ -5,10 +5,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
 import com.mobdeve.s12.mco.databinding.ComponentDialogAdmintransEditstatusBinding
 import com.mobdeve.s12.mco.databinding.ItemAdminTsCardBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): RecyclerView.Adapter<AdminTransactionsViewHolder>() {
+class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>,
+                               private val changeStatusToToReturnCallback : () -> Unit,
+                               private val changeToReturnStatusToReturnedCallback: () -> Unit,
+                               private val changeOverdueStatusToReturnedCallback: () -> Unit): RecyclerView.Adapter<AdminTransactionsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminTransactionsViewHolder {
         val itemAdminTransBinding = ItemAdminTsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val adminTransViewHolder = AdminTransactionsViewHolder(itemAdminTransBinding)
@@ -46,13 +53,46 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
             dialog.dismiss()
         }
 
-        editDialogBinding.dialogAdmintransBtnConfirm.setOnClickListener {
-            // TODO: Change transaction status after hitting confirm
-            // TODO: Change edit button after book is returned
-            dialog.dismiss()
-        }
+        addConfirmBtnListener(editDialogBinding, dialog, position)
 
         dialog.show()
+    }
+
+    private fun addConfirmBtnListener(editDialogBinding : ComponentDialogAdmintransEditstatusBinding, dialog: AlertDialog, position: Int) {
+        editDialogBinding.dialogAdmintransBtnConfirm.setOnClickListener {
+            var newStatus : TransactionModel.Status = TransactionModel.Status.RETURNED
+            if(data[position].status == TransactionModel.Status.FOR_PICKUP) {
+                newStatus = TransactionModel.Status.TO_RETURN
+            } else if(data[position].status == TransactionModel.Status.TO_RETURN ||
+                      data[position].status == TransactionModel.Status.OVERDUE) {
+                newStatus = TransactionModel.Status.RETURNED
+            }
+
+            val firestoreHandler = FirestoreHandler.getInstance(editDialogBinding.root.context)
+            CoroutineScope(Dispatchers.Main).launch {
+                firestoreHandler.updateTransaction(data[position].transactionId, "status", newStatus.toString())
+                val oldStatus = data[position].status
+                val currentTime = Timestamp.now()
+
+                if(oldStatus == TransactionModel.Status.FOR_PICKUP) {
+                    changeStatusToToReturnCallback()
+                    firestoreHandler.updateTransaction(data[position].transactionId, "actualPickupDate", currentTime)
+                    data[position].actualPickupDate = currentTime
+                } else if(oldStatus == TransactionModel.Status.TO_RETURN) {
+                    changeToReturnStatusToReturnedCallback()
+                    firestoreHandler.updateTransaction(data[position].transactionId, "actualReturnDate", currentTime)
+                    data[position].actualReturnDate = currentTime
+                } else if(oldStatus == TransactionModel.Status.OVERDUE) {
+                    changeOverdueStatusToReturnedCallback()
+                    firestoreHandler.updateTransaction(data[position].transactionId, "actualReturnDate", currentTime)
+                    data[position].actualReturnDate = currentTime
+                }
+
+                data[position].status = newStatus
+                dialog.dismiss()
+                this@AdminTransactionsAdapter.notifyItemChanged(position)
+            }
+        }
     }
 
     private fun setDialogMessage(transaction: TransactionModel, dialogBinding: ComponentDialogAdmintransEditstatusBinding) {

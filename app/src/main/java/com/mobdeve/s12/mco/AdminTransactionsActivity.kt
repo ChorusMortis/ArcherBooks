@@ -102,6 +102,54 @@ class AdminTransactionsActivity : AppCompatActivity() {
         }
     }
 
+    private fun changeStatusToToReturnCallback() {
+        var forPickupCount = adminTransBinding.adminTransTvFpValue.text.toString().toInt()
+        var toReturnCount = adminTransBinding.adminTransTvTrValue.text.toString().toInt()
+        forPickupCount -= 1
+        toReturnCount += 1
+
+        adminTransBinding.adminTransTvFpValue.text = forPickupCount.toString()
+        adminTransBinding.adminTransTvTrValue.text = toReturnCount.toString()
+    }
+
+    private fun changeToReturnStatusToReturnedCallback() {
+        var toReturnCount = adminTransBinding.adminTransTvTrValue.text.toString().toInt()
+        var returnedCount = adminTransBinding.adminTransTvRValue.text.toString().toInt()
+        var totalCount = adminTransBinding.adminTransTvTotalValue.text.toString().split(" ")[0].toInt()
+
+        toReturnCount -= 1
+        returnedCount += 1
+        totalCount -= 1
+
+        var label = " Transactions"
+        if(totalCount == 1) {
+            label = " Transaction"
+        }
+
+        adminTransBinding.adminTransTvTrValue.text = toReturnCount.toString()
+        adminTransBinding.adminTransTvRValue.text = returnedCount.toString()
+        adminTransBinding.adminTransTvTotalValue.text = totalCount.toString() + label
+    }
+
+    private fun changeOverdueStatusToReturnedCallback() {
+        var overdueCount = adminTransBinding.adminTransTvOdValue.text.toString().toInt()
+        var returnedCount = adminTransBinding.adminTransTvRValue.text.toString().toInt()
+        var totalCount = adminTransBinding.adminTransTvTotalValue.text.toString().split(" ")[0].toInt()
+
+        overdueCount -= 1
+        returnedCount += 1
+        totalCount -= 1
+
+        var label = " Transactions"
+        if(totalCount == 1) {
+            label = " Transaction"
+        }
+
+        adminTransBinding.adminTransTvTrValue.text = overdueCount.toString()
+        adminTransBinding.adminTransTvRValue.text = returnedCount.toString()
+        adminTransBinding.adminTransTvTotalValue.text = totalCount.toString() + label
+    }
+
     private fun setTransactionsCount() {
         val firestoreHandler = FirestoreHandler.getInstance(this)
         adminTransBinding.adminTransPbTotal.visibility = View.VISIBLE
@@ -228,7 +276,7 @@ class AdminTransactionsActivity : AppCompatActivity() {
 
     private fun setRVRecyclerView() {
         rvRecyclerView = adminTransBinding.adminTransRv
-        rvAdapter = AdminTransactionsAdapter(arrayListOf())
+        rvAdapter = AdminTransactionsAdapter(arrayListOf(), { changeStatusToToReturnCallback() }, { changeToReturnStatusToReturnedCallback() }, { changeOverdueStatusToReturnedCallback() })
         rvRecyclerView.adapter = rvAdapter
         layoutManager = LinearLayoutManager(this)
         rvRecyclerView.layoutManager = layoutManager
