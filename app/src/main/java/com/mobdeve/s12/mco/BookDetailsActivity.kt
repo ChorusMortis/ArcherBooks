@@ -219,14 +219,34 @@ class BookDetailsActivity : AppCompatActivity() {
                 val transactionDate = Timestamp.now()
                 val bookId = this.intent.getStringExtra(ID_KEY)
 
+                val bookTitle = intent.getStringExtra(TITLE_KEY)
+                val bookAuthors = intent.getStringExtra(AUTHORS_KEY)
+                val bookPickupReminder = "Reminder to pick up $bookTitle by $bookAuthors"
+                val bookReturnReminder = "Reminder to return $bookTitle by $bookAuthors"
+                val pickupDateString = borrowPopupBinding.borrowPopupTvStartDateValue.text.toString()
+                val returnDateString = borrowPopupBinding.borrowPopupTvEndDateValue.text.toString()
+                val transReceipt = "Borrowed $bookTitle by $bookAuthors. Pick up by $pickupDateString and return by $returnDateString"
+                val millisIn24Hours = 24 * 60 * 60 * 1000L
+                val oneDayBeforePickup = expectedPickupDate!!.toDate().time - millisIn24Hours - transactionDate.toDate().time
+                val oneDayBeforeReturn = expectedReturnDate!!.toDate().time - millisIn24Hours - transactionDate.toDate().time
+
                 CoroutineScope(Dispatchers.Main).launch {
                     val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
-                    firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
+                    val transId = firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
                     setUIToBorrowed(TransactionModel.Status.FOR_PICKUP, expectedPickupDate, expectedReturnDate)
 
                     // hide progress bar
                     viewBinding.bookDetailsLoadingCover.visibility = View.GONE
                     viewBinding.bookDetailsProgressBar.visibility = View.GONE
+
+                    val pickupNotifId = "{$transId}_pickup"
+                    val returnNotifId = "{$transId}_return"
+                    val borrowNotifId = "{$transId}_borrow"
+                    NotificationReceiver.sendNotification(this@BookDetailsActivity, transReceipt, borrowNotifId, borrowNotifId, 0)
+                    NotificationReceiver.sendNotification(this@BookDetailsActivity, bookPickupReminder, pickupNotifId, pickupNotifId, oneDayBeforePickup)
+                    NotificationReceiver.sendNotification(this@BookDetailsActivity, bookReturnReminder, returnNotifId, returnNotifId, oneDayBeforeReturn)
+//                    NotificationReceiver.sendNotification(this@BookDetailsActivity, bookPickupReminder, pickupNotifId, pickupNotifId, 5 * 1000)
+//                    NotificationReceiver.sendNotification(this@BookDetailsActivity, bookReturnReminder, returnNotifId, returnNotifId, 10 * 1000)
 
                     val toast = Toast.makeText(this@BookDetailsActivity, "Borrow transaction successfully made.", Toast.LENGTH_SHORT)
                     toast.show()
