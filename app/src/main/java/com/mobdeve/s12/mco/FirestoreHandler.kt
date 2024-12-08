@@ -488,6 +488,7 @@ class FirestoreHandler private constructor(context: Context) {
 
             val querySnapshot = database.collection(transactionsCollection)
                     .whereEqualTo(USER_FIELD, currentUserRef)
+                    .orderBy(TRANSACTION_DATE_FIELD, Query.Direction.DESCENDING)
                     .limit(increment)
                     .get()
                     .await()
