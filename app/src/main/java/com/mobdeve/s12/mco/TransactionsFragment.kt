@@ -106,6 +106,7 @@ class TransactionsFragment : Fragment() {
     }
 
     private fun passInitialData() {
+        transactionsFragBinding.historyTvEmptyList.visibility = View.GONE
         CoroutineScope(Dispatchers.Main).launch {
             lastTransactionRetrieved = null
             isLoading = true
@@ -121,6 +122,7 @@ class TransactionsFragment : Fragment() {
     }
 
     private fun refreshData() {
+        transactionsFragBinding.historyTvEmptyList.visibility = View.GONE
         CoroutineScope(Dispatchers.Main).launch {
             lastTransactionRetrieved = null
             isLoading = true
@@ -185,6 +187,10 @@ class TransactionsFragment : Fragment() {
             }
 
             tsAdapter.addTransactions(transactionsObjList)
+
+            if(transactionsObjList.size == 0) {
+                transactionsFragBinding.historyTvEmptyList.visibility = View.VISIBLE
+            }
         }
     }
 
