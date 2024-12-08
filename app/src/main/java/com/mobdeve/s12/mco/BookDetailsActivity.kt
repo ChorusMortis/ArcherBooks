@@ -78,7 +78,7 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding.bookDetailsTvYear.text = this.intent.getStringExtra(YEAR_PUBLISHED_KEY)
         viewBinding.bookDetailsTvPublisher.text = "Published by ${this.intent.getStringExtra(PUBLISHER_KEY)}"
         viewBinding.bookDetailsTvShelfLocation.text = this.intent.getStringExtra(SHELF_LOCATION_KEY)
-        viewBinding.bookDetailsTvStatus.text = this.intent.getStringExtra(STATUS_KEY)
+//        viewBinding.bookDetailsTvStatus.text = this.intent.getStringExtra(STATUS_KEY)
         viewBinding.bookDetailsTvPages.text = "${this.intent.getStringExtra(PAGES_KEY)} pages"
         viewBinding.bookDetailsTvDescription.text = this.intent.getStringExtra(DESCRIPTION_KEY)
     }
