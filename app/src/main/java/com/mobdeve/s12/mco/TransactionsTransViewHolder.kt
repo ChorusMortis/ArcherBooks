@@ -20,15 +20,30 @@ class TransactionsTransViewHolder(private val viewBinding: ItemTsCardBinding): R
         viewBinding.itemTsTvTitle.text = transaction.book.title
         viewBinding.itemTsTvAuthors.text = transaction.book.authors.joinToString(", ")
 
+        setStatusColor(transaction)
         setStatusIcon(transaction)
         setStatusLabel(transaction)
         setStatusDateValue(transaction)
     }
 
+    private fun setStatusColor(transaction: TransactionModel) {
+        if(transaction.status == TransactionModel.Status.CANCELLED) {
+            viewBinding.itemTsTvBorrowStatusLabel.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_unavailable))
+            viewBinding.itemTsTvBorrowStatusDate.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_unavailable))
+        } else if(transaction.status == TransactionModel.Status.RETURNED) {
+            viewBinding.itemTsTvBorrowStatusLabel.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_available))
+            viewBinding.itemTsTvBorrowStatusDate.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_available))
+        } else {
+            viewBinding.itemTsTvBorrowStatusLabel.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_borrowed))
+            viewBinding.itemTsTvBorrowStatusDate.setTextColor(ContextCompat.getColor(viewBinding.root.context, R.color.book_borrowed))
+        }
+    }
+
     private fun setStatusIcon(transaction: TransactionModel) {
-        if(transaction.status == TransactionModel.Status.CANCELLED ||
-            transaction.status == TransactionModel.Status.RETURNED)  {
-            viewBinding.itemTsIvBorrowStatusIcon.setImageResource(R.drawable.icon_available)
+        if(transaction.status == TransactionModel.Status.CANCELLED) {
+            viewBinding.itemTsIvBorrowStatusIcon.setImageResource(R.drawable.icon_cancel_transaction)
+        } else if(transaction.status == TransactionModel.Status.RETURNED) {
+            viewBinding.itemTsIvBorrowStatusIcon.setImageResource(R.drawable.icon_returned)
         } else {
             viewBinding.itemTsIvBorrowStatusIcon.setImageResource(R.drawable.icon_timer)
         }
