@@ -75,4 +75,15 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>): R
 
         dialogBinding.dialogAdmintransTvLabel.text = header
     }
+
+    fun addTransactions(newTransactions: ArrayList<TransactionModel>) {
+        val startingIndex = data.size
+        data.addAll(newTransactions)
+        notifyItemRangeInserted(startingIndex, newTransactions.size)
+    }
+
+    fun removeAllTransactions() {
+        data.clear()
+        this.notifyDataSetChanged()
+    }
 }
