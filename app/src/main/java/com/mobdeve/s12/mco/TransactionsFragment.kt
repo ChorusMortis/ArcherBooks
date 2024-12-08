@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,14 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.DocumentSnapshot
 import com.mobdeve.s12.mco.databinding.ComponentDialogTransBinding
 import com.mobdeve.s12.mco.databinding.FragmentTransactionsBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class TransactionsFragment : Fragment() {
     companion object {
@@ -38,7 +44,16 @@ class TransactionsFragment : Fragment() {
         CANCELLED,
     }
 
+    private var transactionsObjList : ArrayList<TransactionModel> = arrayListOf()
+    private var displayIncrement = 10L
+    private var isLoading = false
+    private var hasMoreData = true
+    private var lastTransactionRetrieved : DocumentSnapshot? = null
+    private var transactionsCount = 0
+
     private lateinit var transactionsFragBinding : FragmentTransactionsBinding
+    private lateinit var tsAdapter: TransactionsTransAdapter
+    private lateinit var layoutManager: LinearLayoutManager
 
     private var sortDialogBinding : ComponentDialogTransBinding? = null
 
@@ -59,9 +74,15 @@ class TransactionsFragment : Fragment() {
             showSortDialog()
         }
 
-        transactionsFragBinding.historyRv.adapter = TransactionsTransAdapter(BookGenerator.generateSampleBooks())
-        transactionsFragBinding.historyRv.layoutManager = LinearLayoutManager(activity)
+        tsAdapter = TransactionsTransAdapter(arrayListOf())
+        transactionsFragBinding.historyRv.adapter = tsAdapter
+
+        layoutManager = LinearLayoutManager(activity)
+        transactionsFragBinding.historyRv.layoutManager = layoutManager
         transactionsFragBinding.historyRv.addItemDecoration(MarginItemDecoration(resources.displayMetrics, VERTICAL_SPACE))
+
+        passInitialData()
+        addRVScrollListener()
 
         return transactionsFragBinding.root
     }
@@ -82,6 +103,81 @@ class TransactionsFragment : Fragment() {
         prefFilterOption?.let {
             activeFilterOption = it
         }
+    }
+
+    private fun passInitialData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            isLoading = true
+            tsAdapter.removeAllTransactions()
+            transactionsFragBinding.transactionsInitialProgressBar.visibility = View.VISIBLE
+            val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+
+            val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved)
+            addDataToAdapter(returnedObjList)
+            transactionsFragBinding.transactionsInitialProgressBar.visibility = View.GONE
+            isLoading = false
+        }
+    }
+
+    private fun addRVScrollListener() {
+        transactionsFragBinding.historyRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if(!isLoading && hasMoreData) {
+                    if(visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        && totalItemCount >= 10) {
+                        incrementData()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun incrementData() {
+        isLoading = true
+        transactionsFragBinding.transactionsScrollProgressBar.visibility = View.VISIBLE
+        val layoutParams = transactionsFragBinding.historyRv.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.bottomMargin = 180
+
+        val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved)
+            addDataToAdapter(returnedObjList)
+            transactionsFragBinding.transactionsScrollProgressBar.visibility = View.GONE
+            layoutParams.bottomMargin = 0
+            isLoading = false
+        }
+    }
+
+    private fun addDataToAdapter(returnedObjList: Pair<ArrayList<TransactionModel>, DocumentSnapshot?>?) {
+        if(returnedObjList != null) {
+            transactionsObjList = returnedObjList.first
+            lastTransactionRetrieved = returnedObjList.second
+            transactionsCount = transactionsObjList.size
+
+            Log.d("TransactionsFragment", "Retrieved a total of ${transactionsObjList.size} transactions")
+
+            if(lastTransactionRetrieved == null) {
+                hasMoreData = false
+            }
+
+            tsAdapter.addTransactions(transactionsObjList)
+        }
+    }
+
+    private fun setTransactionsCount() {
+//        var label = " books"
+//        if(bookCount == 1) {
+//            label = "book"
+//        }
+//        transactionsFragBinding.favoritesTvOverviewbookcount.text = "$bookCount $label"
     }
 
     private fun showSortDialog() {
