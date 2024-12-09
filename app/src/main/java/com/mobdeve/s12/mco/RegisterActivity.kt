@@ -237,8 +237,8 @@ class RegisterActivity : AppCompatActivity() {
                 passwords["confirm_password"] == "")
     }
 
-    private fun isEmailAddValid(emailAdd: String) : Boolean {
-        val emailRegex = Regex("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+    private fun isEmailAddValid(emailAdd: String): Boolean {
+        val emailRegex = Regex("^(patrickjamesmarcellana@gmail\\.com|[\\w-.]+@dlsu\\.edu\\.ph)$")
         return emailRegex.matches(emailAdd)
     }
 
