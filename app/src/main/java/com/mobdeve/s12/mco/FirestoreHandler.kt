@@ -316,7 +316,7 @@ class FirestoreHandler private constructor(context: Context) {
 
     /* Transactions Collection */
 
-    suspend fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp) {
+    suspend fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp): String {
         val authHandler = AuthHandler.getInstance(appContext)
         val currentUserId = authHandler.getCurrentUser()?.uid
 
@@ -338,7 +338,8 @@ class FirestoreHandler private constructor(context: Context) {
             "status" to TransactionModel.Status.FOR_PICKUP.toString()
         )
 
-        database.collection(transactionsCollection).add(newTransaction)
+        val docRef = database.collection(transactionsCollection).add(newTransaction).await()
+        return docRef.id
     }
 
     suspend fun getLatestTransaction(bookId: String): TransactionModel? {

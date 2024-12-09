@@ -219,14 +219,33 @@ class BookDetailsActivity : AppCompatActivity() {
                 val transactionDate = Timestamp.now()
                 val bookId = this.intent.getStringExtra(ID_KEY)
 
+                val bookTitle = intent.getStringExtra(TITLE_KEY)
+                val pickupDateString = borrowPopupBinding.borrowPopupTvStartDateValue.text.toString()
+                val returnDateString = borrowPopupBinding.borrowPopupTvEndDateValue.text.toString()
+                val bookPickupReminder = "Reminder to pick up by $pickupDateString"
+                val bookReturnReminder = "Reminder to return by $returnDateString"
+                val transReceipt = "Pick up by $pickupDateString and return by $returnDateString"
+                val millisIn24Hours = 24 * 60 * 60 * 1000L
+                val oneDayBeforePickup = expectedPickupDate!!.toDate().time - millisIn24Hours - transactionDate.toDate().time
+                val oneDayBeforeReturn = expectedReturnDate!!.toDate().time - millisIn24Hours - transactionDate.toDate().time
                 CoroutineScope(Dispatchers.Main).launch {
                     val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
-                    firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
+                    val transId = firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
                     setUIToBorrowed(TransactionModel.Status.FOR_PICKUP, expectedPickupDate, expectedReturnDate)
 
                     // hide progress bar
                     viewBinding.bookDetailsLoadingCover.visibility = View.GONE
                     viewBinding.bookDetailsProgressBar.visibility = View.GONE
+
+                    val pickupNotifId = "{$transId}_pickup"
+                    val returnNotifId = "{$transId}_return"
+                    val borrowNotifId = "{$transId}_borrow"
+                    Log.d("BookDetailsActivity", "Sending notification with pick up date $pickupDateString and return date $returnDateString")
+                    NotificationReceiver.sendNotification(this@BookDetailsActivity, "Borrowed $bookTitle", transReceipt, borrowNotifId, borrowNotifId, 3)
+                    NotificationReceiver.sendNotification(this@BookDetailsActivity, "Pick up $bookTitle", bookPickupReminder, pickupNotifId, pickupNotifId, oneDayBeforePickup)
+                    NotificationReceiver.sendNotification(this@BookDetailsActivity, "Return $bookTitle", bookReturnReminder, returnNotifId, returnNotifId, oneDayBeforeReturn)
+//                    NotificationReceiver.sendNotification(this@BookDetailsActivity, "Pick up $bookTitle", bookPickupReminder, pickupNotifId, pickupNotifId, 7 * 1000)
+//                    NotificationReceiver.sendNotification(this@BookDetailsActivity, "Return $bookTitle", bookReturnReminder, returnNotifId, returnNotifId, 10 * 1000)
 
                     val toast = Toast.makeText(this@BookDetailsActivity, "Borrow transaction successfully made.", Toast.LENGTH_SHORT)
                     toast.show()
@@ -312,6 +331,20 @@ class BookDetailsActivity : AppCompatActivity() {
                     if(transactionId != null) {
                         firestoreHandler.updateTransaction(transactionId, "status", TransactionModel.Status.CANCELLED.toString())
                         firestoreHandler.updateTransaction(transactionId, "canceledDate", Timestamp.now())
+
+                        val bookTitle = intent.getStringExtra(TITLE_KEY)
+                        val transaction = firestoreHandler.getLatestTransaction(bookId)
+                        val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH)
+                        val pickupDateString = outputFormat.format(transaction!!.expectedPickupDate.toDate())
+                        val returnDateString = outputFormat.format(transaction!!.expectedReturnDate.toDate())
+                        val bookPickupReminder = "Reminder to pick up by $pickupDateString"
+                        val bookReturnReminder = "Reminder to return by $returnDateString"
+                        val pickupNotifId = "{$transactionId}_pickup"
+                        val returnNotifId = "{$transactionId}_return"
+                        Log.d("BookDetailsActivity", "Canceling notification with pick up date $pickupDateString and return date $returnDateString")
+                        NotificationReceiver.cancelNotification(this@BookDetailsActivity, "Pick up $bookTitle", bookPickupReminder, pickupNotifId, pickupNotifId)
+                        NotificationReceiver.cancelNotification(this@BookDetailsActivity, "Return $bookTitle", bookReturnReminder, returnNotifId, returnNotifId)
+
                     } else {
                         Log.e("BookDetailsActivity", "TransactionID is null when attempting to cancel transaction.")
                     }
@@ -421,6 +454,9 @@ class BookDetailsActivity : AppCompatActivity() {
                 val bookId = getBookId()
 
                 if(bookId != null) {
+
+                    viewBinding.bookDetailsIbFavBtn.visibility = View.INVISIBLE
+                    viewBinding.bookDetailsPbFavbtn.visibility = View.VISIBLE
                     val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
                     if(isBookFavorited != null) {
                         if(isBookFavorited == true) {
@@ -429,10 +465,12 @@ class BookDetailsActivity : AppCompatActivity() {
                             firestoreHandler.addToFavorites(bookId)
                         }
                         updateFavButton(!isBookFavorited)
-                    }
-                     else {
+                    } else {
                         Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
                     }
+                    viewBinding.bookDetailsIbFavBtn.visibility = View.VISIBLE
+                    viewBinding.bookDetailsPbFavbtn.visibility = View.GONE
+                    
                 } else {
                     Log.w("BookDetailsActivity", "Book ID is null when called in addListenerFavoriteBtn()")
                 }

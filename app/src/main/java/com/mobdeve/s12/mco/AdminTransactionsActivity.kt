@@ -19,11 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.DocumentSnapshot
-import com.mobdeve.s12.mco.TransactionsFragment.Companion
 import com.mobdeve.s12.mco.databinding.ActivityAdminTransactionsBinding
 import com.mobdeve.s12.mco.databinding.ComponentDialogAdminTransBinding
 import com.mobdeve.s12.mco.databinding.ComponentDialogConfirmlogoutBinding
-import com.mobdeve.s12.mco.databinding.FragmentTransactionsBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -314,6 +312,8 @@ class AdminTransactionsActivity : AppCompatActivity() {
         confirmLogoutDialogBinding.dialogConfirmlogoutBtnConfirm.setOnClickListener {
             dialog.dismiss()
             // finish activity that was started by Login to logout
+            val authHandler = AuthHandler.getInstance(this)
+            authHandler.logoutAccount()
             finish()
         }
 
