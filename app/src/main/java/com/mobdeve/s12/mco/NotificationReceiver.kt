@@ -79,6 +79,7 @@ class NotificationReceiver : BroadcastReceiver() {
             .setContentTitle(title)
             .setContentText(message)
             .setSmallIcon(android.R.drawable.ic_notification_overlay)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setAutoCancel(true)
             .build()
 
