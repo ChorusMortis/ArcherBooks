@@ -1,9 +1,8 @@
 package com.mobdeve.s12.mco
 
+import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.AggregateSource
@@ -14,10 +13,8 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
-import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
-import kotlin.math.exp
 
 class FirestoreHandler private constructor(context: Context) {
     private val appContext: Context = context.applicationContext
@@ -427,7 +424,7 @@ class FirestoreHandler private constructor(context: Context) {
 
     suspend fun getTransactions(increment: Long, sortOption: TransactionsFragment.SortOption,
                                 filterOption: TransactionsFragment.FilterOption,
-                                startAfterDoc: DocumentSnapshot?) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
+                                startAfterDoc: DocumentSnapshot?, context: Context) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
         try {
             val authHandler = AuthHandler.getInstance(appContext)
             val currentUserId = authHandler.getUserUid()
@@ -490,7 +487,7 @@ class FirestoreHandler private constructor(context: Context) {
 
             if(!querySnapshot.isEmpty) {
                 for (document in querySnapshot.documents) {
-                    transObjArr.add(convertDataToTransactionObjSimplified(document)!!)
+                    transObjArr.add(convertDataToTransactionObjSimplified(document, context)!!)
                 }
                 lastDocument = querySnapshot.documents.last()
             }
@@ -502,7 +499,7 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
-    suspend fun getInitialTransactions(increment: Long) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
+    suspend fun getInitialTransactions(increment: Long, context: Context) : Pair<ArrayList<TransactionModel>, DocumentSnapshot?>? {
         try {
             val authHandler = AuthHandler.getInstance(appContext)
             val currentUserId = authHandler.getUserUid()
@@ -521,7 +518,7 @@ class FirestoreHandler private constructor(context: Context) {
 
             if(!querySnapshot.isEmpty) {
                 for (document in querySnapshot.documents) {
-                    transObjArr.add(convertDataToTransactionObjSimplified(document)!!)
+                    transObjArr.add(convertDataToTransactionObjSimplified(document, context)!!)
                 }
                 lastDocument = querySnapshot.documents.last()
             }
@@ -603,7 +600,7 @@ class FirestoreHandler private constructor(context: Context) {
         return calendar.time
     }
 
-    private suspend fun convertDataToTransactionObjSimplified(document : DocumentSnapshot) : TransactionModel? {
+    private suspend fun convertDataToTransactionObjSimplified(document : DocumentSnapshot, context: Context) : TransactionModel? {
         val data = document.data
         val bookRef = data?.get(BOOK_FIELD) as DocumentReference
 
@@ -622,11 +619,26 @@ class FirestoreHandler private constructor(context: Context) {
         if(status == TransactionModel.Status.TO_RETURN.toString() && expectedReturnDateWithoutTime.before(dateTodayWithoutTime)) {
             updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.OVERDUE)
             status = TransactionModel.Status.OVERDUE.toString()
+
+            // hack: send over due return date notification when transaction is updated regardless of whether user has signed in or not
+            // send clearance hold notification regardless of whether user is logged in or not
+            val bookTitle = data[BOOK_TITLE_INDEX_FIELD] as String
+            val transactionId = document.id
+            val toReturnOverdueMsg = "Return the book to borrow more. Check your account for a clearance hold and late fees."
+            val toReturnOverdueNotifId = "${transactionId}_toreturnoverdue"
+            NotificationReceiver.sendNotification(context as Activity, "Late return of $bookTitle", toReturnOverdueMsg, toReturnOverdueNotifId, toReturnOverdueNotifId, 3 * 1000)
         } else if(status == TransactionModel.Status.FOR_PICKUP.toString() && expectedPickupDateWithoutTime.before(dateTodayWithoutTime)) {
             updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.CANCELLED)
             status = TransactionModel.Status.CANCELLED.toString()
             cancelledDate = Timestamp.now()
             updateTransaction(document.id, CANCELED_DATE_FIELD, cancelledDate)
+
+            // hack: send over due pickup date notification when transaction is updated regardless of whether user has signed in or not
+            val bookTitle = data[BOOK_TITLE_INDEX_FIELD] as String
+            val transactionId = document.id
+            val toPickupOverdueMsg = "Your transaction has been cancelled since it was not picked up on time."
+            val toPickupOverdueNotifId = "${transactionId}_topickupoverdue"
+            NotificationReceiver.sendNotification(context as Activity, "Late pickup of $bookTitle", toPickupOverdueMsg, toPickupOverdueNotifId, toPickupOverdueNotifId, 3 * 1000)
         }
 
         if(book != null) {

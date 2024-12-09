@@ -115,7 +115,7 @@ class TransactionsFragment : Fragment() {
             transactionsFragBinding.transactionsInitialProgressBar.visibility = View.VISIBLE
             val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
 
-            val returnedObjList = firestoreHandler.getInitialTransactions(this@TransactionsFragment.displayIncrement)
+            val returnedObjList = firestoreHandler.getInitialTransactions(this@TransactionsFragment.displayIncrement, requireActivity())
             addDataToAdapter(returnedObjList)
 
             if(returnedObjList?.first?.size == 0) {
@@ -137,7 +137,7 @@ class TransactionsFragment : Fragment() {
             transactionsFragBinding.transactionsInitialProgressBar.visibility = View.VISIBLE
             val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
 
-            val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved)
+            val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved, requireActivity())
             addDataToAdapter(returnedObjList)
 
             if(returnedObjList?.first?.size == 0) {
@@ -178,7 +178,7 @@ class TransactionsFragment : Fragment() {
         val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
 
         CoroutineScope(Dispatchers.Main).launch {
-            val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved)
+            val returnedObjList = firestoreHandler.getTransactions(this@TransactionsFragment.displayIncrement, activeSortOption, activeFilterOption, lastTransactionRetrieved, requireActivity())
             addDataToAdapter(returnedObjList)
             transactionsFragBinding.transactionsScrollProgressBar.visibility = View.GONE
             layoutParams.bottomMargin = 0
