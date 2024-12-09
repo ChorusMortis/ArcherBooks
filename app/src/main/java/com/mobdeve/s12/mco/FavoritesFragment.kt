@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.DocumentSnapshot
 import com.mobdeve.s12.mco.databinding.ComponentDialogFavsBinding
 import com.mobdeve.s12.mco.databinding.FragmentFavoritesBinding
 import kotlinx.coroutines.CoroutineScope
@@ -95,27 +96,51 @@ class FavoritesFragment : Fragment() {
         fAdapter.notifyDataSetChanged()
     }
 
+    private fun setBookCount() {
+        val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+        transactionsFragBinding.favoritesPbTotalCount.visibility = View.VISIBLE
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val totalCount = firestoreHandler.getTotalFavorites()
+            bookCount = totalCount
+            var label = " Books"
+            if(totalCount == 1) {
+                label = " Book"
+            }
+
+            transactionsFragBinding.favoritesTvOverviewbookcount.text = totalCount.toString() + label
+            transactionsFragBinding.favoritesPbTotalCount.visibility = View.GONE
+        }
+    }
+
     private fun passInitialData() {
         dataStartingIndex = 0
-        CoroutineScope(Dispatchers.Main).launch {
-            isLoading = true
-            fAdapter.removeAllBooks()
-            transactionsFragBinding.favoritesInitialProgressBar.visibility = View.VISIBLE
-            val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+        hasMoreData = true
+        transactionsFragBinding.favoritesTvEmptyList.visibility = View.GONE
+        setBookCount()
 
+        isLoading = true
+        fAdapter.removeAllBooks()
+        transactionsFragBinding.favoritesInitialProgressBar.visibility = View.VISIBLE
+        val firestoreHandler = FirestoreHandler.getInstance(transactionsFragBinding.root.context)
+
+        CoroutineScope(Dispatchers.Main).launch {
             val returnedObjList = firestoreHandler.getAllFavorites(activeSortOption)
             if(returnedObjList != null) {
                 favoritesObjList = returnedObjList
-                bookCount = favoritesObjList.size
-                setBookCount()
 
                 val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
                 Log.d("FavoritesFragment", "End index at initial data is $endIndex")
+
                 val favoritesBookList = ArrayList(favoritesObjList.subList(dataStartingIndex, endIndex))
                 dataStartingIndex = endIndex
 
                 if(dataStartingIndex == favoritesObjList.size) {
                     hasMoreData = false
+                }
+
+                if(returnedObjList.size == 0) {
+                    transactionsFragBinding.favoritesTvEmptyList.visibility = View.VISIBLE
                 }
 
                 fAdapter.addBooks(favoritesBookList)
@@ -137,7 +162,7 @@ class FavoritesFragment : Fragment() {
                 if(!isLoading && hasMoreData) {
                     if(visibleItemCount + firstVisibleItemPosition >= totalItemCount
                         && firstVisibleItemPosition >= 0
-                        && totalItemCount >= 10) {
+                        && totalItemCount >= displayIncrement) {
                         incrementData()
                     }
                 }
@@ -150,7 +175,6 @@ class FavoritesFragment : Fragment() {
         transactionsFragBinding.favoritesScrollProgressBar.visibility = View.VISIBLE
         val layoutParams = transactionsFragBinding.favoritesRvFavs.layoutParams as ViewGroup.MarginLayoutParams
         layoutParams.bottomMargin = 40
-        val googleBooksAPIHandler = GoogleBooksAPIHandler()
 
         CoroutineScope(Dispatchers.Main).launch {
             val endIndex = (dataStartingIndex + displayIncrement).coerceAtMost(favoritesObjList.size)
@@ -169,21 +193,16 @@ class FavoritesFragment : Fragment() {
         }
     }
 
-    private fun setBookCount() {
-        var label = " books"
-        if(bookCount == 1) {
-            label = "book"
-        }
-        transactionsFragBinding.favoritesTvOverviewbookcount.text = "$bookCount $label"
-    }
-
     private fun decrementBookCount() {
         bookCount--
-        var label = " books"
+        var label = " Books"
         if(bookCount == 1) {
-            label = "book"
+            label = "Book"
         }
         transactionsFragBinding.favoritesTvOverviewbookcount.text = "$bookCount $label"
+        if(bookCount == 0) {
+            transactionsFragBinding.favoritesTvEmptyList.visibility = View.VISIBLE
+        }
     }
 
     private fun initPreferences() {
