@@ -94,6 +94,8 @@ class FavoritesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         fAdapter.notifyDataSetChanged()
+        activeFilterOption = FilterOption.ALL
+        activeSortOption = SortOption.RECENT_FAV
     }
 
     private fun setBookCount() {
