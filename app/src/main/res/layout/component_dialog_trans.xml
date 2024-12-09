@@ -76,7 +76,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:stateListAnimator="@null"
-        android:text="Author Name"
+        android:text="First Author"
         android:textAllCaps="false"
         android:textColor="@color/dark_background"
         android:textSize="12sp"
