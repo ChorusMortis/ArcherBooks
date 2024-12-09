@@ -284,23 +284,37 @@ class FirestoreHandler private constructor(context: Context) {
 
     suspend fun getAllFavorites(sortOption: FavoritesFragment.SortOption) : ArrayList<BookModel>? {
         return try {
-            val currentUser = getCurrentUserModel()
+            val authHandler = AuthHandler.getInstance(appContext)
+            val uid = authHandler.getUserUid()
 
-            if(currentUser != null) {
+            val userRef = database.collection(usersCollection).document(uid!!).get().await()
+            val userData = userRef.data
+
+            if(userData != null) {
+                val favoritesRefs = userData["favorites"] as List<DocumentReference>
+                val favoritesObjs : ArrayList<BookModel> = arrayListOf()
+                if(favoritesRefs.isNotEmpty()) {
+                    favoritesRefs.map { favoritesRef ->
+                        val favoritesObj = favoritesRef.get().await().toObject(BookModel::class.java)
+                        if(favoritesObj != null) {
+                            favoritesObjs += favoritesObj
+                        }
+                    }
+                }
+
                 Log.d("FirestoreHandler", "Successfully returning the favorites list (empty or not) from the backend!")
                 when (sortOption) {
                     FavoritesFragment.SortOption.RECENT_FAV -> {
-                        // TODO: change placeholder logic
-                        ArrayList(currentUser.favorites.sortedBy { it.title })
+                        ArrayList(favoritesObjs)
                     }
                     FavoritesFragment.SortOption.NEWEST -> {
-                        ArrayList(currentUser.favorites.sortedByDescending { it.publishYear })
+                        ArrayList(favoritesObjs.sortedByDescending { it.publishYear })
                     }
                     FavoritesFragment.SortOption.TITLE -> {
-                        ArrayList(currentUser.favorites.sortedBy { it.title })
+                        ArrayList(favoritesObjs.sortedBy { it.title })
                     }
                     FavoritesFragment.SortOption.AUTHOR -> {
-                        ArrayList(currentUser.favorites.sortedBy { it.authors[0] })
+                        ArrayList(favoritesObjs.sortedBy { it.authors[0] })
                     }
                 }
             } else {
