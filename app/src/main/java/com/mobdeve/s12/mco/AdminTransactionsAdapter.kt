@@ -113,10 +113,12 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>,
                     firestoreHandler.updateTransaction(data[position].transactionId, "actualReturnDate", currentTime)
                     data[position].actualReturnDate = currentTime
 
+                    firestoreHandler.setUserCanBorrow(true)
+
                     // send clearance hold notification regardless of whether user is logged in or not
                     val bookTitle = data[position].book.title
                     val transactionId = data[position].transactionId
-                    val returnedOverdueMsg = "Thank you for using Archer Books! Your clearance hold has been lifted."
+                    val returnedOverdueMsg = "You can now borrow more books and your clearance hold has been lifted."
                     val bookReturnedOverdueNotifId = "${transactionId}_returnedoverdue"
                     NotificationReceiver.sendNotification(context as Activity, "Returned $bookTitle", returnedOverdueMsg, bookReturnedOverdueNotifId, bookReturnedOverdueNotifId, 3 * 1000)
                 }
