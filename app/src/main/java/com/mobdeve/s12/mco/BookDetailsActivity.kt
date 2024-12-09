@@ -95,6 +95,7 @@ class BookDetailsActivity : AppCompatActivity() {
 
             // get transaction and user data
             val latestTransactionOfBook = firestoreHandler.getLatestTransaction(this@BookDetailsActivity.intent.getStringExtra(ID_KEY)!!)
+            val currentUserModel = firestoreHandler.getCurrentUserModel() ?: return@launch
             val currentUserId = authHandler.getCurrentUser()?.uid
 
             // default
@@ -107,6 +108,11 @@ class BookDetailsActivity : AppCompatActivity() {
                 setUIToAvailable()
             } else if(latestTransactionOfBook.user.userId == currentUserId) {
                 setUIToBorrowed(latestTransactionOfBook.status, latestTransactionOfBook.expectedPickupDate, latestTransactionOfBook.expectedReturnDate)
+            }
+
+            if (!currentUserModel.canBorrow) {
+                viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+                viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
             }
 
             // hide progress bar

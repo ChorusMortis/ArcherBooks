@@ -30,6 +30,7 @@ class FirestoreHandler private constructor(context: Context) {
     private val SIGNUP_METHOD_FIELD = "signUpMethod"
     private val USER_ID_FIELD = "userId"
     private val FAVORITES_FIELD = "favorites"
+    private val CAN_BORROW_FIELD = "canBorrow"
 
     private val BOOK_FIELD = "book"
     private val USER_FIELD = "user"
@@ -128,7 +129,7 @@ class FirestoreHandler private constructor(context: Context) {
             }
         }
 
-        return UserModel(
+        val userModel = UserModel(
             userRef.id,
             userData["firstName"] as String,
             userData["lastName"] as String,
@@ -137,6 +138,8 @@ class FirestoreHandler private constructor(context: Context) {
             recentlyViewedObjs,
             favoritesObjs
         )
+        userModel.canBorrow = userData["canBorrow"] as Boolean
+        return userModel
     }
 
     suspend fun isUserAnAdmin(emailAdd: String) : Boolean {
@@ -179,6 +182,19 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("getUserFromEmail", e.toString())
             null
         }
+    }
+
+    fun setUserCanBorrow(canBorrow: Boolean) {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val uid = authHandler.getUserUid() ?: return
+        database.collection(usersCollection).document(uid)
+            .update(CAN_BORROW_FIELD, canBorrow)
+            .addOnSuccessListener {
+                Log.d("FirestoreHandler", "Successfully updated user's canBorrow field")
+            }
+            .addOnFailureListener {
+                Log.e("FirestoreHandler", "Error updating user's canBorrow field")
+            }
     }
 
     suspend fun getRecentlyViewedBooks(): ArrayList<BookModel>? {
@@ -649,6 +665,8 @@ class FirestoreHandler private constructor(context: Context) {
         if(status == TransactionModel.Status.TO_RETURN.toString() && expectedReturnDateWithoutTime.before(dateTodayWithoutTime)) {
             updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.OVERDUE)
             status = TransactionModel.Status.OVERDUE.toString()
+
+            setUserCanBorrow(false)
 
             // hack: send over due return date notification when transaction is updated regardless of whether user has signed in or not
             // send clearance hold notification regardless of whether user is logged in or not
