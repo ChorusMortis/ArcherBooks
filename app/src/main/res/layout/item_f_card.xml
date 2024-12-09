@@ -85,9 +85,9 @@
     <ProgressBar
         android:id="@+id/item_fv_pb_favbtn"
         style="?android:attr/progressBarStyle"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="12dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
         android:indeterminateTint="@color/main_green"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
