@@ -109,6 +109,13 @@ class BookDetailsActivity : AppCompatActivity() {
                 setUIToBorrowed(latestTransactionOfBook.status, latestTransactionOfBook.expectedPickupDate, latestTransactionOfBook.expectedReturnDate)
             }
 
+            // modify styling if user already is within limit of books
+            val activeTransactionsCount = firestoreHandler.getActiveTransactionsCount()
+            Log.d("BookDetailsActivity", "Number of active transactions is $activeTransactionsCount")
+            if(activeTransactionsCount >= 10) {
+                setUIToBorrowLimitReached()
+            }
+
             // hide progress bar
             viewBinding.bookDetailsLoadingCover.visibility = View.GONE
             viewBinding.bookDetailsProgressBar.visibility = View.GONE
@@ -417,6 +424,14 @@ class BookDetailsActivity : AppCompatActivity() {
         viewBinding.bookDetailsTvStatus.setTextColor(ContextCompat.getColor(this@BookDetailsActivity, R.color.book_unavailable))
         viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
         viewBinding.bookDetailsIbBorrowBtn.text = viewBinding.root.context.getString(R.string.borrow_btn_unavailable)
+        viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
+        viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+        viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+    }
+
+    private fun setUIToBorrowLimitReached() {
+        viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+        viewBinding.bookDetailsIbBorrowBtn.text = "Borrow Limit Reached"
         viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
         viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
         viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE

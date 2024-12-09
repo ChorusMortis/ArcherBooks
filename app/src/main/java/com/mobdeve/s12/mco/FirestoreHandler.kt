@@ -790,6 +790,26 @@ class FirestoreHandler private constructor(context: Context) {
         return transactionsDetails
     }
 
+    suspend fun getActiveTransactionsCount() : Int {
+        try {
+            val authHandler = AuthHandler.getInstance(appContext)
+            val currentUserId = authHandler.getUserUid()
+            val currentUserRef = database.collection(usersCollection).document(currentUserId!!)
+
+            Log.d("FirestoreHandler", "Current user found ${currentUserRef.id}")
+            val transactionsCount = database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereNotIn(STATUS_FIELD, listOf(TransactionsFragment.FilterOption.CANCELLED.toString(), TransactionsFragment.FilterOption.RETURNED.toString()))
+                .count().get(AggregateSource.SERVER).await().count
+
+            Log.d("FirestoreHandler", "Got $transactionsCount transactions when getActiveTransactions() was called")
+           return transactionsCount.toInt()
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getActiveTransactions() was called.", e)
+            return 0
+        }
+    }
+
     /*** Books Collection ***/
     suspend fun createBook(bookId: String) {
         val bookRef = database.collection(booksCollection).document(bookId)
