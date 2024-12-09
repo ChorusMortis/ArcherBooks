@@ -19,9 +19,7 @@ class AdminTransactionsViewHolder(private val viewBinding: ItemAdminTsCardBindin
         viewBinding.itemAdminTsTvTitle.text = transaction.book.title
         viewBinding.itemAdminTsTvBorrowerName.text = transaction.user.firstName + " " + transaction.user.lastName
 
-        val calendar = Calendar.getInstance()
-        calendar.set(2024, 11, 24)
-        viewBinding.itemAdminTsTvTransDateValue.text = formatDate(Timestamp(calendar.time))
+        viewBinding.itemAdminTsTvTransDateValue.text = formatDate(transaction.transactionDate)
         modifyTransactionDetails(transaction)
         setEditStatusButtonIcon(transaction)
     }
