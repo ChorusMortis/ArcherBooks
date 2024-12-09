@@ -614,7 +614,7 @@ class FirestoreHandler private constructor(context: Context) {
 
             return Pair(transObjArr, lastDocument)
         } catch(e: Exception) {
-            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getTransactionsForAdmin() was called.")
+            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getTransactionsForAdmin() was called.", e)
             return null
         }
     }
