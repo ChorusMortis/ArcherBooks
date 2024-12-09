@@ -228,7 +228,6 @@ class BookDetailsActivity : AppCompatActivity() {
                 val millisIn24Hours = 24 * 60 * 60 * 1000L
                 val oneDayBeforePickup = expectedPickupDate!!.toDate().time - millisIn24Hours - transactionDate.toDate().time
                 val oneDayBeforeReturn = expectedReturnDate!!.toDate().time - millisIn24Hours - transactionDate.toDate().time
-
                 CoroutineScope(Dispatchers.Main).launch {
                     val firestoreHandler = FirestoreHandler.getInstance(this@BookDetailsActivity)
                     val transId = firestoreHandler.createTransaction(bookId!!, transactionDate, expectedPickupDate!!, expectedReturnDate!!)
@@ -241,6 +240,7 @@ class BookDetailsActivity : AppCompatActivity() {
                     val pickupNotifId = "{$transId}_pickup"
                     val returnNotifId = "{$transId}_return"
                     val borrowNotifId = "{$transId}_borrow"
+                    Log.d("BookDetailsActivity", "Sending notification with pick up date $pickupDateString and return date $returnDateString")
                     NotificationReceiver.sendNotification(this@BookDetailsActivity, "Borrowed $bookTitle", transReceipt, borrowNotifId, borrowNotifId, 3)
                     NotificationReceiver.sendNotification(this@BookDetailsActivity, "Pick up $bookTitle", bookPickupReminder, pickupNotifId, pickupNotifId, oneDayBeforePickup)
                     NotificationReceiver.sendNotification(this@BookDetailsActivity, "Return $bookTitle", bookReturnReminder, returnNotifId, returnNotifId, oneDayBeforeReturn)
@@ -331,6 +331,20 @@ class BookDetailsActivity : AppCompatActivity() {
                     if(transactionId != null) {
                         firestoreHandler.updateTransaction(transactionId, "status", TransactionModel.Status.CANCELLED.toString())
                         firestoreHandler.updateTransaction(transactionId, "canceledDate", Timestamp.now())
+
+                        val bookTitle = intent.getStringExtra(TITLE_KEY)
+                        val transaction = firestoreHandler.getLatestTransaction(bookId)
+                        val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH)
+                        val pickupDateString = outputFormat.format(transaction!!.expectedPickupDate.toDate())
+                        val returnDateString = outputFormat.format(transaction!!.expectedReturnDate.toDate())
+                        val bookPickupReminder = "Reminder to pick up by $pickupDateString"
+                        val bookReturnReminder = "Reminder to return by $returnDateString"
+                        val pickupNotifId = "{$transactionId}_pickup"
+                        val returnNotifId = "{$transactionId}_return"
+                        Log.d("BookDetailsActivity", "Canceling notification with pick up date $pickupDateString and return date $returnDateString")
+                        NotificationReceiver.cancelNotification(this@BookDetailsActivity, "Pick up $bookTitle", bookPickupReminder, pickupNotifId, pickupNotifId)
+                        NotificationReceiver.cancelNotification(this@BookDetailsActivity, "Return $bookTitle", bookReturnReminder, returnNotifId, returnNotifId)
+
                     } else {
                         Log.e("BookDetailsActivity", "TransactionID is null when attempting to cancel transaction.")
                     }
