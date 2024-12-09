@@ -53,7 +53,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/sf_ui_text_bold"
-        android:text="24 Books"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/favorites_iv_overviewbg"
@@ -70,6 +69,7 @@
         android:padding="10dp"
         android:scaleX="1"
         android:scaleY="1"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/favorites_tv_overviewbookcount"
         app:layout_constraintEnd_toEndOf="@+id/favorites_iv_overviewbg"
         app:layout_constraintTop_toTopOf="@+id/favorites_tv_overviewtitle"
@@ -111,5 +111,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/favorites_pb_total_count"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/favorites_iv_overviewbg"
+        app:layout_constraintStart_toStartOf="@+id/favorites_tv_overviewtitle"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_tv_overviewtitle" />
+
+    <TextView
+        android:id="@+id/favorites_tv_empty_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/sf_ui_text_medium"
+        android:text="You have not favorited any book so far."
+        android:textColor="@color/text_over_white_bg"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/favorites_rv_favs"
+        app:layout_constraintTop_toTopOf="@+id/favorites_rv_favs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
