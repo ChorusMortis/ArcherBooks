@@ -176,6 +176,15 @@ class RegisterActivity : AppCompatActivity() {
                 val user = task.result?.user
                 val email = user?.email ?: return@addOnCompleteListener
 
+                // block email without dlsu.edu.ph domain
+                if (!email.endsWith("dlsu.edu.ph")) {
+                    viewBinding.registerLoadingCover.visibility = View.GONE
+                    viewBinding.registerProgressBar.visibility = View.GONE
+                    authHandler.logoutAccount()
+                    Toast.makeText(this@RegisterActivity, "Sorry! Only DLSU (dlsu.edu.ph) emails are allowed.", Toast.LENGTH_SHORT).show()
+                    return@addOnCompleteListener
+                }
+
                 // create Google account in database (if it doesn't exist yet) and go to MainActivity
                 createGoogleAccountInDb(user, email)
             } else {
