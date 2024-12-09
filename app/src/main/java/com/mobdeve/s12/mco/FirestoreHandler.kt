@@ -328,6 +328,22 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun getTotalFavorites() : Int {
+        val authHandler = AuthHandler.getInstance(appContext)
+        val uid = authHandler.getUserUid()
+
+        val userRef = database.collection(usersCollection).document(uid!!).get().await()
+        val userData = userRef.data
+
+        var count  = 0
+        if(userData != null) {
+            val favoritesList = userData["favorites"] as List<DocumentReference>
+            count = favoritesList.size
+        }
+
+        return count
+    }
+
     /* Transactions Collection */
 
     suspend fun createTransaction(bookId: String, transactionDate: Timestamp, expectedPickupDate: Timestamp, expectedReturnDate: Timestamp): String {
