@@ -454,6 +454,9 @@ class BookDetailsActivity : AppCompatActivity() {
                 val bookId = getBookId()
 
                 if(bookId != null) {
+
+                    viewBinding.bookDetailsIbFavBtn.visibility = View.INVISIBLE
+                    viewBinding.bookDetailsPbFavbtn.visibility = View.VISIBLE
                     val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
                     if(isBookFavorited != null) {
                         if(isBookFavorited == true) {
@@ -462,10 +465,12 @@ class BookDetailsActivity : AppCompatActivity() {
                             firestoreHandler.addToFavorites(bookId)
                         }
                         updateFavButton(!isBookFavorited)
-                    }
-                     else {
+                    } else {
                         Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
                     }
+                    viewBinding.bookDetailsIbFavBtn.visibility = View.VISIBLE
+                    viewBinding.bookDetailsPbFavbtn.visibility = View.GONE
+                    
                 } else {
                     Log.w("BookDetailsActivity", "Book ID is null when called in addListenerFavoriteBtn()")
                 }
