@@ -13,10 +13,13 @@ import kotlinx.coroutines.launch
 
 class FavoritesFavsAdapter(private val data: ArrayList<BookModel>,
                            private val onBookRemoved: () -> Unit ): RecyclerView.Adapter<FavoritesFavsViewHolder>() {
+
+    private lateinit var itemFavsViewBinding: ItemFCardBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesFavsViewHolder {
         // TODO MCO3: Add on-click listener for Favorite button that will add the book to the user's favorites list
 
-        val itemFavsViewBinding = ItemFCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        itemFavsViewBinding = ItemFCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val favsViewHolder = FavoritesFavsViewHolder(itemFavsViewBinding)
         addListenerCard(favsViewHolder, itemFavsViewBinding)
         addListenerFavoriteBtn(favsViewHolder, itemFavsViewBinding)
@@ -60,11 +63,14 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>,
     }
 
     private fun addListenerFavoriteBtn(holder : FavoritesFavsViewHolder, itemFavsViewBinding: ItemFCardBinding) {
-        itemFavsViewBinding.itemFvIbFavbtn.setOnClickListener(View.OnClickListener {
+        itemFavsViewBinding.itemFvIbFavbtn.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 val bookId = data[holder.bindingAdapterPosition].id
-                val firestoreHandler = FirestoreHandler.getInstance(itemFavsViewBinding.root.context)
 
+                itemFavsViewBinding.itemFvPbFavbtn.visibility = View.VISIBLE
+                itemFavsViewBinding.itemFvIbFavbtn.visibility = View.INVISIBLE
+
+                val firestoreHandler = FirestoreHandler.getInstance(itemFavsViewBinding.root.context)
                 val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
                 if(isBookFavorited != null) {
                     if(isBookFavorited == true) {
@@ -80,13 +86,14 @@ class FavoritesFavsAdapter(private val data: ArrayList<BookModel>,
                             this@FavoritesFavsAdapter.notifyItemRangeChanged(holder.bindingAdapterPosition, data.size)
                             onBookRemoved()
                         }
-
                     }
-                }
-                else {
+                } else {
                     Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
                 }
+
+                itemFavsViewBinding.itemFvPbFavbtn.visibility = View.GONE
+                itemFavsViewBinding.itemFvIbFavbtn.visibility = View.VISIBLE
             }
-        })
+        }
     }
 }

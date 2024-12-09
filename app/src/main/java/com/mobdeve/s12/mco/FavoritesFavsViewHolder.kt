@@ -26,8 +26,10 @@ class FavoritesFavsViewHolder(private val viewBinding: ItemFCardBinding): Recycl
     /*** Favorite Button Functions ***/
     private fun setInitialFavButtonUI(bookId: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            val firestoreHandler = FirestoreHandler.getInstance(viewBinding.root.context)
+            viewBinding.itemFvPbFavbtn.visibility = View.VISIBLE
+            viewBinding.itemFvIbFavbtn.visibility = View.INVISIBLE
 
+            val firestoreHandler = FirestoreHandler.getInstance(viewBinding.root.context)
             val isBookFavorited = firestoreHandler.isBookFavorited(bookId)
             if(isBookFavorited != null && viewBinding.itemFvIbFavbtn.tag == bookId) {
                 updateFavButton(isBookFavorited)
@@ -35,6 +37,9 @@ class FavoritesFavsViewHolder(private val viewBinding: ItemFCardBinding): Recycl
             else {
                 Log.e("BookDetailsActivity", "There was an error in checking if book was part of current user's favorites in Firestore.")
             }
+
+            viewBinding.itemFvPbFavbtn.visibility = View.GONE
+            viewBinding.itemFvIbFavbtn.visibility = View.VISIBLE
         }
     }
 
