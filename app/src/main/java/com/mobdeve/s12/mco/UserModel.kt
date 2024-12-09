@@ -16,7 +16,6 @@ class UserModel {
         private set
     var admin: Boolean = false
         private set
-    var canBorrow: Boolean = true
 
     enum class SignUpMethod {
         EMAIL,

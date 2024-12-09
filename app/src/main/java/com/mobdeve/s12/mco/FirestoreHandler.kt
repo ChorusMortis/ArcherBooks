@@ -138,7 +138,6 @@ class FirestoreHandler private constructor(context: Context) {
             recentlyViewedObjs,
             favoritesObjs
         )
-        userModel.canBorrow = userData["canBorrow"] as Boolean
         return userModel
     }
 
@@ -182,19 +181,6 @@ class FirestoreHandler private constructor(context: Context) {
             Log.e("getUserFromEmail", e.toString())
             null
         }
-    }
-
-    fun setUserCanBorrow(canBorrow: Boolean) {
-        val authHandler = AuthHandler.getInstance(appContext)
-        val uid = authHandler.getUserUid() ?: return
-        database.collection(usersCollection).document(uid)
-            .update(CAN_BORROW_FIELD, canBorrow)
-            .addOnSuccessListener {
-                Log.d("FirestoreHandler", "Successfully updated user's canBorrow field")
-            }
-            .addOnFailureListener {
-                Log.e("FirestoreHandler", "Error updating user's canBorrow field")
-            }
     }
 
     suspend fun getRecentlyViewedBooks(): ArrayList<BookModel>? {
@@ -665,8 +651,6 @@ class FirestoreHandler private constructor(context: Context) {
         if(status == TransactionModel.Status.TO_RETURN.toString() && expectedReturnDateWithoutTime.before(dateTodayWithoutTime)) {
             updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.OVERDUE)
             status = TransactionModel.Status.OVERDUE.toString()
-
-            setUserCanBorrow(false)
 
             // hack: send over due return date notification when transaction is updated regardless of whether user has signed in or not
             // send clearance hold notification regardless of whether user is logged in or not

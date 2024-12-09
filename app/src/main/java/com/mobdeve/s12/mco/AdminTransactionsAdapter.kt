@@ -113,8 +113,6 @@ class AdminTransactionsAdapter(private val data: ArrayList<TransactionModel>,
                     firestoreHandler.updateTransaction(data[position].transactionId, "actualReturnDate", currentTime)
                     data[position].actualReturnDate = currentTime
 
-                    firestoreHandler.setUserCanBorrow(true)
-
                     // send clearance hold notification regardless of whether user is logged in or not
                     val bookTitle = data[position].book.title
                     val transactionId = data[position].transactionId
