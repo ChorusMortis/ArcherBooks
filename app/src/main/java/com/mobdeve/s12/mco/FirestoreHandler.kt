@@ -1,7 +1,9 @@
 package com.mobdeve.s12.mco
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.AggregateSource
@@ -12,6 +14,10 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
+import java.time.ZoneId
+import java.util.Calendar
+import java.util.Date
+import kotlin.math.exp
 
 class FirestoreHandler private constructor(context: Context) {
     private val appContext: Context = context.applicationContext
@@ -583,6 +589,18 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    private fun truncateTimeFromDate(date: Date): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+
+        // Set time fields to zero
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        return calendar.time
+    }
 
     private suspend fun convertDataToTransactionObjSimplified(document : DocumentSnapshot) : TransactionModel? {
         val data = document.data
@@ -590,18 +608,38 @@ class FirestoreHandler private constructor(context: Context) {
 
         val book = bookRef.get().await().toObject(BookModel::class.java)
 
+        // detect if book is already overdue
+        var status = data[STATUS_FIELD].toString()
+        val expectedReturnDate = data[EXPECTED_RETURN_DATE_FIELD] as Timestamp
+        val expectedPickupDate = data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp
+        var cancelledDate = data[CANCELED_DATE_FIELD] as Timestamp?
+
+        val expectedReturnDateWithoutTime = truncateTimeFromDate(expectedReturnDate.toDate())
+        val dateTodayWithoutTime = truncateTimeFromDate(Timestamp.now().toDate())
+        val expectedPickupDateWithoutTime = truncateTimeFromDate(expectedPickupDate.toDate())
+
+        if(status == TransactionModel.Status.TO_RETURN.toString() && expectedReturnDateWithoutTime.before(dateTodayWithoutTime)) {
+            updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.OVERDUE)
+            status = TransactionModel.Status.OVERDUE.toString()
+        } else if(status == TransactionModel.Status.FOR_PICKUP.toString() && expectedPickupDateWithoutTime.before(dateTodayWithoutTime)) {
+            updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.CANCELLED)
+            status = TransactionModel.Status.CANCELLED.toString()
+            cancelledDate = Timestamp.now()
+            updateTransaction(document.id, CANCELED_DATE_FIELD, cancelledDate)
+        }
+
         if(book != null) {
             val transactionObject = TransactionModel(
                 document.id,
                 book,
                 UserModel(), // simplify the model
                 data[TRANSACTION_DATE_FIELD] as Timestamp,
-                data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp,
-                data[EXPECTED_RETURN_DATE_FIELD] as Timestamp,
+                expectedPickupDate,
+                expectedReturnDate,
                 data[ACTUAL_PICKUP_DATE_FIELD] as Timestamp?,
                 data[ACTUAL_RETURN_DATE_FIELD] as Timestamp?,
-                data[CANCELED_DATE_FIELD] as Timestamp?,
-                TransactionModel.Status.valueOf(data[STATUS_FIELD].toString())
+                cancelledDate,
+                TransactionModel.Status.valueOf(status)
             )
 
             return transactionObject
@@ -618,18 +656,38 @@ class FirestoreHandler private constructor(context: Context) {
         val userDoc = userRef.get().await()
         val userData = userDoc.data
 
+        // detect if book is already overdue
+        var status = data[STATUS_FIELD].toString()
+        val expectedReturnDate = data[EXPECTED_RETURN_DATE_FIELD] as Timestamp
+        val expectedPickupDate = data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp
+        var cancelledDate = data[CANCELED_DATE_FIELD] as Timestamp?
+
+        val expectedReturnDateWithoutTime = truncateTimeFromDate(expectedReturnDate.toDate())
+        val dateTodayWithoutTime = truncateTimeFromDate(Timestamp.now().toDate())
+        val expectedPickupDateWithoutTime = truncateTimeFromDate(expectedPickupDate.toDate())
+
+        if(status == TransactionModel.Status.TO_RETURN.toString() && expectedReturnDateWithoutTime.before(dateTodayWithoutTime)) {
+            updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.OVERDUE)
+            status = TransactionModel.Status.OVERDUE.toString()
+        } else if(status == TransactionModel.Status.FOR_PICKUP.toString() && expectedPickupDateWithoutTime.before(dateTodayWithoutTime)) {
+            updateTransaction(document.id, STATUS_FIELD, TransactionModel.Status.CANCELLED)
+            status = TransactionModel.Status.CANCELLED.toString()
+            cancelledDate = Timestamp.now()
+            updateTransaction(document.id, CANCELED_DATE_FIELD, cancelledDate)
+        }
+
         if(book != null) {
             val transactionObject = TransactionModel(
                 document.id,
                 book,
                 UserModel(userData?.get(USER_ID_FIELD)!!.toString(), userData[FIRST_NAME_FIELD]!!.toString(), userData[LAST_NAME_FIELD]!!.toString()),
                 data[TRANSACTION_DATE_FIELD] as Timestamp,
-                data[EXPECTED_PICKUP_DATE_FIELD] as Timestamp,
-                data[EXPECTED_RETURN_DATE_FIELD] as Timestamp,
+                expectedPickupDate,
+                expectedReturnDate,
                 data[ACTUAL_PICKUP_DATE_FIELD] as Timestamp?,
                 data[ACTUAL_RETURN_DATE_FIELD] as Timestamp?,
-                data[CANCELED_DATE_FIELD] as Timestamp?,
-                TransactionModel.Status.valueOf(data[STATUS_FIELD].toString())
+                cancelledDate,
+                TransactionModel.Status.valueOf(status)
             )
 
             return transactionObject
