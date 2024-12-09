@@ -828,6 +828,26 @@ class FirestoreHandler private constructor(context: Context) {
         }
     }
 
+    suspend fun hasOverdueTransactions() : Boolean {
+        try {
+            val authHandler = AuthHandler.getInstance(appContext)
+            val currentUserId = authHandler.getUserUid()
+            val currentUserRef = database.collection(usersCollection).document(currentUserId!!)
+
+            Log.d("FirestoreHandler", "Current user found ${currentUserRef.id}")
+            val overdueTransactionsCount = database.collection(transactionsCollection)
+                .whereEqualTo(USER_FIELD, currentUserRef)
+                .whereEqualTo(STATUS_FIELD, TransactionsFragment.FilterOption.OVERDUE.toString())
+                .count().get(AggregateSource.SERVER).await().count
+
+            Log.d("FirestoreHandler", "Got $overdueTransactionsCount transactions when getActiveTransactions() was called")
+            return overdueTransactionsCount > 0
+        } catch(e: Exception) {
+            Log.e("FirestoreHandler", "Error trying to get transactions from the database when getActiveTransactions() was called.", e)
+            return true
+        }
+    }
+
     /*** Books Collection ***/
     suspend fun createBook(bookId: String) {
         val bookRef = database.collection(booksCollection).document(bookId)

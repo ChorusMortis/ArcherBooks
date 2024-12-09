@@ -109,6 +109,13 @@ class BookDetailsActivity : AppCompatActivity() {
                 setUIToBorrowed(latestTransactionOfBook.status, latestTransactionOfBook.expectedPickupDate, latestTransactionOfBook.expectedReturnDate)
             }
 
+            // modify styling if user has overdue books
+            val hasOverdueBooks = firestoreHandler.hasOverdueTransactions()
+            Log.d("BookDetailsActivity", "Has overdue books = $hasOverdueBooks")
+            if(hasOverdueBooks) {
+                setUIToHasOverdue()
+            }
+
             // modify styling if user already is within limit of books
             val activeTransactionsCount = firestoreHandler.getActiveTransactionsCount()
             Log.d("BookDetailsActivity", "Number of active transactions is $activeTransactionsCount")
@@ -432,6 +439,14 @@ class BookDetailsActivity : AppCompatActivity() {
     private fun setUIToBorrowLimitReached() {
         viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
         viewBinding.bookDetailsIbBorrowBtn.text = "Borrow Limit Reached"
+        viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
+        viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
+        viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
+    }
+
+    private fun setUIToHasOverdue() {
+        viewBinding.bookDetailsIbBorrowBtn.alpha = 0.3f
+        viewBinding.bookDetailsIbBorrowBtn.text = "Return Overdue Books First"
         viewBinding.bookDetailsIbBorrowBtn.isEnabled = false
         viewBinding.bookDetailsIbCancelBtn.visibility = View.GONE
         viewBinding.bookDetailsIbBorrowBtn.visibility = View.VISIBLE
